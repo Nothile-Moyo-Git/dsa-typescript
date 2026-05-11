@@ -9,11 +9,6 @@
  * It does so by iterating through a list, and then proceeding to count the frequency of each node in a hashmap
  */
 
-// =================================================================================================
-// Anagram
-//
-// An anagram is a word or phrase that can have the letters re-arranged
-// =================================================================================================
 type ANAGRAM = {
     method: (firstInput: string, secondInput: string) => boolean
 };
@@ -22,6 +17,11 @@ type FREQUENCY_COUNTER = {
     method: (firstInput: number[], secondInput: number[]) => boolean
 };
 
+// =======================================================================================================================
+// Anagram
+//
+// An anagram is a word or phrase that can have the letters re-arranged
+// =======================================================================================================================
 const isAnagram: ANAGRAM['method'] = (firstInput, secondInput) => {
 
     if (firstInput.length !== secondInput.length) {
@@ -52,7 +52,7 @@ const isAnagram: ANAGRAM['method'] = (firstInput, secondInput) => {
     return success;
 };
 
-// =================================================================================================
+// =======================================================================================================================
 // Frequency counter
 // 
 // For this, we must check that the values in both arrays would be the same if we squared the values of the first array
@@ -60,7 +60,7 @@ const isAnagram: ANAGRAM['method'] = (firstInput, secondInput) => {
 // 
 // This approach checks the frequency of items in two arrays and converts them to hashmap
 // It does this to keep the time complexity to O(n) instead of O(n logn) or O(n^2)
-// =================================================================================================
+// =======================================================================================================================
 const firstInput = [1, 2, 3]; // True 
 const secondInput = [1, 2, 3]; // False 
 const thirdInput = [1, 2, 1]; // False
