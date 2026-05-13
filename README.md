@@ -2,6 +2,8 @@
 
 > Frequency Counter
 
+> Multiple Pointers
+
 To test a file, run the command
 
 ```
