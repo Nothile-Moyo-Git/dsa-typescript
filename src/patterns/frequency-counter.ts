@@ -21,6 +21,7 @@ type FREQUENCY_COUNTER = {
 // Anagram
 //
 // An anagram is a word or phrase that can have the letters re-arranged
+// In this case, we're checking the frequency of characters in our strings
 // =======================================================================================================================
 const isAnagram: ANAGRAM['method'] = (firstInput, secondInput) => {
 
@@ -34,6 +35,8 @@ const isAnagram: ANAGRAM['method'] = (firstInput, secondInput) => {
     const firstCharCounter: Record<string, number> = {};
     const secondCharCounter: Record<string, number> = {};
 
+    // Use char as in the index
+    // If we have a value, increment it, otherwise, set it to 0 so we get a value of 1
     for (const char of firstInput.toLowerCase()) {
         firstCharCounter[char] = (firstCharCounter[char] || 0) + 1;
     }
