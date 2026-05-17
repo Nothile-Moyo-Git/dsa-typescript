@@ -24,12 +24,9 @@ const maxSubArraySum = (values: number[], subArraySize: number) => {
 
     // If it's longer than 0, then get the sum anyway
     if (values.length < subArraySize) {
-        const sum: number = values.reduce((previousState, currentState) => previousState += currentState);
-        return sum;
+        return values.reduce((previousState, currentState) => previousState += currentState);
     }
 
-    // This allows us to always be able to get the future sum
-    const maxIndex = values.length;
     let max = 0;
     let sum = 0;
 
@@ -40,28 +37,29 @@ const maxSubArraySum = (values: number[], subArraySize: number) => {
         }
     }
 
-    for (let index = 0; index < maxIndex; index++) {
-        console.log("Index: ", index);
-        console.log("Value: ", values[index]);
+    // Set the sum to the original max so we can start updating it
+    // This is our sliding window, we should update it every iteration
+    sum = max;
 
-        // Get initial max to up sum size
-        if (index >= subArraySize) {
+    for (let index = subArraySize; index < values.length; index++) {
 
             // Check if the current value is worth more than the value at index - size
             // If it's bigger, remove the previous value and add the current
             const currentValue = values[index];
             const previousValue = values[index - subArraySize];
 
-            console.log("Current value: ", values[index]);
-            console.log("Previous value: ", values[index - subArraySize]);
-            if (currentValue && previousValue && currentValue > previousValue) {
-                console.log("Current is larger: ");
-                max -= previousValue;
-                max += currentValue;
+            // We set to undefined here as one of these values could be 0 and I don't want this skipped because of that
+            if (currentValue !== undefined && previousValue !== undefined) {
+
+                // Update the sliding window, remove the previous and add the current one for comparison
+                sum += currentValue - previousValue;
+                console.log("Sum: ", sum);
             }
-        }
-        console.log("Current max: ", max);
-        console.log("\n");
+
+            // If the current sum is greater than the max, update it
+            if (sum > max) {
+                max = sum;
+            }
     }
 
     return max;
