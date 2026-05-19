@@ -48,22 +48,25 @@ type DUPLICATES = {
     frequencyCounter: Record<string, number>;
 };
 
-const areThereduplicates : DUPLICATES['method'] = (...args) => {
+const areThereDuplicates : DUPLICATES['method'] = (...args) => {
 
     if (args.length === 0) {
         return false;
     }
 
-    let success = true;
+    let success = false;
     const frequencyCounter: DUPLICATES['frequencyCounter'] = {};
 
-    for (const value in frequencyCounter) {
-        frequencyCounter[value] = (frequencyCounter[value] || 0) + 1;
+    for (let index = 0; index < args.length; index++) {
+        const value = args[index];
+        if (value) {
+            frequencyCounter[value] = (frequencyCounter[value] || 0) + 1;
+        }
     }
 
     for (const value in frequencyCounter) {
         if (frequencyCounter[value] && frequencyCounter[value] > 1) {
-            success = false;
+            success = true
         }
     }
 
@@ -76,5 +79,11 @@ console.log(sameFrequency(182,281)); // true
 console.log(sameFrequency(34,14)); // false
 console.log(sameFrequency(3589578, 5879385)); // true
 console.log(sameFrequency(22,222)); // false
+console.log("\n\n");
+
+console.log("Are there duplicates: ");
+console.log(areThereDuplicates(1, 2, 3)) // false
+console.log(areThereDuplicates(1, 2, 2)) // true 
+console.log(areThereDuplicates('a', 'b', 'c', 'a')) // true 
 
 
