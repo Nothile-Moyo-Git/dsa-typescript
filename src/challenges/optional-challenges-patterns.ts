@@ -37,8 +37,44 @@ const sameFrequency = (firstNumber: number, secondNumber: number): boolean => {
     return success;
 };
 
+// =======================================================================================================================
+// Are there duplicates
+//
+// This challenge is to take a number and process the number of duplicate items
+// Allowed data types are primitives
+// =======================================================================================================================
+type DUPLICATES = {
+    method: (...args: (string | number)[]) => boolean;
+    frequencyCounter: Record<string, number>;
+};
+
+const areThereduplicates : DUPLICATES['method'] = (...args) => {
+
+    if (args.length === 0) {
+        return false;
+    }
+
+    let success = true;
+    const frequencyCounter: DUPLICATES['frequencyCounter'] = {};
+
+    for (const value in frequencyCounter) {
+        frequencyCounter[value] = (frequencyCounter[value] || 0) + 1;
+    }
+
+    for (const value in frequencyCounter) {
+        if (frequencyCounter[value] && frequencyCounter[value] > 1) {
+            success = false;
+        }
+    }
+
+    return success;
+};
+
+
 console.log("Same frequency: ");
 console.log(sameFrequency(182,281)); // true
 console.log(sameFrequency(34,14)); // false
 console.log(sameFrequency(3589578, 5879385)); // true
 console.log(sameFrequency(22,222)); // false
+
+
