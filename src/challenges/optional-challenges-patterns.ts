@@ -73,17 +73,57 @@ const areThereDuplicates : DUPLICATES['method'] = (...args) => {
     return success;
 };
 
+// =======================================================================================================================
+// Construct note
+//
+// This challenge is to take a string of letters, one as a message
+// Return a boolean which determines whether the letters can be arranged to form the string
+// =======================================================================================================================
+const constructNote = (message: string, letters: string): boolean => {
+    if (message.length === 0) {
+        return true;
+    }
+
+    if (letters.length === 0) {
+        return false;
+    }
+
+    const lettersFrequency: Record<string, number> = {};
+    const messageFrequency: Record<string, number> = {};
+
+    for (const char of letters.toLowerCase()) {
+        lettersFrequency[char] = (lettersFrequency[char] || 0) + 1;
+    }
+
+    for (const char of message.toLowerCase()) {
+        messageFrequency[char] = (messageFrequency[char] || 0) + 1;
+    }
+
+    for (const char in messageFrequency) {
+        if ((messageFrequency[char] || 0) > (lettersFrequency[char] || 0)) {
+            return false;
+        }
+    }
+
+    return true;
+};
 
 console.log("Same frequency: ");
 console.log(sameFrequency(182,281)); // true
 console.log(sameFrequency(34,14)); // false
 console.log(sameFrequency(3589578, 5879385)); // true
 console.log(sameFrequency(22,222)); // false
-console.log("\n\n");
+console.log("\n");
 
 console.log("Are there duplicates: ");
 console.log(areThereDuplicates(1, 2, 3)) // false
 console.log(areThereDuplicates(1, 2, 2)) // true 
-console.log(areThereDuplicates('a', 'b', 'c', 'a')) // true 
+console.log(areThereDuplicates('a', 'b', 'c', 'a')) // true
+console.log("\n");
+
+console.log("Construct note: ");
+console.log(constructNote('aa', 'abc')); // false
+console.log(constructNote('abc', 'dcba')); // true
+console.log(constructNote('aabbcc', 'bcabcaddff')); // true
 
 
