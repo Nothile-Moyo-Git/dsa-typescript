@@ -8,6 +8,10 @@
  * Description: This file showcases attempts at solving the optional challenges for patterns
  */
 
+type FREQUENCY_COUNTER = {
+    property: Record<string, number>;
+};
+
 // =======================================================================================================================
 // Same Frequency
 //
@@ -88,8 +92,8 @@ const constructNote = (message: string, letters: string): boolean => {
         return false;
     }
 
-    const lettersFrequency: Record<string, number> = {};
-    const messageFrequency: Record<string, number> = {};
+    const lettersFrequency: FREQUENCY_COUNTER['property'] = {};
+    const messageFrequency: FREQUENCY_COUNTER['property'] = {};
 
     for (const char of letters.toLowerCase()) {
         lettersFrequency[char] = (lettersFrequency[char] || 0) + 1;
@@ -106,6 +110,33 @@ const constructNote = (message: string, letters: string): boolean => {
     }
 
     return true;
+};
+
+// =======================================================================================================================
+// Find all duplicates
+//
+// This challenge is to find the duplicates in an array of positive intergers
+// =======================================================================================================================
+const findAllDuplicates = (values: number[]) : number[] => {
+    if (values.length === 0) {
+        return [];
+    }
+
+    const frequencyCounter: FREQUENCY_COUNTER['property'] = {};
+
+    for (const value of values) {
+        frequencyCounter[value] = (frequencyCounter[value] || 0) + 1;
+    }
+
+    const duplicateCounter: number[] = [];
+
+    for (const value in frequencyCounter) {
+        if (frequencyCounter[value] && frequencyCounter[value] > 1) {
+            duplicateCounter.push(Number(value));
+        }
+    }
+
+    return duplicateCounter;
 };
 
 console.log("Same frequency: ");
@@ -125,5 +156,12 @@ console.log("Construct note: ");
 console.log(constructNote('aa', 'abc')); // false
 console.log(constructNote('abc', 'dcba')); // true
 console.log(constructNote('aabbcc', 'bcabcaddff')); // true
+console.log("\n");
+
+console.log("Find all duplicates: ");
+console.log(findAllDuplicates([4,3,2,7,8,2,3,1])); // array with 2 and 3
+console.log(findAllDuplicates([4, 3, 2, 1, 0])); // []
+console.log(findAllDuplicates([4, 3, 2, 1, 0, 1, 2, 3])); // array with 3, 2, and 1
+console.log("\n");
 
 
