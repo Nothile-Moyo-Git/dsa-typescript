@@ -139,6 +139,7 @@ const findAllDuplicates = (values: number[]) : number[] => {
     return duplicateCounter;
 };
 
+/* console.log("Frequency counter:");
 console.log("Same frequency: ");
 console.log(sameFrequency(182,281)); // true
 console.log(sameFrequency(34,14)); // false
@@ -162,6 +163,48 @@ console.log("Find all duplicates: ");
 console.log(findAllDuplicates([4,3,2,7,8,2,3,1])); // array with 2 and 3
 console.log(findAllDuplicates([4, 3, 2, 1, 0])); // []
 console.log(findAllDuplicates([4, 3, 2, 1, 0, 1, 2, 3])); // array with 3, 2, and 1
+console.log("\n"); */
+
+// =======================================================================================================================
+// Average pair
+//
+// This challenge is to take an array of numbers and a value
+// There must be a selection of a pair that averages to the number found in the argument
+// 
+// Time Complexity: O(n)
+// Space Complexity: O(1)
+// =======================================================================================================================
+const averagePair = (numbers: number[], average: number) : boolean => {
+
+    if (numbers.length === 0) {
+        return false;
+    }
+
+    const max = numbers.length;
+    let success = false;
+    let first = 0;
+    let second = max - 1;
+
+    while (first < second) {
+        const firstPointer = numbers[first];
+        const secondPointer = numbers[second];
+
+        if (firstPointer !== undefined && secondPointer !== undefined) {
+            const currentAverage = (firstPointer + secondPointer) / 2;
+            if (currentAverage === average) return true;
+            if (currentAverage > average) second--;
+            else first++;
+        }
+    }
+
+    return success;
+};
+
+console.log("Multiple pointers: ");
+console.log(averagePair([1,2,3],2.5)); // true
+console.log(averagePair([1,3,3,5,6,7,10,12,19],8)); // true */
+console.log(averagePair([-1,0,3,4,5,6], 4.1)); // false
+console.log(averagePair([],4)); // false
 console.log("\n");
 
 
