@@ -238,6 +238,64 @@ const isSubsequence = (subsequence: string, sequence: string): boolean => {
     return false;
 };
 
+// =======================================================================================================================
+// Find Pair
+//
+// This challenge is to find a pair of values in an unsorted array
+// 
+// Time complexity: O(n)
+// =======================================================================================================================
+const findPair = (numbers: number[], value: number): boolean => {
+
+    if (numbers.length < 2) {
+        return false
+    }
+
+    // We need a frequency counter in order to use the index to sort the array
+    // We cannot check the pairs in O(n) otherwise
+    const frequencyCounter: FREQUENCY_COUNTER['property'] = {}; 
+    let sortedArray: number[] = [];
+
+    for (const value of numbers) {
+        frequencyCounter[value] = (frequencyCounter[value] || 0) + 1;
+    }
+
+    for (const index in frequencyCounter) {
+        sortedArray.push(Number(index));
+    }
+
+    const max = sortedArray.length - 1;
+    let firstPointer = 0;
+    let secondPointer = max;
+
+    while (firstPointer < secondPointer) {
+        const first = sortedArray[firstPointer];
+        const second = sortedArray[secondPointer];
+
+        console.log("First: ", first);
+        console.log("Second: ", second);
+
+        if (first !== undefined && second !== undefined) {
+
+            const difference = Math.abs(second - first);
+
+            console.log("Difference: ", difference);
+            console.log("First pointer: ", firstPointer);
+
+            if (difference > value) {
+                
+            }
+
+            firstPointer++;
+        }
+
+        console.log("\n");
+    }
+
+    return false;
+};
+
+
 console.log("Multiple pointers: ");
 /* console.log("Average pair:");
 console.log(averagePair([1,2,3],2.5)); // true
@@ -246,13 +304,20 @@ console.log(averagePair([-1,0,3,4,5,6], 4.1)); // false
 console.log(averagePair([],4)); // false
 console.log("\n"); */
 
-console.log("isSubsequence: ");
+/* console.log("isSubsequence: ");
 console.log(isSubsequence('hello', 'hello world')); // true
 console.log(isSubsequence('sing', 'sting')); // true
 console.log(isSubsequence('abc', 'abracadabra')); // true
-console.log(isSubsequence('abc', 'acb')); // false (order)
+console.log(isSubsequence('abc', 'acb')); // false (order) */
 
-
-
-
-
+console.log(findPair([6,1,4,10,2,4,7], 2)); // true
+/* findPair([8,6,2,4,1,0,2,5,13],1) // true
+findPair([4,-2,3,10],-6) // true
+findPair([6,1,4,10,2,4], 22) // false
+findPair([], 0) // false
+findPair([5,5], 0) // true
+findPair([-4,4], -8) // true
+findPair([-4,4], 8) // true
+findPair([1,3,4,6],-2) // true
+findPair([0,1,3,4,6],-2) // true
+findPair([1,2,3], 0) // false */
