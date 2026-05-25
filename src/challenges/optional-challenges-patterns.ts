@@ -253,44 +253,58 @@ const findPair = (numbers: number[], value: number): boolean => {
 
     // We need a frequency counter in order to use the index to sort the array
     // We cannot check the pairs in O(n) otherwise
-    const frequencyCounter: FREQUENCY_COUNTER['property'] = {}; 
+    const frequencyCounter: FREQUENCY_COUNTER['property'] = {};
     let sortedArray: number[] = [];
 
-    for (const value of numbers) {
-        frequencyCounter[value] = (frequencyCounter[value] || 0) + 1;
+    for (const index of numbers) {
+        frequencyCounter[index] = (frequencyCounter[index] || 0) + 1;
+        // console.log("Frequency counter: ", frequencyCounter[index]);
+
+        if (value === 0 && frequencyCounter[index] && frequencyCounter[index] >= 2) {
+            return true;
+        }
     }
 
     for (const index in frequencyCounter) {
         sortedArray.push(Number(index));
     }
 
+    // console.log("Sorted array: ", sortedArray);
+
     const max = sortedArray.length - 1;
     let firstPointer = 0;
-    let secondPointer = max;
+    let secondPointer = 0;
 
-    while (firstPointer < secondPointer) {
+    while (firstPointer < max - secondPointer) {
         const first = sortedArray[firstPointer];
-        const second = sortedArray[secondPointer];
+        const second = sortedArray[max - secondPointer];
 
-        console.log("First: ", first);
-        console.log("Second: ", second);
+        /* console.log("First: ", first);
+        console.log("Second: ", second); */
 
         if (first !== undefined && second !== undefined) {
 
-            const difference = Math.abs(second - first);
+            const difference = second - first;
 
+            /* console.log("Signed difference: ", signedDifference);
             console.log("Difference: ", difference);
-            console.log("First pointer: ", firstPointer);
+            console.log("First pointer: ", firstPointer); */
 
-            if (difference > value) {
-                
+            if (difference === value) {
+                return true;
             }
 
-            firstPointer++;
+            if (firstPointer <= secondPointer) {
+                firstPointer++
+            } else {
+                secondPointer++;
+            }
         }
 
-        console.log("\n");
+        // console.log("\n");
     }
+
+    // console.log("\n");
 
     return false;
 };
@@ -311,12 +325,12 @@ console.log(isSubsequence('abc', 'abracadabra')); // true
 console.log(isSubsequence('abc', 'acb')); // false (order) */
 
 console.log(findPair([6,1,4,10,2,4,7], 2)); // true
-/* findPair([8,6,2,4,1,0,2,5,13],1) // true
-findPair([4,-2,3,10],-6) // true
-findPair([6,1,4,10,2,4], 22) // false
-findPair([], 0) // false
-findPair([5,5], 0) // true
-findPair([-4,4], -8) // true
+console.log(findPair([8,6,2,4,1,0,2,5,13],1)); // true 
+console.log(findPair([4,-2,3,10],-6)); // true
+console.log(findPair([6,1,4,10,2,4], 22)); // false
+console.log(findPair([], 0)); // false
+console.log(findPair([5,5], 0)); // true
+/* findPair([-4,4], -8) // true
 findPair([-4,4], 8) // true
 findPair([1,3,4,6],-2) // true
 findPair([0,1,3,4,6],-2) // true
