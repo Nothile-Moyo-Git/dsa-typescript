@@ -242,73 +242,27 @@ const isSubsequence = (subsequence: string, sequence: string): boolean => {
 // Find Pair
 //
 // This challenge is to find a pair of values in an unsorted array
+// You can use a divide and conquer strategy here comprising of multiple patterns
 // 
 // Time complexity: O(n)
 // =======================================================================================================================
 const findPair = (numbers: number[], value: number): boolean => {
 
-    if (numbers.length < 2) {
-        return false
-    }
+    if (numbers.length < 2) return false;
 
-    // We need a frequency counter in order to use the index to sort the array
-    // We cannot check the pairs in O(n) otherwise
-    const frequencyCounter: FREQUENCY_COUNTER['property'] = {};
-    let sortedArray: number[] = [];
+    const seen = new Set<number>();
 
-    for (const index of numbers) {
-        frequencyCounter[index] = (frequencyCounter[index] || 0) + 1;
-        // console.log("Frequency counter: ", frequencyCounter[index]);
-
-        if (value === 0 && frequencyCounter[index] && frequencyCounter[index] >= 2) {
+    for (const num of numbers) {
+        const complement = value + num; // looking for: num + complement = value... 
+        // wait, we want second - first = value, so complement = num + value OR num - value
+        if (seen.has(complement) || seen.has(complement)) {
             return true;
         }
+        seen.add(num);
     }
-
-    for (const index in frequencyCounter) {
-        sortedArray.push(Number(index));
-    }
-
-    // console.log("Sorted array: ", sortedArray);
-
-    const max = sortedArray.length - 1;
-    let firstPointer = 0;
-    let secondPointer = 0;
-
-    while (firstPointer < max - secondPointer) {
-        const first = sortedArray[firstPointer];
-        const second = sortedArray[max - secondPointer];
-
-        /* console.log("First: ", first);
-        console.log("Second: ", second); */
-
-        if (first !== undefined && second !== undefined) {
-
-            const difference = second - first;
-
-            /* console.log("Signed difference: ", signedDifference);
-            console.log("Difference: ", difference);
-            console.log("First pointer: ", firstPointer); */
-
-            if (difference === value) {
-                return true;
-            }
-
-            if (firstPointer <= secondPointer) {
-                firstPointer++
-            } else {
-                secondPointer++;
-            }
-        }
-
-        // console.log("\n");
-    }
-
-    // console.log("\n");
 
     return false;
 };
-
 
 console.log("Multiple pointers: ");
 /* console.log("Average pair:");
@@ -328,10 +282,10 @@ console.log(findPair([6,1,4,10,2,4,7], 2)); // true
 console.log(findPair([8,6,2,4,1,0,2,5,13],1)); // true 
 console.log(findPair([4,-2,3,10],-6)); // true
 console.log(findPair([6,1,4,10,2,4], 22)); // false
-console.log(findPair([], 0)); // false
-console.log(findPair([5,5], 0)); // true
-/* findPair([-4,4], -8) // true
-findPair([-4,4], 8) // true
-findPair([1,3,4,6],-2) // true
-findPair([0,1,3,4,6],-2) // true
-findPair([1,2,3], 0) // false */
+console.log(findPair([], 0)); // false 
+console.log(findPair([5,5], 0)); // true 
+console.log(findPair([-4,4], -8)); // true 
+console.log(findPair([-4,4], 8)); // true
+console.log(findPair([1,3,4,6],-2)); // true
+console.log(findPair([0,1,3,4,6],-2)); // true
+console.log(findPair([1,2,3], 0)); // false
