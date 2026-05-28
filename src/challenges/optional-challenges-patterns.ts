@@ -278,7 +278,7 @@ console.log(isSubsequence('sing', 'sting')); // true
 console.log(isSubsequence('abc', 'abracadabra')); // true
 console.log(isSubsequence('abc', 'acb')); // false (order) */
 
-console.log(findPair([6,1,4,10,2,4,7], 2)); // true
+/* console.log(findPair([6,1,4,10,2,4,7], 2)); // true
 console.log(findPair([8,6,2,4,1,0,2,5,13],1)); // true 
 console.log(findPair([4,-2,3,10],-6)); // true
 console.log(findPair([6,1,4,10,2,4], 22)); // false
@@ -288,4 +288,142 @@ console.log(findPair([-4,4], -8)); // true
 console.log(findPair([-4,4], 8)); // true
 console.log(findPair([1,3,4,6],-2)); // true
 console.log(findPair([0,1,3,4,6],-2)); // true
-console.log(findPair([1,2,3], 0)); // false
+console.log(findPair([1,2,3], 0)); // false */
+
+// =======================================================================================================================
+// Max Sub Array Sum
+//
+// Find the maximum value of a subarray based on the size based through the parameters
+// This should use a sliding window
+// 
+// Time complexity: O(n)
+// =======================================================================================================================
+const maxSubarraySum = (values: number[], size: number): number | null => {
+
+    if (values.length === 0) {
+        return 0;
+    }
+
+    if (values.length < size) {
+        return null;
+    }
+
+    let total = 0;
+
+    for (let index = 0; index < size; index++) {
+
+        const value = values[index];
+
+        if (value !== undefined) {
+            total += value;
+        }
+    }
+    
+    const max = values.length - 1;
+    let highest = total;
+
+    for (let index = size - 1; index < max; index++) {
+
+        // If the max is two, don't add the one otherwise it breaks the loop
+        const previous = values[(index - size) + 1];
+        const next = values[index + 1];
+
+        if (previous !== undefined && next !== undefined) {
+            total = total - previous;
+            total = total + next;
+        }
+
+        if (total > highest) {
+            highest = total;
+        }
+
+    }
+
+    return highest;
+};
+
+const minSubArrayLen = (values: number[], sumToBeat: number): number => {
+
+    if (values.length === 0) {
+        return 0;
+    }
+
+    if (values.length === 1) {
+        let greaterOrEqual = values[0] !== undefined && values[0] >= sumToBeat;
+
+        if (greaterOrEqual === true) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    let total = 0;
+
+    const first = values[0];
+    const second = values[1];
+
+    if (first !== undefined && second !== undefined) {
+        total = first + second;
+    }
+
+    // Tomorrow notes
+    // You need to handle a size of 2 as well, if it's greater, cool, if not, return 0
+    if (values.length === 2) {
+
+    }
+
+    const max = values.length;
+    let startingPosition = 1;
+    let windowPosition = 2;
+    let currentSize = 2;
+    let currentTotal = total;
+
+    // Tomorrow notes
+    // You need to get the initial total
+    // Don't get it in the loop
+    // Slide it across and iterate on that
+
+    console.log("Max: ", max);
+    console.log("Total: ", total);
+
+    while (currentSize < max) {
+        const first = values[startingPosition];
+        const second = values[windowPosition];
+
+        console.log("First: ", first);
+        console.log("Second: ", second);
+
+        if (first !== undefined && second !== undefined) {
+            total = first + second;
+        }
+
+        if (total > currentTotal) {
+            currentTotal = total;
+        }
+
+        console.log("Updated total: ", total);
+        startingPosition++;
+        windowPosition++;
+        currentSize++;
+
+    }
+
+    return 0;
+};
+
+console.log("Sliding window");
+/* console.log("Max sub array sum: ");
+console.log(maxSubarraySum([100,200,300,400], 2)); // 700
+console.log(maxSubarraySum([1,4,2,10,23,3,1,0,20], 4));  // 39
+console.log(maxSubarraySum([-3,4,0,-2,6,-1], 2)); // 5
+console.log(maxSubarraySum([3,-2,7,-4,1,-1,4,-2,1],2)); // 5
+console.log(maxSubarraySum([2,3], 3)); // null */
+
+minSubArrayLen([2,3,1,2,4,3], 7) // 2 -> because [4,3] is the smallest subarray
+/* minSubArrayLen([2,1,6,5,4], 9) // 2 -> because [5,4] is the smallest subarray
+minSubArrayLen([3,1,7,11,2,9,8,21,62,33,19], 52) // 1 -> because [62] is greater than 52
+minSubArrayLen([1,4,16,22,5,7,8,9,10],39) // 3
+minSubArrayLen([1,4,16,22,5,7,8,9,10],55) // 5
+minSubArrayLen([4, 3, 3, 8, 1, 2, 3], 11) // 2
+minSubArrayLen([1,4,16,22,5,7,8,9,10],95) // 0 */
