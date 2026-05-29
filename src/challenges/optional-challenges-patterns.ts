@@ -370,14 +370,22 @@ const minSubArrayLen = (values: number[], sumToBeat: number): number => {
     // Tomorrow notes
     // You need to handle a size of 2 as well, if it's greater, cool, if not, return 0
     if (values.length === 2) {
-
+        if (total >= sumToBeat) {
+            return 2;
+        } else {
+            return 0;
+        }
     }
 
     const max = values.length;
     let startingPosition = 1;
-    let windowPosition = 2;
+    let windowPosition = 1;
+    let initialSize = 2;
     let currentSize = 2;
     let currentTotal = total;
+
+    let testingSizeToBeDeleted = 2;
+    let window = testingSizeToBeDeleted + startingPosition;
 
     // Tomorrow notes
     // You need to get the initial total
@@ -386,30 +394,44 @@ const minSubArrayLen = (values: number[], sumToBeat: number): number => {
 
     console.log("Max: ", max);
     console.log("Total: ", total);
+    console.log("Window: ", window);
 
     while (currentSize < max) {
-        const first = values[startingPosition];
-        const second = values[windowPosition];
+
+        const previousValue = values[startingPosition - 1];
+        const nextValue = values[startingPosition + 1];
+
+
 
         console.log("First: ", first);
         console.log("Second: ", second);
+        console.log("Current total: ", currentTotal);
 
-        if (first !== undefined && second !== undefined) {
-            total = first + second;
+        if (previousValue !== undefined && nextValue !== undefined) {
+
+            currentTotal -= previousValue;
+            console.log("Current - previous", currentTotal);
+            currentTotal += nextValue;
+            console.log("Current + next: ", currentTotal);
+
+            console.log("Previous value: ", previousValue);
+            console.log("Next value: ", nextValue);
+            console.log("Current total: ", currentTotal);
         }
 
-        if (total > currentTotal) {
-            currentTotal = total;
+        if (currentTotal >= sumToBeat) {
+            return initialSize;
         }
 
         console.log("Updated total: ", total);
+        console.log("\n");
+
         startingPosition++;
         windowPosition++;
         currentSize++;
-
     }
 
-    return 0;
+    return currentSize;
 };
 
 console.log("Sliding window");
@@ -420,7 +442,8 @@ console.log(maxSubarraySum([-3,4,0,-2,6,-1], 2)); // 5
 console.log(maxSubarraySum([3,-2,7,-4,1,-1,4,-2,1],2)); // 5
 console.log(maxSubarraySum([2,3], 3)); // null */
 
-minSubArrayLen([2,3,1,2,4,3], 7) // 2 -> because [4,3] is the smallest subarray
+console.log("MinSubArrayLen: ");
+console.log(minSubArrayLen([2,3,1,2,4,3], 7)); // 2 -> because [4,3] is the smallest subarray
 /* minSubArrayLen([2,1,6,5,4], 9) // 2 -> because [5,4] is the smallest subarray
 minSubArrayLen([3,1,7,11,2,9,8,21,62,33,19], 52) // 1 -> because [62] is greater than 52
 minSubArrayLen([1,4,16,22,5,7,8,9,10],39) // 3
