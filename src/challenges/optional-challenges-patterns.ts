@@ -250,20 +250,33 @@ const isSubsequence = (subsequence: string, sequence: string): boolean => {
 //  
 // Time complexity: O(n)
 // =======================================================================================================================
-const findPair = (numbers: number[], value: number): boolean => {
+const findPair = (numbers: number[], difference: number): boolean => {
 
+    const seen = new Set<number>(numbers);
+
+    // Can't find a pair here so return false
     if (numbers.length < 2) return false;
 
-    const seen = new Set<number>();
+    if (difference === 0) {
+        const setToCheck = new Set();
 
+        // Simple duplicate check as we have no difference
+        for (const num of numbers) {
+            if (setToCheck.has(num)) {
+                return true;
+            } else {
+                setToCheck.add(num);
+            }
+        }
+
+        return false;
+    }
+
+    // Duplicate check but accounts for the difference
     for (const num of numbers) {
-        const complement = value + num; // looking for: num + complement = value...
-        console.log("complement: ", complement);
-        // wait, we want second - first = value, so complement = num + value OR num - value
-        if (seen.has(complement)) {
+        if (seen.has(num + difference) || seen.has(num - difference)) {
             return true;
         }
-        seen.add(num);
     }
 
     return false;
@@ -283,8 +296,9 @@ console.log(isSubsequence('sing', 'sting')); // true
 console.log(isSubsequence('abc', 'abracadabra')); // true
 console.log(isSubsequence('abc', 'acb')); // false (order) */
 
-console.log(findPair([6,1,4,10,2,4,7], 2)); // true
-/* console.log(findPair([8,6,2,4,1,0,2,5,13],1)); // true 
+console.log("Find pair: ");
+/* console.log(findPair([6,1,4,10,2,4,7], 2)); // true
+console.log(findPair([8,6,2,4,1,0,2,5,13],1)); // true 
 console.log(findPair([4,-2,3,10],-6)); // true
 console.log(findPair([6,1,4,10,2,4], 22)); // false
 console.log(findPair([], 0)); // false 
@@ -347,94 +361,48 @@ const maxSubarraySum = (values: number[], size: number): number | null => {
     return highest;
 };
 
-const minSubArrayLen = (values: number[], sumToBeat: number): number => {
+const minSubArrayLen = (numbers: number[], sumToBeat: number): number => {
 
-    // Guard for an empty array as it can't be calculated
-    if (values.length === 0) {
+    if (numbers.length === 0) {
         return 0;
     }
 
-    // Check only for a single number
-    if (values.length === 1) {
-        let greaterOrEqual = values[0] !== undefined && values[0] >= sumToBeat;
+    const max = numbers.length;
+    let currentSize = 0;
+    let currentTotal = 0;
+    let smallestSize = numbers.length;
+    let left = 0;
+    let returnSize = 0;
 
-        if (greaterOrEqual === true) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
+    for (let index = 0; index < numbers.length; index++) {
 
-    let total = 0;
+        const value = numbers[index];
 
-    const first = values[0];
-    const second = values[1];
+        if (value !== undefined) {
 
-    if (first !== undefined && second !== undefined) {
-        total = first + second;
-    }
-
-    // Check for both values, we don't need a loop, just check the two
-    if (values.length === 2) {
-        if (total >= sumToBeat) {
-            return 2;
-        } else {
-            return 0;
-        }
-    }
-
-    const max = values.length;
-    let index = 1;
-    let windowPosition = 1;
-    let currentSize = 2;
-    let currentTotal = total;
-
-    // Our while loop so we can keep it O(n) as we don't need to nest iterations
-    while (currentSize < max) {
-
-        // Get sub array start and end position, and value that comes after
-        const startingPosition = index - (currentSize - 1);
-        const previousValue = values[startingPosition];
-        const nextValue = values[index + 1];
-
-        // if there's no next value, skip adding to the total
-        if (previousValue !== undefined && nextValue !== undefined) {
-
-            // Update the current total
-            currentTotal -= previousValue;
-            currentTotal += nextValue;
-
-            // If a single value is greater, return 1
-            if (nextValue >= sumToBeat) {
-                return 1;
-            }
-        }
-
-        // If we've calculated a size, return it
-        if (currentTotal >= sumToBeat) {
-            return currentSize;
-        }
-
-        if (index >= (max - 1)) {
-            windowPosition++;
             currentSize++;
-            index = windowPosition;
-            const addToTotal = values[index];
+            currentTotal += value;
 
-            if (addToTotal !== undefined) {
-                total += addToTotal;
-                currentTotal = total;
+            while (currentTotal > sumToBeat) {
+                const previous = numbers[left];
+
+                if (previous !== undefined) {
+
+                    left++;
+                    currentSize--;
+                    currentTotal -= previous;
+                }
+
+                if (currentSize < smallestSize && currentTotal >= sumToBeat) {
+                    smallestSize = currentSize;
+                }
             }
 
-        } else {
-            index++;
+            returnSize = smallestSize;
         }
-
-        /* console.log("Updated total: ", total);
-        console.log("\n"); */
     }
 
-    return 0;
+    return returnSize === max ? 0 : returnSize;
 };
 
 console.log("Sliding window");
@@ -446,10 +414,10 @@ console.log(maxSubarraySum([3,-2,7,-4,1,-1,4,-2,1],2)); // 5
 console.log(maxSubarraySum([2,3], 3)); // null */
 
 console.log("MinSubArrayLen: ");
-/* console.log(minSubArrayLen([2,3,1,2,4,3], 7)); // 2 -> because [4,3] is the smallest subarray
+console.log(minSubArrayLen([2,3,1,2,4,3], 7)); // 2 -> because [4,3] is the smallest subarray
 console.log(minSubArrayLen([2,1,6,5,4], 9)); // 2 -> because [5,4] is the smallest subarray
 console.log(minSubArrayLen([3,1,7,11,2,9,8,21,62,33,19], 52)); // 1 -> because [62] is greater than 52 
 console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10],39)); // 3 
 console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10],55)); // 5 
 console.log(minSubArrayLen([4, 3, 3, 8, 1, 2, 3], 11)); // 2
-console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10],95)); // 0 */
+console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10],95)); // 0
