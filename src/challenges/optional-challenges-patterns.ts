@@ -361,48 +361,47 @@ const maxSubarraySum = (values: number[], size: number): number | null => {
     return highest;
 };
 
+// =======================================================================================================================
+// Min Sub Array Len
+//
+// Find the minimum sub array size that finds a value equal to or greater than the second parameter
+// This should use a sliding window with dynamic sizing
+// 
+// To do this, we add to the total then 
+// **Note** Make sure you iterate over the WHOLE array.
+// 
+// Time complexity: O(n)
+// =======================================================================================================================
 const minSubArrayLen = (numbers: number[], sumToBeat: number): number => {
 
-    if (numbers.length === 0) {
-        return 0;
-    }
-
-    const max = numbers.length;
-    let currentSize = 0;
-    let currentTotal = 0;
-    let smallestSize = numbers.length;
     let left = 0;
-    let returnSize = 0;
+    let smallest = Infinity;
+    let currentTotal = 0;
 
-    for (let index = 0; index < numbers.length; index++) {
-
-        const value = numbers[index];
+    // Iterate through the whole loop O(n)
+    for (let right = 0; right < numbers.length; right++) {
+        const value = numbers[right];
 
         if (value !== undefined) {
-
-            currentSize++;
+            // Add to the total
             currentTotal += value;
 
-            while (currentTotal > sumToBeat) {
-                const previous = numbers[left];
+            // When the total is greater, then take away from the left hand side
+            // This is capped when the value empties, so left can't be greater than right
+            while (currentTotal >= sumToBeat) {
+                // Calculates the smallest size, even down to 1
+                smallest = Math.min(smallest, (right - left) + 1);
 
-                if (previous !== undefined) {
-
-                    left++;
-                    currentSize--;
-                    currentTotal -= previous;
+                const leftValue = numbers[left];
+                if (leftValue !== undefined) {
+                    currentTotal -= leftValue;
                 }
-
-                if (currentSize < smallestSize && currentTotal >= sumToBeat) {
-                    smallestSize = currentSize;
-                }
+                left++;
             }
-
-            returnSize = smallestSize;
         }
     }
 
-    return returnSize === max ? 0 : returnSize;
+    return smallest === Infinity ? 0 : smallest;
 };
 
 console.log("Sliding window");
