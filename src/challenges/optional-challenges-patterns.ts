@@ -404,19 +404,70 @@ const minSubArrayLen = (numbers: number[], sumToBeat: number): number => {
     return smallest === Infinity ? 0 : smallest;
 };
 
-console.log("Sliding window");
-/* console.log("Max sub array sum: ");
+/*console.log("Sliding window");
+console.log("Max sub array sum: ");
 console.log(maxSubarraySum([100,200,300,400], 2)); // 700
 console.log(maxSubarraySum([1,4,2,10,23,3,1,0,20], 4));  // 39
 console.log(maxSubarraySum([-3,4,0,-2,6,-1], 2)); // 5
 console.log(maxSubarraySum([3,-2,7,-4,1,-1,4,-2,1],2)); // 5
 console.log(maxSubarraySum([2,3], 3)); // null */
 
-console.log("MinSubArrayLen: ");
+/* console.log("MinSubArrayLen: ");
 console.log(minSubArrayLen([2,3,1,2,4,3], 7)); // 2 -> because [4,3] is the smallest subarray
 console.log(minSubArrayLen([2,1,6,5,4], 9)); // 2 -> because [5,4] is the smallest subarray
 console.log(minSubArrayLen([3,1,7,11,2,9,8,21,62,33,19], 52)); // 1 -> because [62] is greater than 52 
 console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10],39)); // 3 
 console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10],55)); // 5 
 console.log(minSubArrayLen([4, 3, 3, 8, 1, 2, 3], 11)); // 2
-console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10],95)); // 0
+console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10],95)); // 0 */
+
+// =======================================================================================================================
+// findLongestSubstring
+//
+// Find the longest length of a substring that can be obtained from the main string
+// The substring has to have distinct characters
+// 
+// Time complexity: O(n)
+// =======================================================================================================================
+const findLongestSubstring = (word: string): number => {
+
+    if (word.length === 0) {
+        return 0;
+    }
+
+    // Create a set of unique characters
+    const uniqueChars = new Set<string>();
+    let subStringLength = 0;
+    let longestSubString = 0;
+
+    for (let index = 0; index < word.length; index++) {
+        const char = word[index];
+
+        console.log("Longest Sub string: ", longestSubString);
+        console.log("Sub string length: ", subStringLength);
+        console.log("Unique chars: ", uniqueChars);
+
+        if (char !== undefined) {
+
+            if (uniqueChars.has(char)) {
+                longestSubString = subStringLength > longestSubString ? subStringLength : longestSubString;
+                uniqueChars.clear();
+                subStringLength = 0;
+            } else {
+                uniqueChars.add(char);
+                subStringLength++;
+            }
+        }
+    }
+
+    return longestSubString;
+};
+
+console.log("findLongestSubstring:");
+console.log(findLongestSubstring('')); // 0
+console.log(findLongestSubstring('rithmschool')); // 7
+console.log(findLongestSubstring('thisisawesome')); // 6
+console.log(findLongestSubstring('thecatinthehat')); // 7
+console.log(findLongestSubstring('bbbbbb')); // 1
+console.log(findLongestSubstring('longestsubstring')); // 8
+console.log(findLongestSubstring('thisishowwedoit')); // 6 */
