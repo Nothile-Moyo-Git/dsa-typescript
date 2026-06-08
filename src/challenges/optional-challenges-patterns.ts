@@ -439,35 +439,52 @@ const findLongestSubstring = (word: string): number => {
     const uniqueChars = new Set<string>();
     let subStringLength = 0;
     let longestSubString = 0;
+    let window = new Set<string>();
+    let biggestSubString = 0;
+    let left = 0;
 
     for (let index = 0; index < word.length; index++) {
         const char = word[index];
 
-        console.log("Longest Sub string: ", longestSubString);
+        /* console.log("Longest Sub string: ", longestSubString);
         console.log("Sub string length: ", subStringLength);
-        console.log("Unique chars: ", uniqueChars);
+        console.log("Unique chars: ", uniqueChars); */
 
         if (char !== undefined) {
 
-            if (uniqueChars.has(char)) {
-                longestSubString = subStringLength > longestSubString ? subStringLength : longestSubString;
-                uniqueChars.clear();
-                subStringLength = 0;
+            if (window.has(char)) {
+
+                biggestSubString = window.size > biggestSubString ? window.size : biggestSubString;
+
+                while (window.has(char)) {
+
+                    // console.log("Window:" , window);
+
+                    const previous = word[left];
+                    window.delete(previous ?? "");
+                    left++;
+                }
+
+                // console.log("Loop over");
+
             } else {
-                uniqueChars.add(char);
-                subStringLength++;
+                window.add(char);
             }
+
         }
     }
 
-    return longestSubString;
+    console.log("Word: ", word);
+    console.log("\n");
+
+    return biggestSubString;
 };
 
 console.log("findLongestSubstring:");
 console.log(findLongestSubstring('')); // 0
-console.log(findLongestSubstring('rithmschool')); // 7
+console.log(findLongestSubstring('rithmschool')); // 7 */
 console.log(findLongestSubstring('thisisawesome')); // 6
 console.log(findLongestSubstring('thecatinthehat')); // 7
 console.log(findLongestSubstring('bbbbbb')); // 1
 console.log(findLongestSubstring('longestsubstring')); // 8
-console.log(findLongestSubstring('thisishowwedoit')); // 6 */
+console.log(findLongestSubstring('thisishowwedoit')); // 6
