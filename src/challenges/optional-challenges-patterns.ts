@@ -436,55 +436,38 @@ const findLongestSubstring = (word: string): number => {
     }
 
     // Create a set of unique characters
-    const uniqueChars = new Set<string>();
-    let subStringLength = 0;
-    let longestSubString = 0;
-    let window = new Set<string>();
+    // Allows us to find the position of each letter
+    let window = new Map<string, number>();
     let biggestSubString = 0;
     let left = 0;
 
-    for (let index = 0; index < word.length; index++) {
-        const char = word[index];
-
-        /* console.log("Longest Sub string: ", longestSubString);
-        console.log("Sub string length: ", subStringLength);
-        console.log("Unique chars: ", uniqueChars); */
+    for (let right = 0; right < word.length; right++) {
+        const char = word[right];
 
         if (char !== undefined) {
 
             if (window.has(char)) {
 
-                biggestSubString = window.size > biggestSubString ? window.size : biggestSubString;
-
-                while (window.has(char)) {
-
-                    // console.log("Window:" , window);
-
-                    const previous = word[left];
-                    window.delete(previous ?? "");
-                    left++;
-                }
-
-                // console.log("Loop over");
-
-            } else {
-                window.add(char);
-            }
-
+                // Shortcut (!) means it isn't undefined
+                // Set left to the value of the recent duplicated letter then add 1, this handles the duplicate
+                // It's not a frequency counter, it handles the position of the letters
+                left = Math.max(left, window.get(char)! + 1);
+            } 
+                
+            // Set the value anyway
+            window.set(char, right);
+            biggestSubString = Math.max(biggestSubString, right - left + 1);
         }
     }
-
-    console.log("Word: ", word);
-    console.log("\n");
 
     return biggestSubString;
 };
 
 console.log("findLongestSubstring:");
 console.log(findLongestSubstring('')); // 0
-console.log(findLongestSubstring('rithmschool')); // 7 */
+console.log(findLongestSubstring('rithmschool')); // 7
 console.log(findLongestSubstring('thisisawesome')); // 6
 console.log(findLongestSubstring('thecatinthehat')); // 7
-console.log(findLongestSubstring('bbbbbb')); // 1
+console.log(findLongestSubstring('bbbbbb')); // 1 
 console.log(findLongestSubstring('longestsubstring')); // 8
 console.log(findLongestSubstring('thisishowwedoit')); // 6
