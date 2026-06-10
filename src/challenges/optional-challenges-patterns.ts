@@ -282,8 +282,8 @@ const findPair = (numbers: number[], difference: number): boolean => {
     return false;
 };
 
-console.log("Multiple pointers: ");
-/* console.log("Average pair:");
+/* console.log("Multiple pointers: ");
+console.log("Average pair:");
 console.log(averagePair([1,2,3],2.5)); // true
 console.log(averagePair([1,3,3,5,6,7,10,12,19],8)); // true 
 console.log(averagePair([-1,0,3,4,5,6], 4.1)); // false
@@ -296,8 +296,8 @@ console.log(isSubsequence('sing', 'sting')); // true
 console.log(isSubsequence('abc', 'abracadabra')); // true
 console.log(isSubsequence('abc', 'acb')); // false (order) */
 
-console.log("Find pair: ");
-/* console.log(findPair([6,1,4,10,2,4,7], 2)); // true
+/* console.log("Find pair: ");
+console.log(findPair([6,1,4,10,2,4,7], 2)); // true
 console.log(findPair([8,6,2,4,1,0,2,5,13],1)); // true 
 console.log(findPair([4,-2,3,10],-6)); // true
 console.log(findPair([6,1,4,10,2,4], 22)); // false
@@ -372,37 +372,7 @@ const maxSubarraySum = (values: number[], size: number): number | null => {
 // 
 // Time complexity: O(n)
 // =======================================================================================================================
-const minSubArrayLen = (numbers: number[], sumToBeat: number): number => {
 
-    let left = 0;
-    let smallest = Infinity;
-    let currentTotal = 0;
-
-    // Iterate through the whole loop O(n)
-    for (let right = 0; right < numbers.length; right++) {
-        const value = numbers[right];
-
-        if (value !== undefined) {
-            // Add to the total
-            currentTotal += value;
-
-            // When the total is greater, then take away from the left hand side
-            // This is capped when the value empties, so left can't be greater than right
-            while (currentTotal >= sumToBeat) {
-                // Calculates the smallest size, even down to 1
-                smallest = Math.min(smallest, (right - left) + 1);
-
-                const leftValue = numbers[left];
-                if (leftValue !== undefined) {
-                    currentTotal -= leftValue;
-                }
-                left++;
-            }
-        }
-    }
-
-    return smallest === Infinity ? 0 : smallest;
-};
 
 /*console.log("Sliding window");
 console.log("Max sub array sum: ");
@@ -463,11 +433,55 @@ const findLongestSubstring = (word: string): number => {
     return biggestSubString;
 };
 
-console.log("findLongestSubstring:");
+/* console.log("findLongestSubstring:");
 console.log(findLongestSubstring('')); // 0
 console.log(findLongestSubstring('rithmschool')); // 7
 console.log(findLongestSubstring('thisisawesome')); // 6
 console.log(findLongestSubstring('thecatinthehat')); // 7
 console.log(findLongestSubstring('bbbbbb')); // 1 
 console.log(findLongestSubstring('longestsubstring')); // 8
-console.log(findLongestSubstring('thisishowwedoit')); // 6
+console.log(findLongestSubstring('thisishowwedoit')); // 6 */
+
+// =======================================================================================================================
+// Count zeroes
+//
+// Find the number of zeroes in an array where the values are either 1 and then 0
+// You must execute this at the performance of O(log n)
+// Return the number of zeros
+// 
+// Time complexity: O(log n)
+// =======================================================================================================================
+const countZeroes = (numbers: number[]) : number => {
+
+    const numberOfZeroes = 0;
+    const max = numbers.length - 1;
+
+    // We'll iterate backwards since we know we
+    if (numbers.length === 0) {
+        return numberOfZeroes;
+    }
+
+    // If we have no 1's, just return the size
+    if (numbers[0] === 0) {
+        return numbers.length;
+    }
+
+    // Calculate the number of zeros and return them
+    for (let index = max; index >= 0; index--) {
+
+        const value = numbers[index];
+
+        if (value !== undefined && value === 1) {
+            const size = max - index;
+            return size;
+        }
+    }
+
+    return numberOfZeroes;
+};
+
+console.log("Divide and conquer:");
+console.log(countZeroes([1,1,1,1,0,0])); // 2 
+console.log(countZeroes([1,0,0,0,0])); // 4
+console.log(countZeroes([0,0,0])); // 3
+console.log(countZeroes([1,1,1,1])); // 0
