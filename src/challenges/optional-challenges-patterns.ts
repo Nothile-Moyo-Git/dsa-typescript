@@ -449,32 +449,45 @@ console.log(findLongestSubstring('thisishowwedoit')); // 6 */
 // You must execute this at the performance of O(log n)
 // Return the number of zeros
 // 
+// The trick is binary search
+//
 // Time complexity: O(log n)
 // =======================================================================================================================
 const countZeroes = (numbers: number[]) : number => {
 
-    const numberOfZeroes = 0;
-    const max = numbers.length - 1;
+    let numberOfZeroes = 0;
+    const size = numbers.length;
+    let high = size - 1;
+    let low = 0;
+    let mid = 0;
 
-    // We'll iterate backwards since we know we
+    // Execute a binary search by splitting it by log 2 in this case
     if (numbers.length === 0) {
-        return numberOfZeroes;
+        return 0;
     }
 
-    // If we have no 1's, just return the size
-    if (numbers[0] === 0) {
-        return numbers.length;
-    }
+    while (low < high) {
+        // Find the value at the center of the search for the plit
+        // You have to floor it, it works for highs but not lows + 1
+        mid = Math.floor((high + low) / 2);
+        const value = numbers[mid];
 
-    // Calculate the number of zeros and return them
-    for (let index = max; index >= 0; index--) {
+        // Split it based on the result 
+        if (value !== undefined) {
 
-        const value = numbers[index];
-
-        if (value !== undefined && value === 1) {
-            const size = max - index;
-            return size;
+            if (value === 0) {
+                high = mid;
+            }else{
+                // Allow low to reach the same position as high to end the loop
+                low = mid + 1;
+            }
         }
+    }
+
+    const left = numbers[low];
+
+    if (left !== undefined) {
+        numberOfZeroes = left === 0 ? size - low : 0;
     }
 
     return numberOfZeroes;
