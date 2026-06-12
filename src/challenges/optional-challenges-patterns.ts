@@ -453,7 +453,7 @@ console.log(findLongestSubstring('thisishowwedoit')); // 6 */
 //
 // Time complexity: O(log n)
 // =======================================================================================================================
-const countZeroes = (numbers: number[]) : number => {
+/* const countZeroes = (numbers: number[]) : number => {
 
     let numberOfZeroes = 0;
     const size = numbers.length;
@@ -491,10 +491,90 @@ const countZeroes = (numbers: number[]) : number => {
     }
 
     return numberOfZeroes;
-};
+}; */
 
 console.log("Divide and conquer:");
-console.log(countZeroes([1,1,1,1,0,0])); // 2 
+/* console.log(countZeroes([1,1,1,1,0,0])); // 2 
 console.log(countZeroes([1,0,0,0,0])); // 4
 console.log(countZeroes([0,0,0])); // 3
-console.log(countZeroes([1,1,1,1])); // 0
+console.log(countZeroes([1,1,1,1])); // 0 */
+
+
+const sortedFrequency = (numbers: number[], frequencyValue: number): number => {
+
+    // Check frequency and size
+    let frequency = 0;
+    const size = numbers.length - 1;
+
+    // Left position
+    let left = 0;
+    let lowLeft = 0;
+    let lowRight = size;
+
+    if (numbers.length === 0) {
+        return 0;
+    }
+
+    // Calculate the lowest value using divide and conquer, left side
+    while (lowLeft < lowRight) {
+        const mid = Math.floor((lowRight + lowLeft) / 2);
+        const value = numbers[mid];
+
+        console.log("Mid: ", mid);
+        console.log("Value: ", value);
+
+        if (value !== undefined) {
+            if (value >= frequencyValue) {
+                lowRight = mid;
+            } else {
+                // Make sure low can actually hit the mid number
+                lowLeft = mid + 1;
+            }
+        }
+
+        left = mid;
+    }
+
+    console.log("Left: ", left);
+    console.log("\n");
+
+    // Right position
+    let right = 0;
+    let highLeft = 0;
+    let highRight = size;
+
+    while (highLeft < highRight) {
+        const mid = Math.floor((highRight + highLeft) / 2);
+        const value = numbers[mid];
+
+        console.log("Mid: ", mid);
+        console.log("Value: ", value);
+
+        // Reverse the logic here as we're checking right hand side.
+        if (value !== undefined) {
+            if (value >= frequencyValue) {
+                highLeft = mid + 1;
+            } else {
+                // Make sure low can actually hit the mid number
+                highRight = mid;
+            }
+        }
+
+        right = mid;
+    }
+
+    // Calculate the highest value using divie and conquer, right side
+    console.log("Right: ", right);
+    console.log("\n");
+    console.log("============================================================================================================");
+
+    frequency = (right - left - 1);
+
+    return frequency;
+};
+
+console.log("Sorted Frequency: ");
+console.log(sortedFrequency([1,1,2,2,2,2,3],2)); // 4 
+/* console.log(sortedFrequency([1,1,2,2,2,2,3],3)); // 1 
+console.log(sortedFrequency([1,1,2,2,2,2,3],1)); // 2 
+console.log(sortedFrequency([1,1,2,2,2,2,3],4)); // -1 */
