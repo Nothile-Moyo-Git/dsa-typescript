@@ -504,7 +504,7 @@ const sortedFrequency = (numbers: number[], frequencyValue: number): number => {
 
     // Check frequency and size
     let frequency = 0;
-    const size = numbers.length - 1;
+    const size = numbers.length;
 
     // Left position
     let left = 0;
@@ -522,19 +522,23 @@ const sortedFrequency = (numbers: number[], frequencyValue: number): number => {
 
         console.log("Mid: ", mid);
         console.log("Value: ", value);
+        console.log("Low left: ", lowLeft);
+        console.log("Low right: ", lowRight);
 
         if (value !== undefined) {
-            if (value >= frequencyValue) {
-                lowRight = mid;
+            if (value < frequencyValue) {
+                lowLeft = mid + 1;
             } else {
                 // Make sure low can actually hit the mid number
-                lowLeft = mid + 1;
+                lowRight = mid;
             }
         }
 
         left = mid;
     }
 
+    console.log("Low left: ", lowLeft);
+    console.log("Low right: ", lowRight);
     console.log("Left: ", left);
     console.log("\n");
 
@@ -549,14 +553,16 @@ const sortedFrequency = (numbers: number[], frequencyValue: number): number => {
 
         console.log("Mid: ", mid);
         console.log("Value: ", value);
+        console.log("High left: ", highLeft);
+        console.log("High right: ", highRight);
 
         // Reverse the logic here as we're checking right hand side.
         if (value !== undefined) {
-            if (value >= frequencyValue) {
-                highLeft = mid + 1;
+            if (value > frequencyValue) {
+                highRight = mid;
             } else {
                 // Make sure low can actually hit the mid number
-                highRight = mid;
+                highLeft = mid + 1;
             }
         }
 
@@ -564,17 +570,20 @@ const sortedFrequency = (numbers: number[], frequencyValue: number): number => {
     }
 
     // Calculate the highest value using divie and conquer, right side
+    console.log("High left: ", highLeft);
+    console.log("High right: ", highRight);
     console.log("Right: ", right);
     console.log("\n");
-    console.log("============================================================================================================");
 
-    frequency = (right - left - 1);
+    frequency = (right - left);
+
+    console.log("============================================================================================================");
 
     return frequency;
 };
 
 console.log("Sorted Frequency: ");
-console.log(sortedFrequency([1,1,2,2,2,2,3],2)); // 4 
-/* console.log(sortedFrequency([1,1,2,2,2,2,3],3)); // 1 
+/* console.log(sortedFrequency([1,1,2,2,2,2,3],2)); // 4 */
+console.log(sortedFrequency([1,1,2,2,2,2,3],3)); // 1
 console.log(sortedFrequency([1,1,2,2,2,2,3],1)); // 2 
-console.log(sortedFrequency([1,1,2,2,2,2,3],4)); // -1 */
+/* console.log(sortedFrequency([1,1,2,2,2,2,3],4)); // -1 */
