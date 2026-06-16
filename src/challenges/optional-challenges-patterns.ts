@@ -510,7 +510,7 @@ console.log(countZeroes([1,1,1,1])); // 0 */
 // 
 // Time complexity: O(log n)
 // =======================================================================================================================
-const sortedFrequency = (numbers: number[], frequencyValue: number): number => {
+/* const sortedFrequency = (numbers: number[], frequencyValue: number): number => {
 
     // Check frequency and size
     let frequency = 0;
@@ -564,17 +564,25 @@ const sortedFrequency = (numbers: number[], frequencyValue: number): number => {
         right = highLeft;
     }
 
-    console.log("Low: ", lowLeft);
-    console.log("High: ", highLeft);
-    console.log("\n");
-
     frequency = (right - left);
 
     return frequency === 0 ? -1 : frequency;
+}; */
+
+const findRotatedIndex = (numbers: number[], check: number): number => {
+
+    if (numbers.length === 0) {
+        return -1;
+    }
+
+    return -1;
 };
 
 console.log("Sorted Frequency: ");
-console.log(sortedFrequency([1,1,2,2,2,2,3],2)); // 4 
+/* console.log(sortedFrequency([1,1,2,2,2,2,3],2)); // 4 
 console.log(sortedFrequency([1,1,2,2,2,2,3],3)); // 1
 console.log(sortedFrequency([1,1,2,2,2,2,3],1)); // 2 
-console.log(sortedFrequency([1,1,2,2,2,2,3],4)); // -1
+console.log(sortedFrequency([1,1,2,2,2,2,3],4)); // -1 */
+
+console.log("Find Rotated Index: ");
+console.log(findRotatedIndex([3,4,1,2],4));
