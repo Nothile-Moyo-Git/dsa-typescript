@@ -575,6 +575,41 @@ const findRotatedIndex = (numbers: number[], check: number): number => {
         return -1;
     }
 
+    const size = numbers.length;
+    let left = 0;
+    let right = size;
+
+    // Handle the left side, return if we have the value at a certain position
+    while (left < right) {
+
+        let mid = Math.floor((right + left) / 2);
+
+        const value = numbers[mid];
+        console.log("Mid: ", mid);
+        console.log("Left: ", left);
+        console.log("Right: ", right);
+        console.log("Value: ", value);
+        console.log("Check: ", check);
+        console.log("\n");
+
+        if (value !== undefined) {
+
+            if (value === check) {
+                return mid;
+            }
+
+            if (value < check) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+    }
+
+    while (right ) {
+
+    }
+
     return -1;
 };
 
@@ -583,6 +618,12 @@ console.log("Sorted Frequency: ");
 console.log(sortedFrequency([1,1,2,2,2,2,3],3)); // 1
 console.log(sortedFrequency([1,1,2,2,2,2,3],1)); // 2 
 console.log(sortedFrequency([1,1,2,2,2,2,3],4)); // -1 */
+ 
 
 console.log("Find Rotated Index: ");
-console.log(findRotatedIndex([3,4,1,2],4));
+/* console.log(findRotatedIndex([3,4,1,2],4)); // 1
+console.log(findRotatedIndex([6, 7, 8, 9, 1, 2, 3, 4], 8)); // 2 */
+console.log(findRotatedIndex([6, 7, 8, 9, 1, 2, 3, 4], 3)); // 6
+/* console.log(findRotatedIndex([37,44,66,102,10,22],14)); // -1
+console.log(findRotatedIndex([6, 7, 8, 9, 1, 2, 3, 4], 12)); // -1
+console.log(findRotatedIndex([11,12,13,14,15,16,3,5,7,9], 16)); // 5 */
