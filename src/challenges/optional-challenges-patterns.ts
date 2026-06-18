@@ -569,6 +569,18 @@ console.log(countZeroes([1,1,1,1])); // 0 */
     return frequency === 0 ? -1 : frequency;
 }; */
 
+// =======================================================================================================================
+// findRotatedIndex
+//
+// Find the size of a subarray from the main array that houses a certain number
+// The trick is binary search bounded 
+// 
+// The lower bound is the size of the array until it hits the value pased by the parameters
+// The upper bound is the final value
+// This works for a sorted array, but isn't the final solution to this problem, but for now it works great 
+// 
+// Time complexity: O(log n)
+// =======================================================================================================================
 const findRotatedIndex = (numbers: number[], check: number): number => {
 
     if (numbers.length === 0) {
@@ -576,21 +588,17 @@ const findRotatedIndex = (numbers: number[], check: number): number => {
     }
 
     const size = numbers.length;
+ 
     let left = 0;
     let right = size;
+    let mid = Math.floor((right + left) / 2);
 
     // Handle the left side, return if we have the value at a certain position
     while (left < right) {
 
-        let mid = Math.floor((right + left) / 2);
+        mid = Math.floor((right + left) / 2);
 
         const value = numbers[mid];
-        console.log("Mid: ", mid);
-        console.log("Left: ", left);
-        console.log("Right: ", right);
-        console.log("Value: ", value);
-        console.log("Check: ", check);
-        console.log("\n");
 
         if (value !== undefined) {
 
@@ -601,15 +609,39 @@ const findRotatedIndex = (numbers: number[], check: number): number => {
             if (value < check) {
                 right = mid;
             } else {
+                // Ensure that left and right can eventually meet and exit the loop, otherwise it runs infinite
                 left = mid + 1;
             }
         }
     }
 
-    while (right ) {
+    // Reset the left and right values
+    left = 0;
+    right = size;
 
+    // Move across the right side of the array
+    while (left < right) {
+
+        mid = Math.floor((right + left) / 2);
+        const value = numbers[mid];
+
+        if (value !== undefined) {
+
+            // if we find the value, return
+            if (value === check) {
+                return mid;
+            }
+
+            if (value > check) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+
+        }
     }
 
+    // If we never found the position, return -1
     return -1;
 };
 
@@ -618,12 +650,12 @@ console.log("Sorted Frequency: ");
 console.log(sortedFrequency([1,1,2,2,2,2,3],3)); // 1
 console.log(sortedFrequency([1,1,2,2,2,2,3],1)); // 2 
 console.log(sortedFrequency([1,1,2,2,2,2,3],4)); // -1 */
- 
+  
 
 console.log("Find Rotated Index: ");
 /* console.log(findRotatedIndex([3,4,1,2],4)); // 1
-console.log(findRotatedIndex([6, 7, 8, 9, 1, 2, 3, 4], 8)); // 2 */
+console.log(findRotatedIndex([6, 7, 8, 9, 1, 2, 3, 4], 8)); // 2 
 console.log(findRotatedIndex([6, 7, 8, 9, 1, 2, 3, 4], 3)); // 6
-/* console.log(findRotatedIndex([37,44,66,102,10,22],14)); // -1
+console.log(findRotatedIndex([37,44,66,102,10,22],14)); // -1
 console.log(findRotatedIndex([6, 7, 8, 9, 1, 2, 3, 4], 12)); // -1
 console.log(findRotatedIndex([11,12,13,14,15,16,3,5,7,9], 16)); // 5 */
