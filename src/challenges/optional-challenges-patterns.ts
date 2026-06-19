@@ -637,7 +637,6 @@ const findRotatedIndex = (numbers: number[], check: number): number => {
             } else {
                 left = mid + 1;
             }
-
         }
     }
 
