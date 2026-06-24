@@ -44,11 +44,11 @@ const sumRange = (num: number) : number => {
     return num + sumRange(num - 1); 
 };
 
-console.log("Sum range: ");
+/* console.log("Sum range: ");
 console.log("For a value of 1: ", sumRange(1));
 console.log("For a value of 2: ", sumRange(2));
 console.log("For a value of 3: ", sumRange(3));
-console.log("For a value of 4: ", sumRange(4));
+console.log("For a value of 4: ", sumRange(4)); */
 
 // =======================================================================================================================
 // Recursion helper function which wraps functionality
@@ -78,3 +78,69 @@ const helper = (input: number[]) => {
 //
 // Time complexity: O(n)
 // =======================================================================================================================
+const collectOddValues = (array: number[]): number[] => {
+
+  const result: number[] = [];
+
+  // Recursive function
+  const helper = (input: number[]) => {
+
+    // Return if the array is empty
+    if (input.length === 0) {
+      return;
+    }
+
+    // 
+    const value = input[0];
+    if (value !== undefined && value % 2 !== 0) {
+      result.push(value);
+    }
+
+    // Run the recusion
+    helper(input.slice(1));
+  };
+
+  helper(array);
+
+  return result;
+};
+/* console.log("Collect odd values: ");
+console.log("For a value of [1,2,3,4,5]: ", collectOddValues([1,2,3,4,5]));
+console.log("For a value of [1,2,3,4,5,6,7,8,9]: ", collectOddValues([1,2,3,4,5,6,7,8,9]));
+console.log("For a value of [3,3,3,3]: ", collectOddValues([3,3,3,3]));
+console.log("For a value of [4,4,4,4]: ", collectOddValues([4,4,4,4]));
+console.log("For a value of []", collectOddValues([])); */
+
+// =======================================================================================================================
+// collectOddValues
+//
+// Counts down values until it hits 1, then returns the sum
+// It adds the value to each number it reduces as it moves towards to the sum
+//
+// This version is pure recursion
+//
+// Time complexity: O(n)
+// =======================================================================================================================
+const collectOddValuesPure = (array: number[]): number[] => {
+
+  let result = [];
+
+  if (array.length === 0) {
+    return array;
+  }
+
+  const value = array[0];
+  if (value !== undefined) {
+    result.push(value);
+  }
+
+  result = result.concat(collectOddValues(array.slice(1)));
+
+  return result;
+};
+console.log("Collect odd values: ");
+console.log("For a value of [1,2,3,4,5]: ", collectOddValuesPure([1,2,3,4,5]));
+console.log("For a value of [1,2,3,4,5,6,7,8,9]: ", collectOddValuesPure([1,2,3,4,5,6,7,8,9]));
+console.log("For a value of [3,3,3,3]: ", collectOddValuesPure([3,3,3,3]));
+console.log("For a value of [4,4,4,4]: ", collectOddValuesPure([4,4,4,4]));
+console.log("For a value of []", collectOddValuesPure([]));
