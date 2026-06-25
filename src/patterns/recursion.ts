@@ -25,11 +25,11 @@ const factorial = (num: number): number => {
   return total;
 };
 
-console.log("Factorial: ");
+/* console.log("Factorial: ");
 console.log("For a value of 1: ", factorial(1));
 console.log("For a value of 2: ", factorial(2));
 console.log("For a value of 3: ", factorial(3));
-console.log("For a value of 4: ", factorial(4));
+console.log("For a value of 4: ", factorial(4)); */
 
 // =======================================================================================================================
 // sumRange
@@ -121,7 +121,7 @@ console.log("For a value of []", collectOddValues([])); */
 //
 // Time complexity: O(n)
 // =======================================================================================================================
-const collectOddValuesPure = (array: number[]): number[] => {
+/* const collectOddValuesPure = (array: number[]): number[] => {
 
   let result = [];
 
@@ -143,4 +143,46 @@ console.log("For a value of [1,2,3,4,5]: ", collectOddValuesPure([1,2,3,4,5]));
 console.log("For a value of [1,2,3,4,5,6,7,8,9]: ", collectOddValuesPure([1,2,3,4,5,6,7,8,9]));
 console.log("For a value of [3,3,3,3]: ", collectOddValuesPure([3,3,3,3]));
 console.log("For a value of [4,4,4,4]: ", collectOddValuesPure([4,4,4,4]));
-console.log("For a value of []", collectOddValuesPure([]));
+console.log("For a value of []", collectOddValuesPure([])); */
+
+// =======================================================================================================================
+// power
+//
+// Create a function that multiples a power by its own exponential based on n times
+// Math.pow isn't allowed to be used here
+//
+// Time complexity: O(n)
+// =======================================================================================================================
+const power = (value: number, exponential:number): number => {
+
+  if (exponential === 0) {
+    return 1;
+  }
+
+  // Implement the first power
+  let result = value;
+
+  // Handles recursion here as need to keep each value throughout the iterations outside the parameters of the function
+  const helper = (base: number, currentExponential: number) => {
+
+    if (currentExponential === 0) {
+      return;
+    }
+
+    // Square the numbers in our helper method
+    result *= value;
+
+    // Recursively call the function, we do this because we can't store the result in the parameters
+    helper(result, currentExponential - 1);
+  }
+
+  helper(value, exponential);
+
+  return result;
+
+};
+
+console.log("Power: ");
+console.log("Power of 0: ", power(2, 0)); // 1
+console.log("Power of 2: ", power(2, 2)); // 8
+console.log("Power of 4: ", power(2, 4)); // 32
