@@ -153,7 +153,7 @@ console.log("For a value of []", collectOddValuesPure([])); */
 //
 // Time complexity: O(n)
 // =======================================================================================================================
-const power = (value: number, exponential:number): number => {
+/* const power = (value: number, exponential:number): number => {
 
   if (exponential === 0) {
     return 1;
@@ -185,4 +185,25 @@ const power = (value: number, exponential:number): number => {
 console.log("Power: ");
 console.log("Power of 0: ", power(2, 0)); // 1
 console.log("Power of 2: ", power(2, 2)); // 8
-console.log("Power of 4: ", power(2, 4)); // 32
+console.log("Power of 4: ", power(2, 4)); // 32 */
+
+const power = (value: number, exponential: number): number => {
+
+  if (exponential === 0) {
+    return 1;
+  }
+
+  let base = value;
+
+  // Call the power recursively, we need a base case
+  if (exponential > 1) {
+    base *= power(value, exponential - 1);
+  }
+
+  return base;
+};
+
+console.log("Power: ");
+// console.log("Power of 0: ", power(2, 0)); // 1
+console.log("Power of 2: ", power(2, 2)); // 4
+console.log("Power of 4: ", power(2, 4)); // 16 */
