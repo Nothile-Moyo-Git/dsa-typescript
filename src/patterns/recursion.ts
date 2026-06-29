@@ -187,7 +187,15 @@ console.log("Power of 0: ", power(2, 0)); // 1
 console.log("Power of 2: ", power(2, 2)); // 8
 console.log("Power of 4: ", power(2, 4)); // 32 */
 
-const power = (value: number, exponential: number): number => {
+// =======================================================================================================================
+// power
+//
+// Create a function that multiples a power by its own exponential based on n times
+// Math.pow isn't allowed to be used here
+//
+// Time complexity: O(n)
+// =======================================================================================================================
+/* const power = (value: number, exponential: number): number => {
 
   if (exponential === 0) {
     return 1;
@@ -201,9 +209,32 @@ const power = (value: number, exponential: number): number => {
   }
 
   return base;
-};
+}; */
 
-console.log("Power: ");
+/*  console.log("Power: ");
 // console.log("Power of 0: ", power(2, 0)); // 1
 console.log("Power of 2: ", power(2, 2)); // 4
 console.log("Power of 4: ", power(2, 4)); // 16 */
+
+// =======================================================================================================================
+// factorial
+//
+// Create a function that collects the sum of values in a factorial way
+// It's the values multiplied by each other, not sums
+//
+// Time complexity: O(n)
+// =======================================================================================================================
+/* const factorialChallenge = (value: number): number => {
+
+  // This is our base case, end the factorial here
+  if (value === 0) {
+    return 1;
+  }
+
+  // We return the value + the value - 1 until we 
+  return value * factorialChallenge(value - 1);
+};
+
+console.log("Factorial: ");
+console.log("Factorial 4: ", factorialChallenge(4)); // 24
+console.log("Factorial 5: ", factorialChallenge(5)); // 120 */
