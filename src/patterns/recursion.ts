@@ -58,7 +58,7 @@ console.log("For a value of 4: ", sumRange(4)); */
 //
 // Time complexity: O(log n)
 // =======================================================================================================================
-const helper = (input: number[]) => {
+/* const helper = (input: number[]) => {
   if (input.length === 0) {
     return;
   }
@@ -68,7 +68,7 @@ const helper = (input: number[]) => {
     // handle request
     helper(input.slice(1));
   }
-};
+}; */
 
 // =======================================================================================================================
 // collectOddValues
@@ -78,7 +78,7 @@ const helper = (input: number[]) => {
 //
 // Time complexity: O(n)
 // =======================================================================================================================
-const collectOddValues = (array: number[]): number[] => {
+/* const collectOddValues = (array: number[]): number[] => {
 
   const result: number[] = [];
 
@@ -103,7 +103,7 @@ const collectOddValues = (array: number[]): number[] => {
   helper(array);
 
   return result;
-};
+}; */
 /* console.log("Collect odd values: ");
 console.log("For a value of [1,2,3,4,5]: ", collectOddValues([1,2,3,4,5]));
 console.log("For a value of [1,2,3,4,5,6,7,8,9]: ", collectOddValues([1,2,3,4,5,6,7,8,9]));
@@ -238,3 +238,31 @@ console.log("Power of 4: ", power(2, 4)); // 16 */
 console.log("Factorial: ");
 console.log("Factorial 4: ", factorialChallenge(4)); // 24
 console.log("Factorial 5: ", factorialChallenge(5)); // 120 */
+
+// =======================================================================================================================
+// productOfArray
+//
+// Get the product of an array which means that each value must be multiplied by the next value
+//
+// Time complexity: O(n)
+// =======================================================================================================================
+/* const productOfArray = (values: number[]): number => {
+
+  if (values.length === 0) {
+    return 1;
+  }
+
+  // Get the initial value and take away the first value from the array
+  const value = values[0];
+  const trimmed = values.slice(1);
+
+  // Take the first value from the array and multiply it the value returned
+  if (trimmed !== undefined && value !== undefined) {
+    return value * productOfArray(trimmed);
+  }
+
+  return 0;
+};
+console.log("productOfArray: ");
+console.log("[1, 2, 3]: ", productOfArray([1, 2, 3]));
+console.log("[1, 2, 3, 10]: ", productOfArray([1, 2, 3, 10])); */
