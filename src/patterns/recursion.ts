@@ -266,3 +266,38 @@ console.log("Factorial 5: ", factorialChallenge(5)); // 120 */
 console.log("productOfArray: ");
 console.log("[1, 2, 3]: ", productOfArray([1, 2, 3]));
 console.log("[1, 2, 3, 10]: ", productOfArray([1, 2, 3, 10])); */
+
+// =======================================================================================================================
+// recursiveRange
+//
+// Get the product of an array which means that each value must be multiplied by the next value
+//
+// Time complexity: O(n)
+// =======================================================================================================================
+/* const recursiveRange = (value: number): number => {
+
+  // Base case, return 0 if 0#
+  if (value === 0) {
+    return 0;
+  }
+
+  return value + recursiveRange(value - 1);
+};
+console.log("Recursive range: ");
+console.log("RecursiveRange 6: ", recursiveRange(6)); // 21
+console.log("RecursiveRange 10: ", recursiveRange(10)); // 55 */
+
+// =======================================================================================================================
+// fib
+//
+// Accept a value and then return the fibonnaci value for that number
+// The fibonacci sequence is a sequence of whole numbers where the next number is the sum of two numbers before it
+//
+// Time complexity: O(n)
+// =======================================================================================================================
+const fib = (value: number): number => {
+
+  
+
+  return 0;
+}
