@@ -293,11 +293,25 @@ console.log("RecursiveRange 10: ", recursiveRange(10)); // 55 */
 // Accept a value and then return the fibonnaci value for that number
 // The fibonacci sequence is a sequence of whole numbers where the next number is the sum of two numbers before it
 //
+// Best way to remember is to use the mathematical formula in order to calculate it
+//
 // Time complexity: O(n)
 // =======================================================================================================================
-const fib = (value: number): number => {
+/* const fib = (value: number): number => {
 
-  
+  if (value <= 1) {
 
-  return 0;
+    // Base case to end the recursion, don't go into negative values as we start with 1
+    return value;
+  } else {
+
+    // Fib is n -1 + n - 2 since it's the addition of the two previous numbers to create the new one
+    return fib(value - 1) + fib(value - 2);
+  }
+
 }
+console.log("Fibonacci: ");
+console.log("Fib (4): ", fib(4)); // 3
+console.log("Fib (10): ", fib(10)); // 55
+console.log("Fib (28): ", fib(28)); // 317811
+console.log("Fib (35): ", fib(35)); // 9227465 */
