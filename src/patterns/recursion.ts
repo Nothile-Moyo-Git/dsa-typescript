@@ -15,7 +15,7 @@
 //
 // Time complexity: O(log n)
 // =======================================================================================================================
-const factorial = (num: number): number => {
+/* const factorial = (num: number): number => {
 
   let total = 1;
   for (let i = num; i > 1; i--) {
@@ -23,7 +23,7 @@ const factorial = (num: number): number => {
   }
 
   return total;
-};
+}; */
 
 /* console.log("Factorial: ");
 console.log("For a value of 1: ", factorial(1));
@@ -39,10 +39,10 @@ console.log("For a value of 4: ", factorial(4)); */
 //
 // Time complexity: O(log n)
 // =======================================================================================================================
-const sumRange = (num: number) : number => {
+/* const sumRange = (num: number) : number => {
     if (num === 1) return 1;
     return num + sumRange(num - 1); 
-};
+}; */
 
 /* console.log("Sum range: ");
 console.log("For a value of 1: ", sumRange(1));
@@ -315,3 +315,43 @@ console.log("Fib (4): ", fib(4)); // 3
 console.log("Fib (10): ", fib(10)); // 55
 console.log("Fib (28): ", fib(28)); // 317811
 console.log("Fib (35): ", fib(35)); // 9227465 */
+
+// =======================================================================================================================
+// reverse
+//
+// Take a string and return the reverse of that string, we do this with one parameter
+//
+// Time complexity: O(n)
+// =======================================================================================================================
+const reserve = (word: string) => {
+
+  let newString: string = "";
+
+  const helper = (reverseWord: string): string => {
+    const size = reverseWord.length;
+
+    if (size === 0) {
+      return "";
+    }
+
+    const char = reverseWord[0];
+
+    console.log("Size: ", size);
+    console.log("Char: ", char);
+    console.log("ReverseWord: ", reverseWord);
+    console.log("New String: ", newString);
+
+    if (char !== undefined) {
+      console.log("Called");
+      return newString.concat(char) + helper(reverseWord.slice(1));
+    }
+
+    return "";
+  }
+
+  console.log("Helper: ", helper(word));
+  console.log("New string: ", newString);
+}
+
+console.log("Reverse: ");
+console.log("Awesome: ", reserve("awesome"));
