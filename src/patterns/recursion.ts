@@ -323,35 +323,26 @@ console.log("Fib (35): ", fib(35)); // 9227465 */
 //
 // Time complexity: O(n)
 // =======================================================================================================================
-const reserve = (word: string) => {
+/* const reverse = (word: string): string => {
 
-  let newString: string = "";
+  const size = word.length;
 
-  const helper = (reverseWord: string): string => {
-    const size = reverseWord.length;
-
-    if (size === 0) {
-      return "";
-    }
-
-    const char = reverseWord[0];
-
-    console.log("Size: ", size);
-    console.log("Char: ", char);
-    console.log("ReverseWord: ", reverseWord);
-    console.log("New String: ", newString);
-
-    if (char !== undefined) {
-      console.log("Called");
-      return newString.concat(char) + helper(reverseWord.slice(1));
-    }
-
+  if (size === 0) {
     return "";
   }
+      
+  // Generate our empty string we'll add the final value to.
+  const finalChar = word[size - 1];
 
-  console.log("Helper: ", helper(word));
-  console.log("New string: ", newString);
+  if (finalChar !== undefined) {
+
+    // Handles both of word concatenation and calls the function
+    return finalChar + reverse(word.slice(0, size - 1));
+  }
+
+  return "";
 }
 
 console.log("Reverse: ");
-console.log("Awesome: ", reserve("awesome"));
+console.log("Awesome: ", reverse("awesome")); // 'emosewa'
+console.log("rithmschool: ", reverse("rithmschool")); // 'loohcsmhtir' */
