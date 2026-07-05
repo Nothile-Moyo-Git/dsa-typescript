@@ -346,3 +346,46 @@ console.log("Fib (35): ", fib(35)); // 9227465 */
 console.log("Reverse: ");
 console.log("Awesome: ", reverse("awesome")); // 'emosewa'
 console.log("rithmschool: ", reverse("rithmschool")); // 'loohcsmhtir' */
+
+// =======================================================================================================================
+// isPalondrome
+//
+// Take a string and determine if it is a palindrome by reducing the array size
+// We use a pincer method to approach this
+//
+// Time complexity: O(n)
+// =======================================================================================================================
+const isPalindrome = (word: string): boolean => {
+  const size = word.length;
+
+  // If we run out of chars to compare, exit here with true as the base case
+  if (size <= 1) {
+    return true;
+  }
+
+  const left = word[0];
+  const right = word[size - 1];
+
+  if (left !== undefined && right !== undefined) {
+
+    // If the letters are different, return a false as it's not a palindrome
+    if (left.toLowerCase() !== right.toLowerCase()) {
+
+      // If the letters aren't the same, end the recursion, this is the base case
+      return false;
+    } else{
+      // Remove from both sides so we're checking the final letters equally
+      isPalindrome(word.slice(1, size - 1))
+    }
+  }
+
+  return true;
+};
+
+console.log("isPalindrome: ");
+console.log("racecar: ", isPalindrome("racecar")); // true
+console.log("awesome: ", isPalindrome('awesome')); // false
+console.log("foobar: ", isPalindrome('foobar')); // false
+console.log("tacocat: ", isPalindrome('tacocat')); // true
+console.log("amanaplanacanalpanama: ", isPalindrome('amanaplanacanalpanama')); // true
+console.log(isPalindrome('amanaplanacanalpandemonium')); // false
