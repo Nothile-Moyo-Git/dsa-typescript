@@ -355,7 +355,7 @@ console.log("rithmschool: ", reverse("rithmschool")); // 'loohcsmhtir' */
 //
 // Time complexity: O(n)
 // =======================================================================================================================
-const isPalindrome = (word: string): boolean => {
+/* const isPalindrome = (word: string): boolean => {
   const size = word.length;
 
   // If we run out of chars to compare, exit here with true as the base case
@@ -388,4 +388,46 @@ console.log("awesome: ", isPalindrome('awesome')); // false
 console.log("foobar: ", isPalindrome('foobar')); // false
 console.log("tacocat: ", isPalindrome('tacocat')); // true
 console.log("amanaplanacanalpanama: ", isPalindrome('amanaplanacanalpanama')); // true
-console.log(isPalindrome('amanaplanacanalpandemonium')); // false
+console.log("amanaplanacanalpandemonium: ", isPalindrome('amanaplanacanalpandemonium')); // false */
+
+// =======================================================================================================================
+// someRecursive
+//
+// A function that accepts an array and a callback which returns true if a case is met
+// It iterates through the array and has a case for each value in the array
+// =======================================================================================================================
+// Initial callback to pass through
+type recursion = {
+  callback: (value: number) => boolean;
+};
+
+// 
+const isOdd = (value: number): boolean => value % 2 !== 0;
+
+const someRecursive = (values: number[], callback: recursion['callback']): boolean => {
+
+  const size = values.length;
+
+  // Return false as a base case
+  if (size === 0) {
+    return false; 
+  }
+
+  const firstValue = values[0];
+  if (firstValue !== undefined) {
+
+    // Calculate if the result isOdd, if it is, return true
+    const result = isOdd(firstValue);
+
+    if (result === true) {
+      return true;
+    }
+
+    // Call the function recursively until the size is empty
+    someRecursive(values.slice(1, size), isOdd);
+  }
+
+  return false;
+};
+
+console.log("someRecursive [1,2,3,4]: ", someRecursive([1,2,3,4], isOdd));
