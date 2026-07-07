@@ -401,12 +401,14 @@ type recursion = {
   callback: (value: number) => boolean;
 };
 
-// 
+// Checks the modular result of the value
 const isOdd = (value: number): boolean => value % 2 !== 0;
 
+// Function to handle a recursive callback helper function
 const someRecursive = (values: number[], callback: recursion['callback']): boolean => {
 
   const size = values.length;
+  let result = false;
 
   // Return false as a base case
   if (size === 0) {
@@ -417,17 +419,22 @@ const someRecursive = (values: number[], callback: recursion['callback']): boole
   if (firstValue !== undefined) {
 
     // Calculate if the result isOdd, if it is, return true
-    const result = isOdd(firstValue);
+    result = callback(firstValue);
 
     if (result === true) {
       return true;
+    } else {
+      // Call the function recursively until the size is empty, return the result of the function call instead of returning the default which would be false
+      // If you want a value returned that isn't the default, return the function itself
+      return someRecursive(values.slice(1, size), callback);
     }
 
-    // Call the function recursively until the size is empty
-    someRecursive(values.slice(1, size), isOdd);
   }
 
   return false;
 };
 
-console.log("someRecursive [1,2,3,4]: ", someRecursive([1,2,3,4], isOdd));
+console.log("someRecursive [1,2,3,4]: ", someRecursive([1,2,3,4], isOdd), "\n"); // true
+console.log("someRecursive [4,6,8,9]: ", someRecursive([4,6,8,9], isOdd), "\n"); // true
+console.log("someRecursive [4,6,8]: ", someRecursive([4,6,8], isOdd), "\n"); // false
+console.log("someRecursive [4,6,8]:", someRecursive([4,6,8], val => val > 10)); // false
