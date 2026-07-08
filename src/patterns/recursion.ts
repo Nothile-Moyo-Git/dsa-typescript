@@ -397,7 +397,7 @@ console.log("amanaplanacanalpandemonium: ", isPalindrome('amanaplanacanalpandemo
 // It iterates through the array and has a case for each value in the array
 // =======================================================================================================================
 // Initial callback to pass through
-type recursion = {
+/* type recursion = {
   callback: (value: number) => boolean;
 };
 
@@ -437,4 +437,22 @@ const someRecursive = (values: number[], callback: recursion['callback']): boole
 console.log("someRecursive [1,2,3,4]: ", someRecursive([1,2,3,4], isOdd), "\n"); // true
 console.log("someRecursive [4,6,8,9]: ", someRecursive([4,6,8,9], isOdd), "\n"); // true
 console.log("someRecursive [4,6,8]: ", someRecursive([4,6,8], isOdd), "\n"); // false
-console.log("someRecursive [4,6,8]:", someRecursive([4,6,8], val => val > 10)); // false
+console.log("someRecursive [4,6,8]:", someRecursive([4,6,8], val => val > 10)); // false */
+
+// =======================================================================================================================
+// flatten
+//
+// Take an array and flatten the numbers so it turns into a single array
+// =======================================================================================================================
+type NestedArray<T> = (T | NestedArray<T>)[];
+
+const flatten = (values: NestedArray<number>): number[] => {
+
+  console.log("Values: ");
+  console.log(values);
+  console.log("\n\n");
+
+  return [];
+};
+
+console.log("Flatten [1, 2, 3, [4, 5] ]: ", flatten([1,2,3,[4,5]]));
