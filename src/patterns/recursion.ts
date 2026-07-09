@@ -446,10 +446,30 @@ console.log("someRecursive [4,6,8]:", someRecursive([4,6,8], val => val > 10)); 
 // =======================================================================================================================
 type NestedArray<T> = (T | NestedArray<T>)[];
 
-const flatten = (values: NestedArray<number>): number[] => {
+const flatten = (values: NestedArray<number>): NestedArray<number> => {
 
   console.log("Values: ");
   console.log(values);
+
+  const size = values.length;
+  const value = values[0];
+  const valueType = typeof(value);
+
+  let outcome: NestedArray<number> = [];
+
+  console.log("Outcome: ", outcome, "\n");
+
+  if (valueType === 'object') {
+    console.log("Value: ", value);
+  }
+   
+  if (value !== undefined && typeof(value) === 'number') {
+
+    outcome.push(value);
+    return outcome.concat(flatten(values.slice(1, size)));
+  }
+
+
   console.log("\n\n");
 
   return [];
