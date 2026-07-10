@@ -444,35 +444,39 @@ console.log("someRecursive [4,6,8]:", someRecursive([4,6,8], val => val > 10)); 
 //
 // Take an array and flatten the numbers so it turns into a single array
 // =======================================================================================================================
-type NestedArray<T> = (T | NestedArray<T>)[];
+/* type NestedArray<T> = (T | NestedArray<T>)[];
 
 const flatten = (values: NestedArray<number>): NestedArray<number> => {
 
-  console.log("Values: ");
-  console.log(values);
-
+  // Declarations
   const size = values.length;
   const value = values[0];
-  const valueType = typeof(value);
+  const remainder = values.slice(1, size);
 
+  // Array to track our values so we can make a new array
   let outcome: NestedArray<number> = [];
 
-  console.log("Outcome: ", outcome, "\n");
+  if (value !== undefined && typeof(value) === 'object') {
 
-  if (valueType === 'object') {
-    console.log("Value: ", value);
+    // Deconstruct the value and remainder objects
+    return outcome.concat(flatten([...value, ...remainder]));
   }
    
   if (value !== undefined && typeof(value) === 'number') {
 
+    // Push the initial value into the new array, we cannot chain a push and a concat so we handle them separately
+    // Add the result returned from flatten into the array we're forming here
     outcome.push(value);
+
+    // The concat here is so that we can 
     return outcome.concat(flatten(values.slice(1, size)));
   }
-
-
-  console.log("\n\n");
 
   return [];
 };
 
+console.log("Flatten: ");
 console.log("Flatten [1, 2, 3, [4, 5] ]: ", flatten([1,2,3,[4,5]]));
+console.log("flatten([1, [2, [3, 4], [[5]]]]): ", flatten([1, [2, [3, 4], [[5]]]]));
+console.log("flatten([[1],[2],[3]]): ", flatten([[1],[2],[3]]));
+console.log("flatten([[[[1], [[[2]]], [[[[[[[3]]]]]]]]]]): ", flatten([[[[1], [[[2]]], [[[[[[[3]]]]]]]]]])); */
