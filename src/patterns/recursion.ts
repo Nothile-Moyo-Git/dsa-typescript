@@ -480,3 +480,52 @@ console.log("Flatten [1, 2, 3, [4, 5] ]: ", flatten([1,2,3,[4,5]]));
 console.log("flatten([1, [2, [3, 4], [[5]]]]): ", flatten([1, [2, [3, 4], [[5]]]]));
 console.log("flatten([[1],[2],[3]]): ", flatten([[1],[2],[3]]));
 console.log("flatten([[[[1], [[[2]]], [[[[[[[3]]]]]]]]]]): ", flatten([[[[1], [[[2]]], [[[[[[[3]]]]]]]]]])); */
+
+// =======================================================================================================================
+// capitalizeFirst
+//
+// Take an array of different strings and capitalize the first letter
+// To do this, we should create a new array from the old aray with uppercase letters
+// =======================================================================================================================
+const capitalizeFirst = (values: string[]): string[] => {
+
+  // Get the initial size to be used for values later
+  const outcome: string[] = [];
+  const size = values.length;
+
+  if (size === 0) {
+    return [];
+  }
+
+  // Create function to uppercase the first letter from a string
+  const uppercaseFirstCharacter = (chars: string) => {
+
+    // Get first character to uppercase.
+    const char = chars[0];
+    const remainder = chars.slice(1, chars.length);
+    let result = "";
+
+    if (char !== undefined && remainder !== undefined) {
+      result = `${char.toUpperCase()}${remainder}`;
+    }
+
+    return result;
+  }
+
+  // Get the first word, we'll uppercase the first letter then return it
+  const word = values[0];
+
+  if (word !== undefined) {
+
+    const uppercase = uppercaseFirstCharacter(word);
+    outcome.push(uppercase);
+    return outcome.concat(capitalizeFirst(values.slice(1, size)));
+
+  }
+
+  return [];
+};
+
+console.log("capitalizeFirst");
+console.log("capitalizeFirst(['car','taco','banana']): ", capitalizeFirst(['car','taco','banana']));
+// capitalizeFirst(['car','taco','banana']); // ['Car','Taco','Banana']
