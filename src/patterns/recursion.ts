@@ -539,13 +539,24 @@ type NestedObject = {
   [key: string] : string | boolean | number | NestedObject
 };
 
+const isEven = (value: number): boolean => value % 2 === 0;
+
 const nestedEvenSum = (nest: NestedObject): number => {
 
   // Get initial details
   if (nest !== undefined && typeof(nest) === 'object') {
-    const objectToArray = nest.keys();
-    console.log("Nest: ", nest);
-    console.log("Type: ", typeof(nest));
+
+    // Iterate through our object
+    for (let value in nest) {
+
+      if (typeof(value) === 'number') {
+        
+      }
+
+      console.log("Value: ", value);
+      // console.log("Nest: ", nest);
+      console.log("Type: ", typeof(nest));
+    }
   }
 
   return 0;
