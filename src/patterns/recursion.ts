@@ -543,19 +543,35 @@ const isEven = (value: number): boolean => value % 2 === 0;
 
 const nestedEvenSum = (nest: NestedObject): number => {
 
+  let evenCount = 0;
+
   // Get initial details
   if (nest !== undefined && typeof(nest) === 'object') {
 
     // Iterate through our object
-    for (let value in nest) {
+    for (let key in nest) {
+
+      const value = nest[key];
+
+      console.log("Key: ", key);
+      console.log("Value: ", value);
+      console.log("Type: ", typeof(value));
 
       if (typeof(value) === 'number') {
-        
+        const even = isEven(value);
+        if (even === true) {
+          evenCount = evenCount + 1;
+        }
       }
 
-      console.log("Value: ", value);
-      // console.log("Nest: ", nest);
-      console.log("Type: ", typeof(nest));
+      console.log("Evencount: ", evenCount);
+
+      if (typeof(value) === 'object') {
+        console.log("Object: ");
+        nestedEvenSum(value);
+      }
+
+      console.log("\n");
     }
   }
 
@@ -583,6 +599,6 @@ const objectTwo: NestedObject = {
   e: {e: {e: 2}, ee: 'car'}
 };
 
-console.log("nestedEvenSum: ");
+console.log("nestedEvenSum: ", "\n");
 console.log("nestedEvenSum object 1: ", nestedEvenSum(objectOne));
 
