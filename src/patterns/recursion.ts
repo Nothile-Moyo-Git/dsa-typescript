@@ -553,36 +553,33 @@ const nestedEvenSum = (nest: NestedObject): number => {
 
       const value = nest[key];
 
-      console.log("Key: ", key);
+      const remainder = nest;
+      delete remainder[key];
+
       console.log("Value: ", value);
-      console.log("Type: ", typeof(value));
+      console.log("Key: ", key);
+      console.log("Remainder: ", remainder);
 
       if (typeof(value) === 'number') {
         const even = isEven(value);
+        console.log("Even: ", even);
 
         // Remove the element in the array that's the number and then call the function with the remaining values
         // This is so that we can increment but continue our iterations
         // Hopefully we can chain returns, and we did
-        const remainder = nest;
-        delete remainder[key];
-
-        console.log("Remainder: ", remainder);
-
-        console.log("Even value: ");
         if (even === true) {
-          return evenCount + 1 + nestedEvenSum(remainder);
+          return evenCount + value + nestedEvenSum(remainder);
         }
       }
 
       if (typeof(value) === 'object') {
-        return nestedEvenSum(value);
+        return evenCount + nestedEvenSum(remainder);
       }
 
       console.log("\n");
     }
   }
 
-  console.log("Eventcount: ", evenCount);
   return evenCount;
 };
 
@@ -607,6 +604,9 @@ const objectTwo: NestedObject = {
   e: {e: {e: 2}, ee: 'car'}
 };
 
+/* 
 console.log("nestedEvenSum: ", "\n");
-console.log("nestedEvenSum object 1: ", nestedEvenSum(objectOne)); // 3
+console.log("nestedEvenSum object 1: ", nestedEvenSum(objectOne)); // 6 */
+console.log("nestedEvenSum object 2: ", nestedEvenSum(objectTwo)); // 10
+
 
