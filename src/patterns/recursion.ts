@@ -541,10 +541,11 @@ type NestedObject = {
 
 const isEven = (value: number): boolean => value % 2 === 0;
 
-const nestedEvenSum = (nest: NestedObject): number => {
+const nestedEvenSum = (nest: NestedObject, sum: number = 0): number => {
 
-  let evenCount = 0;
+  let evenCount = sum;
 
+  console.log("Sum: ", sum);
   console.log("Nest: ", nest, "\n");
 
   // Get initial details
@@ -571,21 +572,21 @@ const nestedEvenSum = (nest: NestedObject): number => {
         // Hopefully we can chain returns, and we did
         if (even === true) {
           evenCount += value;
-          // return evenCount + value + nestedEvenSum(remainder);
+          // return evenCount + nestedEvenSum(remainder);
         }
       }
 
       if (typeof(value) === 'object') {
         
         console.log("IsObject: ");
-        nestedEvenSum(value);
-        // return nestedEvenSum(value);
+        evenCount = nestedEvenSum(value, evenCount);
       }
 
       console.log("\n");
     }
   }
 
+  console.log("EvenCount: ", evenCount);
   return evenCount;
 };
 
@@ -613,6 +614,6 @@ const objectTwo: NestedObject = {
 /* 
 console.log("nestedEvenSum: ", "\n");
 console.log("nestedEvenSum object 1: ", nestedEvenSum(objectOne)); // 6 */
-console.log("nestedEvenSum object 2: ", nestedEvenSum(objectTwo)); // 10
+console.log("nestedEvenSum object 2: ", nestedEvenSum(objectTwo, 0)); // 10
 
 
