@@ -535,7 +535,7 @@ console.log("capitalizeFirst(['car','taco','banana']): ", capitalizeFirst(['car'
 //
 // Create a recursive function that returns the sum of all even numbers in a nested object
 // =======================================================================================================================
-type NestedObject = {
+/* type NestedObject = {
   [key: string] : string | boolean | number | NestedObject
 };
 
@@ -544,9 +544,6 @@ const isEven = (value: number): boolean => value % 2 === 0;
 const nestedEvenSum = (nest: NestedObject, sum: number = 0): number => {
 
   let evenCount = sum;
-
-  console.log("Sum: ", sum);
-  console.log("Nest: ", nest, "\n");
 
   // Get initial details
   if (nest !== undefined && typeof(nest) === 'object') {
@@ -559,13 +556,8 @@ const nestedEvenSum = (nest: NestedObject, sum: number = 0): number => {
       const remainder = nest;
       delete remainder[key];
 
-      console.log("Value: ", value);
-      console.log("Key: ", key);
-      console.log("Remainder: ", remainder);
-
       if (typeof(value) === 'number') {
         const even = isEven(value);
-        console.log("Even: ", even);
 
         // Remove the element in the array that's the number and then call the function with the remaining values
         // This is so that we can increment but continue our iterations
@@ -578,15 +570,11 @@ const nestedEvenSum = (nest: NestedObject, sum: number = 0): number => {
 
       if (typeof(value) === 'object') {
         
-        console.log("IsObject: ");
         evenCount = nestedEvenSum(value, evenCount);
       }
-
-      console.log("\n");
     }
   }
 
-  console.log("EvenCount: ", evenCount);
   return evenCount;
 };
 
@@ -607,13 +595,38 @@ const objectTwo: NestedObject = {
   a: 2,
   b: {b: 2, bb: {b: 3, bb: {b: 2}}},
   c: {c: {c: 2}, cc: 'ball', ccc: 5},
-  /* d: 1,
-  e: {e: {e: 2}, ee: 'car'} */
+  d: 1,
+  e: {e: {e: 2}, ee: 'car'}
 };
 
-/* 
 console.log("nestedEvenSum: ", "\n");
-console.log("nestedEvenSum object 1: ", nestedEvenSum(objectOne)); // 6 */
-console.log("nestedEvenSum object 2: ", nestedEvenSum(objectTwo, 0)); // 10
+console.log("nestedEvenSum object 1: ", nestedEvenSum(objectOne)); // 6
+console.log("nestedEvenSum object 2: ", nestedEvenSum(objectTwo, 0)); // 10 */
 
+// =======================================================================================================================
+// capitalizeWords
+//
+// Turn all words in an array into uppercase for the entire word
+// =======================================================================================================================
+const capitalizeWords = (words: string[]): string[] => {
+  const uppercase: string[] = [];
+  const size = words.length;
+
+  if (size === 0) {
+    return [];
+  }
+
+  const value = words[0];
+  const remainder = words.slice(1, size);
+
+
+  if (value !== undefined) {
+    return uppercase.concat(value.toUpperCase(), capitalizeWords(remainder));
+  }
+
+  return [];
+};
+
+const words = ['i', 'am', 'learning', 'recursion']; // ['I', 'AM', 'LEARNING', 'RECURSION']
+console.log(capitalizeWords(words));
 
