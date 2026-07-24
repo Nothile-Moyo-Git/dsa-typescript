@@ -646,9 +646,6 @@ const stringifyNumbers = (obj: NestedObject): NestedObject => {
 
   let outcome: NestedObject = {};
 
-  console.log("Object: ", obj);
-  console.log("\n");
-  
   for (const key in obj) {
 
     // Get the value so we can check what type it is in order to update the type
@@ -658,7 +655,6 @@ const stringifyNumbers = (obj: NestedObject): NestedObject => {
     // Guarding check that's necessary with TypeScript
     if (value !== undefined) {
 
-      console.log("Is array: ", isArray);
 
       if (typeof(value) === 'number') {
         outcome[key] = value.toString();
