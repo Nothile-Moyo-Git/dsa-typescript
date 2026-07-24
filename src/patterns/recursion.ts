@@ -608,7 +608,7 @@ console.log("nestedEvenSum object 2: ", nestedEvenSum(objectTwo, 0)); // 10 */
 //
 // Turn all words in an array into uppercase for the entire word
 // =======================================================================================================================
-const capitalizeWords = (words: string[]): string[] => {
+/* const capitalizeWords = (words: string[]): string[] => {
   const uppercase: string[] = [];
   const size = words.length;
 
@@ -628,5 +628,93 @@ const capitalizeWords = (words: string[]): string[] => {
 };
 
 const words = ['i', 'am', 'learning', 'recursion']; // ['I', 'AM', 'LEARNING', 'RECURSION']
-console.log(capitalizeWords(words));
+console.log(capitalizeWords(words));  */
+
+// =======================================================================================================================
+// stringifyNumbers
+//
+// Turn all numbers in an object into a string by using recursion
+// Create a new object and remove values from the old one
+// =======================================================================================================================
+
+// For this type, we define 
+type NestedObject = {
+  [key: string] : string | number | number[] | boolean | NestedObject
+}
+
+const stringifyNumbers = (obj: NestedObject): NestedObject => {
+
+  let outcome: NestedObject = {};
+
+  console.log("Object: ", obj);
+  console.log("\n");
+  
+  for (const key in obj) {
+
+    // Get the value so we can check what type it is in order to update the type
+    const value = obj[key];
+    const isArray = Array.isArray(value);
+
+    console.log("Key: ", key);
+    console.log("Value: ", value);
+    console.log("Type: ", typeof(value));
+
+    // Guarding check that's necessary with TypeScript
+    if (value !== undefined) {
+
+      console.log("Is array: ", isArray);
+
+      if (typeof(value) === 'number') {
+        outcome[key] = value.toString();
+        continue;
+      }
+
+      if (isArray === true) {
+        outcome[key] = value;
+        continue;
+      }
+
+      if (typeof(value) === 'object') {
+        let remainder: NestedObject = {};
+        remainder[key] = value;
+        console.log("Remainder: ", remainder);
+        // outcome[key] = stringifyNumbers(remainder);
+      }
+
+      outcome[key] = value;
+
+      console.log("\n");
+    }
+  }
+
+  return outcome;
+};
+
+const object1: NestedObject = {
+  num: 1,
+  test: [],
+  data: {
+    val: 4,
+    info: {
+      isRight: true,
+      random: 66
+    }
+  }
+}
+
+console.log("stringifyNumbers: ", stringifyNumbers(object1));
+
+/* 
+{
+    num: "1",
+    test: [],
+    data: {
+        val: "4",
+        info: {
+            isRight: true,
+            random: "66"
+        }
+    }
+} 
+*/
 
