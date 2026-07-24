@@ -655,10 +655,6 @@ const stringifyNumbers = (obj: NestedObject): NestedObject => {
     const value = obj[key];
     const isArray = Array.isArray(value);
 
-    console.log("Key: ", key);
-    console.log("Value: ", value);
-    console.log("Type: ", typeof(value));
-
     // Guarding check that's necessary with TypeScript
     if (value !== undefined) {
 
@@ -675,15 +671,11 @@ const stringifyNumbers = (obj: NestedObject): NestedObject => {
       }
 
       if (typeof(value) === 'object') {
-        let remainder: NestedObject = {};
-        remainder[key] = value;
-        console.log("Remainder: ", remainder);
-        // outcome[key] = stringifyNumbers(remainder);
+        outcome[key] = stringifyNumbers(value);
+        continue;
       }
 
       outcome[key] = value;
-
-      console.log("\n");
     }
   }
 
