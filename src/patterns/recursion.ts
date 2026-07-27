@@ -638,7 +638,7 @@ console.log(capitalizeWords(words));  */
 // =======================================================================================================================
 
 // For this type, we define 
-type NestedObject = {
+/* type NestedObject = {
   [key: string] : string | number | number[] | boolean | NestedObject
 }
 
@@ -691,8 +691,6 @@ const object1: NestedObject = {
 }
 
 console.log("stringifyNumbers: ", stringifyNumbers(object1));
-
-/* 
 {
     num: "1",
     test: [],
@@ -705,4 +703,49 @@ console.log("stringifyNumbers: ", stringifyNumbers(object1));
     }
 } 
 */
+
+// The key here is whatever type you want. You can then nest it in itself.
+/* type NestedObject = {
+  [key: string]: string | NestedObject
+};
+
+const collectStrings = (obj: NestedObject): string[] => {
+
+  let words: string[] = [];
+
+  // Let's iterate through our object and get the strings out of it
+  for (const key in obj) {
+
+    const value = obj[key];
+
+    if (typeof(value) === 'string') {
+      words.push(value);
+    }
+
+    if (typeof(value) === 'object') {
+      // We update words itself to assign a result to the value, otherwise it gets lost as it nests
+      words = words.concat(collectStrings(value));
+    }
+  }
+
+  return words;
+};
+
+const obj: NestedObject = {
+    stuff: "foo",
+    data: {
+        val: {
+            thing: {
+                info: "bar",
+                moreInfo: {
+                    evenMoreInfo: {
+                        weMadeIt: "baz"
+                    }
+                }
+            }
+        }
+    }
+}
+
+console.log("collectStrings: ", collectStrings(obj)); */
 
