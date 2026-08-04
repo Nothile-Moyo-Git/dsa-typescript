@@ -709,6 +709,11 @@ console.log("stringifyNumbers: ", stringifyNumbers(object1));
   [key: string]: string | NestedObject
 };
 
+// =======================================================================================================================
+// collectStrings
+//
+// Iterate through an object and convert all the strings inside it into an array
+// =======================================================================================================================
 const collectStrings = (obj: NestedObject): string[] => {
 
   let words: string[] = [];
