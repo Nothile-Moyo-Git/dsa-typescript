@@ -17,13 +17,18 @@ const binarySearch = (numbers: number[], value: number): number => {
     // Get the middle for binary search. We'll round up for this.
     // Note: There's flexibility here.
     const size = numbers.length;
-    const half = Math.ceil(size / 2);
+    const half = size > 1 ? Math.ceil(size / 2) : 0;
+    const smallest = numbers[0];
+    const highest = numbers[size - 1];
     const middle = numbers[half];
 
-    console.log("\n");
-    console.log("Size: ", size);
-    console.log("Half: ", half);
-    console.log("Middle: ", middle);
+    // Extra guarding to avoid adding the half value unnecessarily
+    if (smallest !== undefined && highest !== undefined) {
+
+      if (value < smallest || value > highest) {
+        return -1;
+      }
+    }
 
     // Compare the middle value to the value passed through. If it's the same, return the index.
     // If greater, slice the left half and call again with the right hand side
@@ -33,7 +38,7 @@ const binarySearch = (numbers: number[], value: number): number => {
       return half;
     }
 
-    if (middle !== undefined) {
+    if (middle !== undefined && size > 1) {
 
       const left = numbers.slice(0, half);
       const right = numbers.slice(half, size);
@@ -46,7 +51,8 @@ const binarySearch = (numbers: number[], value: number): number => {
       }
 
       if (middle < value) {
-        return binarySearch(right, value);
+        console.log("Middle is less");
+        return half + binarySearch(right, value);
       }
     }
 
@@ -54,4 +60,6 @@ const binarySearch = (numbers: number[], value: number): number => {
 };
 
 console.log("Binary Search: ");
-console.log(binarySearch([1,2,3,4,5],2)); // 1
+// console.log(binarySearch([1,2,3,4,5],2)); // 1
+// console.log(binarySearch([1,2,3,4,5],5)); // 4
+console.log("Result -1:", binarySearch([1,2,3,4,5],6)); // -1
