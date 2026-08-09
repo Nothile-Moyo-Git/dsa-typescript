@@ -10,9 +10,11 @@
 // =======================================================================================================================
 // binarySearch
 //
-// Iterate through an object and convert all the strings inside it into an array
+// Iterate through an array of sorted numbers and find a value within it using an algorithm faster than O (n)
+// 
+// Time complexity: O (log n). It halves each time.
 // =======================================================================================================================
-const binarySearch = (numbers: number[], value: number): number => {
+/* const binarySearch = (numbers: number[], value: number): number => {
 
     // Get the middle for binary search. We'll round up for this.
     // Note: There's flexibility here.
@@ -59,7 +61,53 @@ const binarySearch = (numbers: number[], value: number): number => {
     return -1;
 };
 
-console.log("Binary Search: ");
+console.log("Binary Search: "); */
 // console.log(binarySearch([1,2,3,4,5],2)); // 1
 // console.log(binarySearch([1,2,3,4,5],5)); // 4
-console.log("Result -1:", binarySearch([1,2,3,4,5],6)); // -1
+// console.log("Result -1:", binarySearch([1,2,3,4,5],6)); // -1
+
+// =======================================================================================================================
+// Naive Search
+//
+// Receiving an array of strings, iterate through the array, then iterate through each string as a character
+// You want to check if a substring of some sort is found in each string in the array
+// =======================================================================================================================
+const stringSearch = (words: string[], sub: string): number => {
+
+  const size = words.length;
+  let count = 0;
+  console.log("\n");
+
+  // We need to make sure we actually have a size and guard it
+  if (size === 0) {
+    return 0;
+  }
+
+  // Iterate through the array of strings
+  for (const word of words) {
+    console.log("Word: ", word);
+
+    // Iterate through the string now
+    // Use a regular for loop as we're not using an object so we can't use in and we need to track the index of the chars
+    let subString = "";
+    let subIndex = 0;
+
+    console.log('─'.repeat(50));
+    for (let index = 0; index < word.length; index++) {
+      const subLetter = sub[subIndex];
+      const letter = word[index];
+
+      if (subLetter !== undefined && letter !== undefined) {
+        console.log("Subletter: ", subLetter);
+        console.log("Letter: ", letter);
+      }
+    }
+
+    console.log('─'.repeat(50));
+  }
+
+  return 0;
+};
+
+console.log("Naive search: ");
+console.log("String search wowomgzomg, broomghaha (3):", stringSearch(["wowomgzomg", "broomghaha"], "omg")); // 3
