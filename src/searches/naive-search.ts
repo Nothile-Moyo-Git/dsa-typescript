@@ -3,7 +3,7 @@
   * 
   * Description: Performs a search through an array of strings, and then iterating through each string
   * 
-  * Date created: 06/08/2026
+  * Date created: 10/08/2026
  */
 
 // =======================================================================================================================
@@ -32,21 +32,46 @@ const stringSearch = (words: string[], sub: string): number => {
     let subString = "";
     let subIndex = 0;
 
+    subString = "";
+    subIndex = 0;
+
     console.log('─'.repeat(50));
     for (let index = 0; index < word.length; index++) {
       const subLetter = sub[subIndex];
       const letter = word[index];
 
+      console.log("Subletter: ", subLetter);
+      console.log("Letter: ", letter);
+
       if (subLetter !== undefined && letter !== undefined) {
-        console.log("Subletter: ", subLetter);
-        console.log("Letter: ", letter);
+
+        if (subLetter === letter) {
+          subString += subLetter;
+          subIndex++;
+
+          console.log("Substring: ", subString);
+          console.log("Subindex: ", subIndex);
+          console.log("Count: ", count);
+
+          if (subString === sub) {
+            count++;
+            subString = "";
+            subIndex = 0;
+          }
+        } else {
+          subString = "";
+          subIndex = 0;
+
+          console.log("Substring: ", subString);
+          console.log("Subindex: ", subIndex);
+        }
       }
     }
 
     console.log('─'.repeat(50));
   }
 
-  return 0;
+  return count;
 };
 
 console.log("Naive search: ");
