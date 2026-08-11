@@ -25,7 +25,6 @@ const stringSearch = (words: string[], sub: string): number => {
 
   // Iterate through the array of strings
   for (const word of words) {
-    console.log("Word: ", word);
 
     // Iterate through the string now
     // Use a regular for loop as we're not using an object so we can't use in and we need to track the index of the chars
@@ -35,13 +34,9 @@ const stringSearch = (words: string[], sub: string): number => {
     subString = "";
     subIndex = 0;
 
-    console.log('─'.repeat(50));
     for (let index = 0; index < word.length; index++) {
       const subLetter = sub[subIndex];
       const letter = word[index];
-
-      console.log("Subletter: ", subLetter);
-      console.log("Letter: ", letter);
 
       if (subLetter !== undefined && letter !== undefined) {
 
@@ -49,30 +44,19 @@ const stringSearch = (words: string[], sub: string): number => {
           subString += subLetter;
           subIndex++;
 
-          console.log("Substring: ", subString);
-          console.log("Subindex: ", subIndex);
-          console.log("Count: ", count);
-
           if (subString === sub) {
             count++;
             subString = "";
             subIndex = 0;
           }
-        } else {
-          subString = "";
-          subIndex = 0;
-
-          console.log("Substring: ", subString);
-          console.log("Subindex: ", subIndex);
         }
       }
     }
-
-    console.log('─'.repeat(50));
   }
 
   return count;
 };
 
 console.log("Naive search: ");
-console.log("String search wowomgzomg, broomghaha (3):", stringSearch(["wowomgzomg", "broomghaha"], "omg")); // 3
+// console.log("String search wowomgzomg, broomghaha (3):", stringSearch(["wowomgzomg", "broomghaha"], "omg")); // 3
+// console.log("String search lorie loled, (2):", stringSearch(["lorie loled"], "lo")); // 2
