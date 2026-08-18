@@ -12,7 +12,7 @@
 // Receiving an array of strings, iterate through the array, then iterate through each string as a character
 // You want to check if a substring of some sort is found in each string in the array
 // =======================================================================================================================
-const stringSearch = (words: string[], sub: string): number => {
+/* const stringSearch = (words: string[], sub: string): number => {
 
   const size = words.length;
   let count = 0;
@@ -55,8 +55,8 @@ const stringSearch = (words: string[], sub: string): number => {
   }
 
   return count;
-};
+}; */
 
-console.log("Naive search: ");
+// console.log("Naive search: ");
 // console.log("String search wowomgzomg, broomghaha (3):", stringSearch(["wowomgzomg", "broomghaha"], "omg")); // 3
 // console.log("String search lorie loled, (2):", stringSearch(["lorie loled"], "lo")); // 2
