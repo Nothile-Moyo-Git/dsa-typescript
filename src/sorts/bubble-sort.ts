@@ -28,7 +28,6 @@ const swap = (values: number[], index1: number, index2: number) => {
     console.log("Previous: ", previous);
     console.log("Next: ", next);
     console.log("Values: ", values);
-    console.log("Result: ", result);
 
     return result;
 };
@@ -36,6 +35,7 @@ const swap = (values: number[], index1: number, index2: number) => {
 const bubbleSort = (values: number[]) => {
 
     let result:number[] = values;
+    console.log("Start: ", values);
 
     // Loop for each number
     for (let i = 0; i < values.length; i++) {
@@ -43,9 +43,9 @@ const bubbleSort = (values: number[]) => {
         console.log("First value of I: ", i);
 
         // Do each pass of the 
-        for (let j = i; j < values.length; j++) {
-        const previous = values[j];
-        const next = values[j + 1];
+        for (let j = 0; j < values.length; j++) {
+        const previous = result[j];
+        const next = result[j + 1];
 
         console.log("Value of I: ", i);
         console.log("Value of j: ", j);
@@ -55,14 +55,15 @@ const bubbleSort = (values: number[]) => {
             if (previous !== undefined && next !== undefined) {
                 if (previous > next) {
                     console.log("Values should swap");
-                    console.log(swap(result, i, j + 1));
+                    result = swap(result, j, j + 1);
+                    console.log("Result: ", result);
                 }
             }
         }
 
         console.log("-".repeat(50));
     }
-    return values;
+    return result;
 };
 
 console.log("Bubble sort:");
