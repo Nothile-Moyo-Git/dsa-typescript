@@ -23,48 +23,92 @@ const swap = (values: number[], index1: number, index2: number) => {
         result[index2] = previous;
     }
 
-    console.log("\n");
-    console.log("Swap function called");
-    console.log("Previous: ", previous);
-    console.log("Next: ", next);
-    console.log("Values: ", values);
-
     return result;
 };
 
+// =======================================================================================================================
+// Bubble Sort
+//
+// Receive an array of numbers and sort the numbers using bubble sort
+// Iterate through the main array and then do an iteration to check all the values
+// Make sure you cover all values so that you've finished the sort
+// 
+// Time complexity: O(n ^ 2) as it needs to iterate squared, worst case
+// =======================================================================================================================
 const bubbleSort = (values: number[]) => {
 
     let result:number[] = values;
-    console.log("Start: ", values);
 
     // Loop for each number
     for (let i = 0; i < values.length; i++) {
-
-        console.log("First value of I: ", i);
 
         // Do each pass of the 
         for (let j = 0; j < values.length; j++) {
         const previous = result[j];
         const next = result[j + 1];
 
-        console.log("Value of I: ", i);
-        console.log("Value of j: ", j);
-        console.log("Previous: ", previous);
-        console.log("Next: ", next);
-
             if (previous !== undefined && next !== undefined) {
                 if (previous > next) {
-                    console.log("Values should swap");
                     result = swap(result, j, j + 1);
-                    console.log("Result: ", result);
                 }
             }
         }
 
-        console.log("-".repeat(50));
     }
     return result;
 };
 
 console.log("Bubble sort:");
 console.log(bubbleSort([37, 45, 29, 8]));  // [8, 29, 37, 45]
+
+// =======================================================================================================================
+// Bubble Sort Exercise (Course)
+//
+// Same as above but with a different way of approaching the problem
+// We'll need to do this for objects with strings inside them
+// We'll need 2 parameters being passed through to the method
+// 
+// Time complexity: O(n^2)
+// =======================================================================================================================
+
+// Check two strings and return -1 if the first value is less, 0 if equal, and 1 if the value is more
+type bubbleTypes = {
+    kitten: {name: string, age: number},
+    argument: (a: string | number, b: string | number) => number
+};
+
+const compareStrings: bubbleTypes['argument'] = (a, b) => {
+
+    if (a < b) {
+        return -1;
+    } else if (a > b) {
+        return 1;
+    }
+    
+    return 0;
+};
+
+const bubbleSortCourse = (values: bubbleTypes['kitten'][], compare: bubbleTypes['argument']) => {
+
+    return values;
+};
+
+let fullKittyData = [{
+  name: "LilBub",
+  age: 7
+}, {
+  name: "Garfield",
+  age: 40
+}, {
+  name: "Heathcliff",
+  age: 45
+}, {
+  name: "Blue",
+  age: 1
+}, {
+  name: "Grumpy",
+  age: 6
+}];
+
+// Sort by age
+console.log("Bubble Sort Course Version: ", bubbleSortCourse(fullKittyData, compareStrings));
