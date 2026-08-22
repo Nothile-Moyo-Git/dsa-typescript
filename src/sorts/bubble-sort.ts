@@ -9,7 +9,7 @@
  * Date created: 18/08/2026
  */
 
-const swap = (values: number[], index1: number, index2: number) => {
+/* const swap = (values: number[], index1: number, index2: number) => {
 
     // Get the values, swap the array, and return it
     const previous = values[index1];
@@ -59,7 +59,7 @@ const bubbleSort = (values: number[]) => {
 };
 
 console.log("Bubble sort:");
-console.log(bubbleSort([37, 45, 29, 8]));  // [8, 29, 37, 45]
+console.log(bubbleSort([37, 45, 29, 8]));  // [8, 29, 37, 45] */
 
 // =======================================================================================================================
 // Bubble Sort Exercise (Course)
@@ -90,7 +90,34 @@ const compareStrings: bubbleTypes['argument'] = (a, b) => {
 
 const bubbleSortCourse = (values: bubbleTypes['kitten'][], compare: bubbleTypes['argument']) => {
 
-    return values;
+    let result: bubbleTypes['kitten'][] = values;
+    const size = result.length;
+
+    // Do our double iterations
+    for (let i = 0; i < size; i++) {
+
+        for (let j = 0; j < size; j++) {
+
+            // Get previous and next values for the comparison
+            const previous = result[j];
+            const next = result[j + 1];
+
+            if (previous !== undefined && next !== undefined) {
+                const previousAge = previous.age;
+                const nextAge = next.age;
+
+                const swap = compareStrings(previousAge, nextAge);
+
+                // If valid for a swap, do it
+                if (swap === 1) {
+                    result[j] = next;
+                    result[j + 1] = previous;
+                }
+            }
+        }
+    }
+
+    return result;
 };
 
 let fullKittyData = [{
