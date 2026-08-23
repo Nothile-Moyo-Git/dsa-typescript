@@ -67,6 +67,8 @@ console.log(bubbleSort([37, 45, 29, 8]));  // [8, 29, 37, 45] */
 // Same as above but with a different way of approaching the problem
 // We'll need to do this for objects with strings inside them
 // We'll need 2 parameters being passed through to the method
+//
+// It also needs to work for arrays of numbers, arrays of strings or the default array of object with numbers inside
 // 
 // Time complexity: O(n^2)
 // =======================================================================================================================
@@ -170,6 +172,7 @@ const numsBasic = [1, 2, 3];
 const numsLong = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
 
 // Sort by age
+console.log("Bubble Sort Exercises: ");
 // console.log("Bubble Sort Course Version: ", bubbleSortCourse(fullKittyData, compareStrings));
 // console.log("Bubble Sort Course [4, 20, 12, 10, 7, 9]: ", bubbleSortCourse(numsShort)); // [4, 7, 9, 10, 12, 20]
 // console.log("Bubble Sort Course [1, 2, 3]: ", bubbleSortCourse(numsBasic)); // [1, 2, 3]
