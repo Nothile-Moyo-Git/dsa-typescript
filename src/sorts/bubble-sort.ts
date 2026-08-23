@@ -75,9 +75,10 @@ console.log(bubbleSort([37, 45, 29, 8]));  // [8, 29, 37, 45] */
 type bubbleTypes = {
     kitten: {name: string, age: number},
     argument: (a: string | number, b: string | number) => number
+    numbers: number
 };
 
-const compareStrings: bubbleTypes['argument'] = (a, b) => {
+const compareNumbers: bubbleTypes['argument'] = (a, b) => {
 
     if (a < b) {
         return -1;
@@ -88,9 +89,9 @@ const compareStrings: bubbleTypes['argument'] = (a, b) => {
     return 0;
 };
 
-const bubbleSortCourse = (values: bubbleTypes['kitten'][], compare: bubbleTypes['argument']) => {
+const bubbleSortCourse = (values: bubbleTypes['kitten'][] | bubbleTypes['numbers'][], compare?: bubbleTypes['argument']) => {
 
-    let result: bubbleTypes['kitten'][] = values;
+    let result: bubbleTypes['kitten'][] | bubbleTypes['numbers'][] = values;
     const size = result.length;
 
     // Do our double iterations
@@ -103,10 +104,37 @@ const bubbleSortCourse = (values: bubbleTypes['kitten'][], compare: bubbleTypes[
             const next = result[j + 1];
 
             if (previous !== undefined && next !== undefined) {
-                const previousAge = previous.age;
-                const nextAge = next.age;
 
-                const swap = compareStrings(previousAge, nextAge);
+                let lower: string|number = 0;
+                let higher: string|number = 0;
+
+                // If it's an object, get the name, otherwise, use the number / string
+                if (typeof(previous) === 'object' && typeof(next) === 'object') {
+                    lower = previous.age;
+                    higher = next.age;
+                } 
+                
+                // Setting our previous and next values
+                if (typeof(previous) === 'string' || typeof(previous) === 'number') {
+                    lower = previous;
+                }
+
+                if (typeof(next) === 'string' || typeof(next) === 'number') {
+                    higher = next;
+                }
+
+                console.log("Types: ");
+                console.log("Lower: ", typeof(lower));
+                console.log("Higher: ", typeof(higher));
+
+                // If we have a swap function, use it, otherwise, use the default for numbers
+                let swap = 0;
+
+                if (compare) {
+                    swap = compare(lower, higher);
+                } else {
+                    swap = compareNumbers(lower, higher);
+                }
 
                 // If valid for a swap, do it
                 if (swap === 1) {
@@ -120,7 +148,7 @@ const bubbleSortCourse = (values: bubbleTypes['kitten'][], compare: bubbleTypes[
     return result;
 };
 
-let fullKittyData = [{
+const fullKittyData = [{
   name: "LilBub",
   age: 7
 }, {
@@ -137,5 +165,13 @@ let fullKittyData = [{
   age: 6
 }];
 
+const numsShort = [4, 20, 12, 10, 7, 9];
+const numsBasic = [1, 2, 3];
+const numsLong = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
+
 // Sort by age
-console.log("Bubble Sort Course Version: ", bubbleSortCourse(fullKittyData, compareStrings));
+// console.log("Bubble Sort Course Version: ", bubbleSortCourse(fullKittyData, compareStrings));
+// console.log("Bubble Sort Course [4, 20, 12, 10, 7, 9]: ", bubbleSortCourse(numsShort)); // [4, 7, 9, 10, 12, 20]
+// console.log("Bubble Sort Course [1, 2, 3]: ", bubbleSortCourse(numsBasic)); // [1, 2, 3]
+// console.log("Bubble Sort Course []: ", bubbleSortCourse([])); // []
+console.log("Bubble Sort Course [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32]: ", bubbleSortCourse(numsLong)); // [1, 2, 3][2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
