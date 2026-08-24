@@ -77,8 +77,11 @@ console.log(bubbleSort([37, 45, 29, 8]));  // [8, 29, 37, 45] */
 type bubbleTypes = {
     kitten: {name: string, age: number},
     argument: (a: string | number, b: string | number) => number
-    numbers: number
 };
+
+type dataTypes = {
+    data: bubbleTypes['kitten'][] | number[] | string[]
+}
 
 const compareNumbers: bubbleTypes['argument'] = (a, b) => {
 
@@ -91,9 +94,9 @@ const compareNumbers: bubbleTypes['argument'] = (a, b) => {
     return 0;
 };
 
-const bubbleSortCourse = (values: bubbleTypes['kitten'][] | bubbleTypes['numbers'][], compare?: bubbleTypes['argument']) => {
+const bubbleSortCourse = (values: dataTypes['data'], compare?: bubbleTypes['argument']) => {
 
-    let result: bubbleTypes['kitten'][] | bubbleTypes['numbers'][] = values;
+    let result: dataTypes['data'] = values;
     const size = result.length;
 
     // Do our double iterations
@@ -150,6 +153,11 @@ const bubbleSortCourse = (values: bubbleTypes['kitten'][] | bubbleTypes['numbers
     return result;
 };
 
+
+const numsShort = [4, 20, 12, 10, 7, 9];
+const numsBasic = [1, 2, 3];
+const numsLong = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
+const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
 const fullKittyData = [{
   name: "LilBub",
   age: 7
@@ -167,14 +175,11 @@ const fullKittyData = [{
   age: 6
 }];
 
-const numsShort = [4, 20, 12, 10, 7, 9];
-const numsBasic = [1, 2, 3];
-const numsLong = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
-
 // Sort by age
 console.log("Bubble Sort Exercises: ");
 // console.log("Bubble Sort Course Version: ", bubbleSortCourse(fullKittyData, compareStrings));
 // console.log("Bubble Sort Course [4, 20, 12, 10, 7, 9]: ", bubbleSortCourse(numsShort)); // [4, 7, 9, 10, 12, 20]
 // console.log("Bubble Sort Course [1, 2, 3]: ", bubbleSortCourse(numsBasic)); // [1, 2, 3]
 // console.log("Bubble Sort Course []: ", bubbleSortCourse([])); // []
-console.log("Bubble Sort Course [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32]: ", bubbleSortCourse(numsLong)); // [1, 2, 3][2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
+// console.log("Bubble Sort Course [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32]: ", bubbleSortCourse(numsLong)); // [1, 2, 3][2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
+// console.log('Bubble Sort Course: ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"]', bubbleSortCourse(kitties)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
