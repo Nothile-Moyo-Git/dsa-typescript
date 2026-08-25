@@ -80,10 +80,12 @@ type bubbleTypes = {
 };
 
 type dataTypes = {
-    data: bubbleTypes['kitten'][] | number[] | string[]
+    data: bubbleTypes['kitten'] | number | string,
+    values: bubbleTypes['kitten'][] | number[] | string[],
+    method: (a: bubbleTypes['kitten'] | string, b: bubbleTypes['kitten'] | string) => number
 }
 
-const compareNumbers: bubbleTypes['argument'] = (a, b) => {
+const compareNumbers: dataTypes['method'] = (a, b) => {
 
     if (a < b) {
         return -1;
@@ -94,9 +96,9 @@ const compareNumbers: bubbleTypes['argument'] = (a, b) => {
     return 0;
 };
 
-const bubbleSortCourse = (values: dataTypes['data'], compare?: bubbleTypes['argument']) => {
+const bubbleSortCourse = (values: dataTypes['values'], compare?: dataTypes['method']) => {
 
-    let result: dataTypes['data'] = values;
+    let result: dataTypes['values'] = values;
     const size = result.length;
 
     // Do our double iterations
@@ -107,16 +109,21 @@ const bubbleSortCourse = (values: dataTypes['data'], compare?: bubbleTypes['argu
             // Get previous and next values for the comparison
             const previous = result[j];
             const next = result[j + 1];
+            let swap = 0;
 
             if (previous !== undefined && next !== undefined) {
 
-                let lower: string|number = 0;
-                let higher: string|number = 0;
+                let lower: string| number| bubbleTypes['kitten'];
+                let higher: string| number| bubbleTypes['kitten'];
 
                 // If it's an object, get the name, otherwise, use the number / string
                 if (typeof(previous) === 'object' && typeof(next) === 'object') {
-                    lower = previous.age;
-                    higher = next.age;
+                    lower = previous;
+                    higher = next;
+
+                    if (compare) {
+                       swap = compare(lower, higher);
+                    }
                 } 
                 
                 // Setting our previous and next values
@@ -128,16 +135,7 @@ const bubbleSortCourse = (values: dataTypes['data'], compare?: bubbleTypes['argu
                     higher = next;
                 }
 
-                console.log("Types: ");
-                console.log("Lower: ", typeof(lower));
-                console.log("Higher: ", typeof(higher));
-
-                // If we have a swap function, use it, otherwise, use the default for numbers
-                let swap = 0;
-
-                if (compare) {
-                    swap = compare(lower, higher);
-                } else {
+                {
                     swap = compareNumbers(lower, higher);
                 }
 
