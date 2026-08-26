@@ -82,10 +82,11 @@ type bubbleTypes = {
 type dataTypes = {
     data: bubbleTypes['kitten'] | number | string,
     values: bubbleTypes['kitten'][] | number[] | string[],
-    method: (a: bubbleTypes['kitten'] | string, b: bubbleTypes['kitten'] | string) => number
+    method: (a: bubbleTypes['kitten'] | string | number, b: bubbleTypes['kitten'] | string | number) => number
 }
 
-const compareNumbers: dataTypes['method'] = (a, b) => {
+// Compare numbers to strings
+const compareNumbers: bubbleTypes['argument'] = (a, b) => {
 
     if (a < b) {
         return -1;
@@ -95,6 +96,11 @@ const compareNumbers: dataTypes['method'] = (a, b) => {
     
     return 0;
 };
+
+// Oldest to youngest comparison for the object
+const oldestToYoungest: bubbleTypes['argument'] = (a, b) => {
+  return b.age - a.age;
+}
 
 const bubbleSortCourse = (values: dataTypes['values'], compare?: dataTypes['method']) => {
 
@@ -127,15 +133,11 @@ const bubbleSortCourse = (values: dataTypes['values'], compare?: dataTypes['meth
                 } 
                 
                 // Setting our previous and next values
-                if (typeof(previous) === 'string' || typeof(previous) === 'number') {
+                if ((typeof(previous) === 'string' || typeof(previous) === 'number') 
+                    && (typeof(next) === 'string' || typeof(next) === 'number')) {
                     lower = previous;
-                }
-
-                if (typeof(next) === 'string' || typeof(next) === 'number') {
                     higher = next;
-                }
 
-                {
                     swap = compareNumbers(lower, higher);
                 }
 
@@ -181,3 +183,4 @@ console.log("Bubble Sort Exercises: ");
 // console.log("Bubble Sort Course []: ", bubbleSortCourse([])); // []
 // console.log("Bubble Sort Course [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32]: ", bubbleSortCourse(numsLong)); // [1, 2, 3][2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
 // console.log('Bubble Sort Course: ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"]', bubbleSortCourse(kitties)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
+console.log("Bubble Sort Course object array: ", fullKittyData);
