@@ -82,11 +82,12 @@ type bubbleTypes = {
 type dataTypes = {
     data: bubbleTypes['kitten'] | number | string,
     values: bubbleTypes['kitten'][] | number[] | string[],
+    objectCompare: (a: bubbleTypes['kitten'], b: bubbleTypes['kitten']) => number,
     method: (a: bubbleTypes['kitten'] | string | number, b: bubbleTypes['kitten'] | string | number) => number
 }
 
 // Compare numbers to strings
-const compareNumbers: bubbleTypes['argument'] = (a, b) => {
+const compareValues: bubbleTypes['argument'] = (a, b) => {
 
     if (a < b) {
         return -1;
@@ -98,11 +99,11 @@ const compareNumbers: bubbleTypes['argument'] = (a, b) => {
 };
 
 // Oldest to youngest comparison for the object
-const oldestToYoungest: bubbleTypes['argument'] = (a, b) => {
+const oldestToYoungest: dataTypes['objectCompare'] = (a, b) => {
   return b.age - a.age;
-}
+};
 
-const bubbleSortCourse = (values: dataTypes['values'], compare?: dataTypes['method']) => {
+const bubbleSortCourse = (values: dataTypes['values'], compare?: dataTypes['objectCompare']) => {
 
     let result: dataTypes['values'] = values;
     const size = result.length;
@@ -138,11 +139,11 @@ const bubbleSortCourse = (values: dataTypes['values'], compare?: dataTypes['meth
                     lower = previous;
                     higher = next;
 
-                    swap = compareNumbers(lower, higher);
+                    swap = compareValues(lower, higher);
                 }
 
                 // If valid for a swap, do it
-                if (swap === 1) {
+                if (swap >= 1) {
                     result[j] = next;
                     result[j + 1] = previous;
                 }
@@ -156,6 +157,7 @@ const bubbleSortCourse = (values: dataTypes['values'], compare?: dataTypes['meth
 
 const numsShort = [4, 20, 12, 10, 7, 9];
 const numsBasic = [1, 2, 3];
+const numsNegative = [0, -10, 7, 4];
 const numsLong = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
 const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
 const fullKittyData = [{
@@ -177,10 +179,11 @@ const fullKittyData = [{
 
 // Sort by age
 console.log("Bubble Sort Exercises: ");
-// console.log("Bubble Sort Course Version: ", bubbleSortCourse(fullKittyData, compareStrings));
+// console.log("Bubble Sort Course Version: ", bubbleSortCourse(fullKittyData, compareValues));
 // console.log("Bubble Sort Course [4, 20, 12, 10, 7, 9]: ", bubbleSortCourse(numsShort)); // [4, 7, 9, 10, 12, 20]
+// console.log("Bubble Sort Course [0, -10, 7, 4]: ", bubbleSortCourse(numsNegative)); // [-10, 0, 4, 7]
 // console.log("Bubble Sort Course [1, 2, 3]: ", bubbleSortCourse(numsBasic)); // [1, 2, 3]
 // console.log("Bubble Sort Course []: ", bubbleSortCourse([])); // []
-// console.log("Bubble Sort Course [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32]: ", bubbleSortCourse(numsLong)); // [1, 2, 3][2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
+// console.log("Bubble Sort Course [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32]: ", bubbleSortCourse(numsLong)); // [2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
 // console.log('Bubble Sort Course: ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"]', bubbleSortCourse(kitties)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
-console.log("Bubble Sort Course object array: ", fullKittyData);
+console.log("Bubble Sort Course object array: ", fullKittyData, bubbleSortCourse(fullKittyData, oldestToYoungest));
