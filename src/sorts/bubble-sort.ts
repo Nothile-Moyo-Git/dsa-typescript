@@ -111,6 +111,7 @@ const bubbleSortCourse = (values: dataTypes['values'], compare?: dataTypes['obje
     // Do our double iterations
     for (let i = 0; i < size; i++) {
 
+        let noSwaps = true;
         for (let j = 0; j < size; j++) {
 
             // Get previous and next values for the comparison
@@ -130,6 +131,7 @@ const bubbleSortCourse = (values: dataTypes['values'], compare?: dataTypes['obje
 
                     if (compare) {
                        swap = compare(lower, higher);
+                       noSwaps = false;
                     }
                 } 
                 
@@ -140,6 +142,7 @@ const bubbleSortCourse = (values: dataTypes['values'], compare?: dataTypes['obje
                     higher = next;
 
                     swap = compareValues(lower, higher);
+                    noSwaps = false;
                 }
 
                 // If valid for a swap, do it
@@ -147,6 +150,10 @@ const bubbleSortCourse = (values: dataTypes['values'], compare?: dataTypes['obje
                     result[j] = next;
                     result[j + 1] = previous;
                 }
+            }
+
+            if (noSwaps === true) {
+                break;
             }
         }
     }
