@@ -26,16 +26,19 @@ type sort = {
 
 const selectionSort: sort['method'] = (values) => {
 
-    let result: number[] = [];
+    console.log("Original array: ", values);
+
+    let result: number[] = values;
     const size = values.length;
 
     for (let i = 0; i < size; i++) {
 
+        console.log("Current array: ", result);
         let smallest = i;
+        let temp = values[smallest];
 
-        for (let j = 0; j < size; j++) {
+        for (let j = i; j < size; j++) {
 
-            let temp = values[smallest];
             const value = values[j];
 
             console.log("Temp: ", temp);
@@ -43,13 +46,28 @@ const selectionSort: sort['method'] = (values) => {
 
             if (temp !== undefined && value !== undefined) {
                 if (temp > value) {
-                    result[smallest] = value;
-                    result[j] =  temp;
+
+                    temp = value;
+                    smallest = j;
                 }
             }
 
             console.log("\n");
         }
+
+        console.log("i: ", i);
+        console.log("Temp after: ", temp);
+        console.log("Index: ", smallest);
+
+        const smallestValue = result[smallest];
+        const originalValue = result[i];
+
+        if (smallest > i && smallestValue !== undefined && originalValue !== undefined) {
+            result[i] = smallestValue;
+            result[smallest] =  originalValue;
+        }
+
+        console.log("-".repeat(50));
     }
 
     return result;
