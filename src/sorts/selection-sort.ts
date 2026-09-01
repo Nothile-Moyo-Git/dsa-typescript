@@ -31,12 +31,14 @@ const selectionSort: sort['method'] = (values) => {
     let result: number[] = values;
     const size = values.length;
 
+    // Loop through both iterations
     for (let i = 0; i < size; i++) {
 
         console.log("Current array: ", result);
         let smallest = i;
         let temp = values[smallest];
 
+        // Start here as a sorted value doesn't need to be evaluated and we gain performance
         for (let j = i; j < size; j++) {
 
             const value = values[j];
@@ -44,6 +46,8 @@ const selectionSort: sort['method'] = (values) => {
             console.log("Temp: ", temp);
             console.log("Value: ", value);
 
+            // Store our temporary values so we only do one replacement at a time
+            // This is NOT bubble sort, so that's why
             if (temp !== undefined && value !== undefined) {
                 if (temp > value) {
 
@@ -62,6 +66,8 @@ const selectionSort: sort['method'] = (values) => {
         const smallestValue = result[smallest];
         const originalValue = result[i];
 
+        // Do the swap here, we swap the smallest value with i if it's able to do so
+        // This way, we find the smallest value, and then replace the value at position i with it
         if (smallest > i && smallestValue !== undefined && originalValue !== undefined) {
             result[i] = smallestValue;
             result[smallest] =  originalValue;
