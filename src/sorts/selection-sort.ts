@@ -21,14 +21,15 @@
 // =======================================================================================================================
 
 type sort = {
-    method: (values: number[]) => number[] 
+    params: number[] | string[];
+    method: (values: number[]| string[]) => sort['params'];
 }
 
 const selectionSort: sort['method'] = (values) => {
 
     console.log("Original array: ", values);
 
-    let result: number[] = values;
+    let result: sort['params'] = values;
     const size = values.length;
 
     // Loop through both iterations
@@ -80,5 +81,16 @@ const selectionSort: sort['method'] = (values) => {
 };
 
 const array1 = [4, 20, 12, 10, 7, 9];
+const array2 = [0, -10, 7, 4];
+const array3 = [1, 2, 3];
+const array4: number[] = [];
+const array5 = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
+const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
+
 console.log("Selection Sort: ");
-console.log("Selection sort: ", array1, selectionSort(array1)); // [4, 7, 9, 10, 12, 20]
+// console.log("Selection sort: [4, 20, 12, 10, 7, 9] ", array1, selectionSort(array1)); // [4, 7, 9, 10, 12, 20]
+// console.log("Selection sort: [0, -10, 7, 4] ", array2, selectionSort(array2)); // [-10, 0, 4, 7]
+// console.log("Selection sort: [1, 2, 3] ", selectionSort(array3)); // [1, 2, 3]
+// console.log("Selection sort: [] ", selectionSort(array4)); // []
+// console.log("Selection sort: [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32] ", selectionSort(array5)); // [2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
+console.log('Selection sort: ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"]', selectionSort(kitties));
