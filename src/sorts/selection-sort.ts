@@ -142,4 +142,5 @@ console.log("Selection Sort: ");
 // console.log("Selection sort: [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32] ", selectionSort(array5)); // [2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
 // console.log('Selection sort: ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"]', selectionSort(kitties));
 // console.log(`Selection sort: ${kitties}: `, selectionSort(kitties, comparison)); ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
-console.log(`Selection sort: ${kitties}: `, selectionSort(moarKittyData, comparison)); ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
+console.log(`Selection sort: ${kitties}: `, selectionSort(moarKittyData, comparison)); 
+// [{ name: "Grumpy", age: 6 },{ name: "Blue", age: 1 },{ name: "LilBub", age: 7}, { name: "Garfield", age: 40}, {name: "Heathcliff", age: 45}];
