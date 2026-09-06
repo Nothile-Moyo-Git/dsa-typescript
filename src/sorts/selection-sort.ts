@@ -30,6 +30,8 @@ type sort = {
 const comparison: sort['compare'] = (a, b) => {
 
     if (typeof(a) === 'object' && typeof(b) === 'object') {
+        console.log("A age: ", a.age);
+        console.log("B age: ", b.age);
         return b.age - a.age;
     }
 
@@ -64,7 +66,15 @@ const selectionSort: sort['method'] = (values, compare?: sort['compare']) => {
             // Store our temporary values so we only do one replacement at a time
             // This is NOT bubble sort, so that's why
             if (temp !== undefined && value !== undefined) {
-                if (temp > value) {
+
+                if (typeof(temp) === 'object' && typeof(value) === 'object' && compare) {
+                    let swap = compare(temp, value);
+                    console.log("Swap value: ", swap);
+                    if (swap > 0) {
+                        temp = value;
+                        smallest = j;
+                    }
+                } else if(temp > value) {  
                     temp = value;
                     smallest = j;
                 }
@@ -79,28 +89,10 @@ const selectionSort: sort['method'] = (values, compare?: sort['compare']) => {
 
         const smallestValue = result[smallest];
         const originalValue = result[i];
-        let outcome = 0;
-
-        // If we have the function being passed through, then we call it and process the value
-        if (compare && smallestValue !== undefined && originalValue !== undefined) {
-
-            if (typeof(smallestValue) === 'string' && typeof(originalValue) === 'string') {
-                console.log("Function called: ");
-                outcome = compare(smallestValue, originalValue);
-                console.log("Outcome: ", outcome);
-
-                if (outcome < 0) {
-                    result[i] = smallestValue;
-                    result[smallest] =  originalValue;
-                }
-                functionCalled = true;
-            }
-        }
 
         // Do the swap here, we swap the smallest value with i if it's able to do so
         // This way, we find the smallest value, and then replace the value at position i with it
-        if (smallest > i && smallestValue !== undefined && originalValue !== undefined && functionCalled === false) {
-            console.log("Swap called: ");
+        if (smallest > i && smallestValue !== undefined && originalValue !== undefined) {
             result[i] = smallestValue;
             result[smallest] =  originalValue;
         }
@@ -142,5 +134,4 @@ console.log("Selection Sort: ");
 // console.log("Selection sort: [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32] ", selectionSort(array5)); // [2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
 // console.log('Selection sort: ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"]', selectionSort(kitties));
 // console.log(`Selection sort: ${kitties}: `, selectionSort(kitties, comparison)); ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
-console.log(`Selection sort: ${kitties}: `, selectionSort(moarKittyData, comparison)); 
-// [{ name: "Grumpy", age: 6 },{ name: "Blue", age: 1 },{ name: "LilBub", age: 7}, { name: "Garfield", age: 40}, {name: "Heathcliff", age: 45}];
+console.log(`Selection sort: ${kitties}: `, selectionSort(moarKittyData, comparison)); // [{ name: "Grumpy", age: 6 },{ name: "Blue", age: 1 },{ name: "LilBub", age: 7}, { name: "Garfield", age: 40}, {name: "Heathcliff", age: 45}];
