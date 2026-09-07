@@ -30,8 +30,6 @@ type sort = {
 const comparison: sort['compare'] = (a, b) => {
 
     if (typeof(a) === 'object' && typeof(b) === 'object') {
-        console.log("A age: ", a.age);
-        console.log("B age: ", b.age);
         return b.age - a.age;
     }
 
@@ -42,26 +40,19 @@ const comparison: sort['compare'] = (a, b) => {
 
 const selectionSort: sort['method'] = (values, compare?: sort['compare']) => {
 
-    console.log("Original array: ", values);
-
     let result = values;
     const size = values.length;
 
     // Loop through both iterations
     for (let i = 0; i < size; i++) {
 
-        console.log("Current array: ", result);
         let smallest = i;
         let temp = values[smallest];
-        let functionCalled = false;
 
         // Start here as a sorted value doesn't need to be evaluated and we gain performance
         for (let j = i; j < size; j++) {
 
             const value = values[j];
-
-            console.log("Temp: ", temp);
-            console.log("Value: ", value);
 
             // Store our temporary values so we only do one replacement at a time
             // This is NOT bubble sort, so that's why
@@ -69,7 +60,6 @@ const selectionSort: sort['method'] = (values, compare?: sort['compare']) => {
 
                 if (typeof(temp) === 'object' && typeof(value) === 'object' && compare) {
                     let swap = compare(temp, value);
-                    console.log("Swap value: ", swap);
                     if (swap > 0) {
                         temp = value;
                         smallest = j;
@@ -82,10 +72,6 @@ const selectionSort: sort['method'] = (values, compare?: sort['compare']) => {
 
             console.log("\n");
         }
-
-        console.log("i: ", i);
-        console.log("Temp after: ", temp);
-        console.log("Index: ", smallest);
 
         const smallestValue = result[smallest];
         const originalValue = result[i];
