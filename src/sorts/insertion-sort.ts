@@ -30,28 +30,42 @@ const insertionSort: sort['method'] = (values, compare?: sort['compare']) => {
     // Get values to handle the iteration
     let result = values;
     const size = result.length;
+    console.log("Values: ", values);
 
     console.log("Size: ", size);
 
     // Iterate to the right
-    for (let i = 0; i < size -1; i++) {
+    for (let i = 1; i < size; i++) {
         console.log("I: ", i);
 
-        const previous = result[i];
-        const next = result[i + 1];
         let j = i;
         let sorted = false;
+        let smallest = i;
 
         // Iterate to the left to sort the values
         // This increases with the size of i, will use a while loop for less iterations
         while (sorted === false) {
+
+            const next = result[i];
+            const previous = result[j];
+            const smallestValue = result[smallest];
+
             console.log("J: ", j);
+            console.log("Previous: ", previous);
+            console.log("Next: ", next);
+
+            if (smallestValue !== undefined && previous !== undefined) {
+                const less = previous < smallestValue;
+
+                console.log("Greater: ", less);
+                if (less === true) {
+                    smallest = j;
+                }
+            }
+
+            console.log("SmallestValue: ", result[smallest]);
 
             j = j - 1;
-
-            if (next !== undefined && previous !== undefined) {
-                const greater = next > previous;
-            }
 
             // Conditional to stop the iterations
             if (j < 0) {
@@ -59,6 +73,10 @@ const insertionSort: sort['method'] = (values, compare?: sort['compare']) => {
             }
         }
 
+        console.log("Smallest: ", smallest);
+
+        console.log("\n");
+        console.log("-".repeat(50));
         console.log("\n");
     }
 
