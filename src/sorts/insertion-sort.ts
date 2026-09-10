@@ -77,7 +77,7 @@ const insertionSort: sort['method'] = (values, compare?: sort['compare']) => {
 
             j = j - 1;
 
-            // Conditional to stop the iterations
+            // Continue until we've checked the required number of values
             if (j < 0) {
                 sorted = true; 
             }
