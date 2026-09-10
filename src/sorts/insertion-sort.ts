@@ -30,36 +30,46 @@ const insertionSort: sort['method'] = (values, compare?: sort['compare']) => {
     // Get values to handle the iteration
     let result = values;
     const size = result.length;
-    console.log("Values: ", values);
 
+    console.log("Values: ", values);
     console.log("Size: ", size);
 
     // Iterate to the right
     for (let i = 1; i < size; i++) {
-        console.log("I: ", i);
 
+        console.log("I: ", i);
+        console.log("Result: ", result);
+
+        // Variables that we can update
+        // We start with both values, and we update them when we find the lowest value
+        // The initial lowest is the current value in the array until it's replaced
         let j = i;
         let sorted = false;
         let smallest = i;
+        let smallestValue = result[smallest];
+        let previous = result[j];
+
+        const next = result[i];
 
         // Iterate to the left to sort the values
         // This increases with the size of i, will use a while loop for less iterations
         while (sorted === false) {
 
-            const next = result[i];
-            const previous = result[j];
-            const smallestValue = result[smallest];
+            previous = result[j];
 
             console.log("J: ", j);
             console.log("Previous: ", previous);
             console.log("Next: ", next);
 
-            if (smallestValue !== undefined && previous !== undefined) {
-                const less = previous < smallestValue;
+            if (smallestValue !== undefined && previous !== undefined && next !== undefined) {
+                // Turn true until we reach a point where our previous value is no longer greater than the next
+                const less = next < previous;
 
-                console.log("Greater: ", less);
+                console.log("Less: ", less);
                 if (less === true) {
+                    // Update the index and the value that we'll return if it's the lowest
                     smallest = j;
+                    smallestValue = result[j];
                 }
             }
 
@@ -73,7 +83,19 @@ const insertionSort: sort['method'] = (values, compare?: sort['compare']) => {
             }
         }
 
-        console.log("Smallest: ", smallest);
+        console.log("Smallest after: ", smallest);
+        console.log("smallestValue current: ", smallestValue);
+        console.log("SmallestValue after: ", result[smallest]);
+
+        const initial = result[smallest];
+        const toSwap = result[i];
+
+        if (smallest < i && smallestValue !== undefined && next !== undefined) {
+            result[smallest] = next;
+            result[i] = smallestValue;
+        }
+
+        console.log("Updated results: ", result);
 
         console.log("\n");
         console.log("-".repeat(50));
