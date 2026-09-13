@@ -87,12 +87,14 @@ const insertionSort: sort['method'] = (values, compare?: sort['compare']) => {
         console.log("smallestValue current: ", smallestValue);
         console.log("SmallestValue after: ", result[smallest]);
 
-        const initial = result[smallest];
-        const toSwap = result[i];
-
         if (smallest < i && smallestValue !== undefined && next !== undefined) {
-            result[smallest] = next;
-            result[i] = smallestValue;
+
+            // We're going to do two splices to swap the values properly
+            // Place it in the position we want to position it in, then do one to delete it from the old position
+            if (typeof(next) === 'number') {
+                result.splice(smallest, 0, next);
+                result.splice(i + 1, 1);
+            }
         }
 
         console.log("Updated results: ", result);
@@ -106,7 +108,8 @@ const insertionSort: sort['method'] = (values, compare?: sort['compare']) => {
 };
 
 const array1 = [4, 20, 12, 10, 7, 9];
+const array2 = [0, -10, 7, 4];
 
 console.log("Insertion sort: ");
-console.log("");
-insertionSort(array1); // [4, 7, 9, 10, 12, 20]
+console.log("Insertion sort [4, 20, 12, 10, 7, 9]: ", insertionSort(array1)); // [4, 7, 9, 10, 12, 20]
+console.log("Insertion sort [0, -10, 7, 4]: ", insertionSort(array2)); // [-10, 0, 4, 7]
