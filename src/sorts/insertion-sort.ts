@@ -25,6 +25,9 @@ type sort = {
     method: (values: sort['params'] | sort['object'][], compare?: sort['compare']) => sort['params'] | sort['object'][];
 }
 
+
+// Todo, define a type that contains everything
+// Use a generic type that extends it and contains the relevant typing
 const insertionSort: sort['method'] = (values, compare?: sort['compare']) => {
 
     // Get values to handle the iteration
@@ -87,11 +90,11 @@ const insertionSort: sort['method'] = (values, compare?: sort['compare']) => {
         console.log("smallestValue current: ", smallestValue);
         console.log("SmallestValue after: ", result[smallest]);
 
-        if (smallest < i && smallestValue !== undefined && next !== undefined) {
+        if (smallest < i && next !== undefined) {
 
             // We're going to do two splices to swap the values properly
             // Place it in the position we want to position it in, then do one to delete it from the old position
-            if (typeof(next) === 'number') {
+            if (typeof(next) === 'object' || typeof(next) === 'number') {
                 result.splice(smallest, 0, next);
                 result.splice(i + 1, 1);
             }
@@ -109,7 +112,15 @@ const insertionSort: sort['method'] = (values, compare?: sort['compare']) => {
 
 const array1 = [4, 20, 12, 10, 7, 9];
 const array2 = [0, -10, 7, 4];
+const array3 = [1, 2, 3];
+const emptyArray = [];
+const largeArray = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
+const strings = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
 
 console.log("Insertion sort: ");
 // console.log("Insertion sort [4, 20, 12, 10, 7, 9]: ", insertionSort(array1)); // [4, 7, 9, 10, 12, 20]
 // console.log("Insertion sort [0, -10, 7, 4]: ", insertionSort(array2)); // [-10, 0, 4, 7]
+// console.log("Insertion sort [1, 2, 3]: ", insertionSort(array3)); // [1, 2, 3]
+// console.log("Insertion sort []: ", insertionSort([])); // []
+// console.log("Insertion sort large array []: ", insertionSort(largeArray)); // [2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
+console.log("Insertion sort large array []: ", insertionSort(strings));
