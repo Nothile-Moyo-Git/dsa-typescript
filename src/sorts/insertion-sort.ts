@@ -18,6 +18,15 @@
 // 
 // =======================================================================================================================
 
+// The type that accompanies every type we may use
+type SortableItem = string | number | { name: string, age: number };
+
+// Typing for the comparison function
+type Comparitor = <T extends SortableItem>(a : T, b: T) => number;
+
+// Generic type that takes 
+type SortMethod = <T extends SortableItem>(values: T[], compare?: Comparitor) => T[];
+
 type sort = {
     params: number[] | string[];
     object: { name: string, age: number };
@@ -28,7 +37,7 @@ type sort = {
 
 // Todo, define a type that contains everything
 // Use a generic type that extends it and contains the relevant typing
-const insertionSort: sort['method'] = (values, compare?: sort['compare']) => {
+const insertionSort = (values, compare?: sort['compare']) => {
 
     // Get values to handle the iteration
     let result = values;
