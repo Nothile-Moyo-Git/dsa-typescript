@@ -28,16 +28,23 @@ type Comparitor = <T extends SortableItem>(a : T, b: T) => number;
 type SortMethod = <T extends SortableItem>(values: T[], compare?: Comparitor) => T[];
 
 type sort = {
-    params: number[] | string[];
+    params: number[] | string[]; 
     object: { name: string, age: number };
     compare: (a: {name: string, age: number} | string, b: {name: string, age: number} | string) => number;
     method: (values: sort['params'] | sort['object'][], compare?: sort['compare']) => sort['params'] | sort['object'][];
 }
 
+// Function to compare strings, this will be passed through the compare argument
+const stringCompare: Comparitor = (a, b) => {
+    if (a < b) { return -1;}
+    else if (a > b) { return 1;}
+    return 0;
+};
+
 
 // Todo, define a type that contains everything
 // Use a generic type that extends it and contains the relevant typing
-const insertionSort = (values, compare?: sort['compare']) => {
+const insertionSort: SortMethod = (values, compare) => {
 
     // Get values to handle the iteration
     let result = values;
@@ -58,7 +65,6 @@ const insertionSort = (values, compare?: sort['compare']) => {
         let j = i;
         let sorted = false;
         let smallest = i;
-        let smallestValue = result[smallest];
         let previous = result[j];
 
         const next = result[i];
@@ -73,17 +79,37 @@ const insertionSort = (values, compare?: sort['compare']) => {
             console.log("Previous: ", previous);
             console.log("Next: ", next);
 
-            if (smallestValue !== undefined && previous !== undefined && next !== undefined) {
-                // Turn true until we reach a point where our previous value is no longer greater than the next
-                const less = next < previous;
+            // Handle for values. We do different comparisons because of the methods used to compare
+            if (previous !== undefined && next !== undefined) {
 
-                console.log("Less: ", less);
-                if (less === true) {
-                    // Update the index and the value that we'll return if it's the lowest
-                    smallest = j;
-                    smallestValue = result[j];
+                // Numbers
+                if (typeof(previous) === 'number' && typeof(next) === 'number') {
+                    // Turn true until we reach a point where our previous value is no longer greater than the next
+                    // We only need to do this check because we're starting from position 1 and it sorts from there
+                    if (next < previous) {
+                        // Update the index and the value that we'll return if it's the lowest
+                        smallest = j;
+                    }
                 }
+
+                // Strings
+                if (typeof(previous) === 'string' && typeof(next) === 'string') {
+                    if (compare) {
+                        const outcome = compare(previous, next);
+
+                        console.log("Outcome: ", outcome);
+
+                        if (outcome === 1) {
+                            // Update the index and the value that we'll return if it's the lowest
+                            smallest = j;
+                        }
+                    }
+                }
+
+                // Objects
             }
+
+            // Handle for strings as we do pass a function through
 
             console.log("SmallestValue: ", result[smallest]);
 
@@ -96,14 +122,13 @@ const insertionSort = (values, compare?: sort['compare']) => {
         }
 
         console.log("Smallest after: ", smallest);
-        console.log("smallestValue current: ", smallestValue);
         console.log("SmallestValue after: ", result[smallest]);
 
         if (smallest < i && next !== undefined) {
 
             // We're going to do two splices to swap the values properly
             // Place it in the position we want to position it in, then do one to delete it from the old position
-            if (typeof(next) === 'object' || typeof(next) === 'number') {
+            if (typeof(next) === 'number' || typeof(next) === 'string') {
                 result.splice(smallest, 0, next);
                 result.splice(i + 1, 1);
             }
@@ -132,4 +157,4 @@ console.log("Insertion sort: ");
 // console.log("Insertion sort [1, 2, 3]: ", insertionSort(array3)); // [1, 2, 3]
 // console.log("Insertion sort []: ", insertionSort([])); // []
 // console.log("Insertion sort large array []: ", insertionSort(largeArray)); // [2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
-console.log("Insertion sort large array []: ", insertionSort(strings));
+console.log("Insertion sort large array []: ", insertionSort(strings, stringCompare)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
