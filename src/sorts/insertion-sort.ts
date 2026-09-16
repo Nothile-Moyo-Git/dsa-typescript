@@ -41,7 +41,6 @@ const stringCompare: Comparitor = (a, b) => {
     return 0;
 };
 
-
 // Todo, define a type that contains everything
 // Use a generic type that extends it and contains the relevant typing
 const insertionSort: SortMethod = (values, compare) => {
