@@ -27,17 +27,20 @@ type Comparitor = <T extends SortableItem>(a : T, b: T) => number;
 // Generic type that takes 
 type SortMethod = <T extends SortableItem>(values: T[], compare?: Comparitor) => T[];
 
-type sort = {
-    params: number[] | string[]; 
-    object: { name: string, age: number };
-    compare: (a: {name: string, age: number} | string, b: {name: string, age: number} | string) => number;
-    method: (values: sort['params'] | sort['object'][], compare?: sort['compare']) => sort['params'] | sort['object'][];
-}
-
 // Function to compare strings, this will be passed through the compare argument
-const stringCompare: Comparitor = (a, b) => {
+const strComp: Comparitor = (a, b) => {
     if (a < b) { return -1;}
     else if (a > b) { return 1;}
+    return 0;
+};
+
+const oldestToYoungest: Comparitor = (a, b) => {
+
+    // Ensure it's an object so we can reference parameters despite being a generic
+    if (typeof(a) === 'object' && typeof(b) === 'object') {
+        return b.age - a.age
+    }
+
     return 0;
 };
 
@@ -49,14 +52,8 @@ const insertionSort: SortMethod = (values, compare) => {
     let result = values;
     const size = result.length;
 
-    console.log("Values: ", values);
-    console.log("Size: ", size);
-
     // Iterate to the right
     for (let i = 1; i < size; i++) {
-
-        console.log("I: ", i);
-        console.log("Result: ", result);
 
         // Variables that we can update
         // We start with both values, and we update them when we find the lowest value
@@ -73,10 +70,6 @@ const insertionSort: SortMethod = (values, compare) => {
         while (sorted === false) {
 
             previous = result[j];
-
-            console.log("J: ", j);
-            console.log("Previous: ", previous);
-            console.log("Next: ", next);
 
             // Handle for values. We do different comparisons because of the methods used to compare
             if (previous !== undefined && next !== undefined) {
@@ -96,8 +89,6 @@ const insertionSort: SortMethod = (values, compare) => {
                     if (compare) {
                         const outcome = compare(previous, next);
 
-                        console.log("Outcome: ", outcome);
-
                         if (outcome === 1) {
                             // Update the index and the value that we'll return if it's the lowest
                             smallest = j;
@@ -106,11 +97,18 @@ const insertionSort: SortMethod = (values, compare) => {
                 }
 
                 // Objects
+                if (typeof(previous) === 'object' && typeof(next) === 'object') {
+
+                    if (compare) {
+                        const outcome = compare(previous, next);
+
+                        if (outcome > 0) {
+                            smallest = j;
+                        }
+
+                    }
+                }
             }
-
-            // Handle for strings as we do pass a function through
-
-            console.log("SmallestValue: ", result[smallest]);
 
             j = j - 1;
 
@@ -120,24 +118,15 @@ const insertionSort: SortMethod = (values, compare) => {
             }
         }
 
-        console.log("Smallest after: ", smallest);
-        console.log("SmallestValue after: ", result[smallest]);
-
         if (smallest < i && next !== undefined) {
 
             // We're going to do two splices to swap the values properly
             // Place it in the position we want to position it in, then do one to delete it from the old position
-            if (typeof(next) === 'number' || typeof(next) === 'string') {
-                result.splice(smallest, 0, next);
-                result.splice(i + 1, 1);
-            }
+            result.splice(smallest, 0, next);
+            result.splice(i + 1, 1);
+            
         }
 
-        console.log("Updated results: ", result);
-
-        console.log("\n");
-        console.log("-".repeat(50));
-        console.log("\n");
     }
 
     return result;
@@ -149,6 +138,22 @@ const array3 = [1, 2, 3];
 const emptyArray = [];
 const largeArray = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
 const strings = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
+const moarKittyData = [{
+  name: "LilBub",
+  age: 7
+}, {
+  name: "Garfield",
+  age: 40
+}, {
+  name: "Heathcliff",
+  age: 45
+}, {
+  name: "Blue",
+  age: 1
+}, {
+  name: "Grumpy",
+  age: 6
+}];
 
 console.log("Insertion sort: ");
 // console.log("Insertion sort [4, 20, 12, 10, 7, 9]: ", insertionSort(array1)); // [4, 7, 9, 10, 12, 20]
@@ -156,4 +161,21 @@ console.log("Insertion sort: ");
 // console.log("Insertion sort [1, 2, 3]: ", insertionSort(array3)); // [1, 2, 3]
 // console.log("Insertion sort []: ", insertionSort([])); // []
 // console.log("Insertion sort large array []: ", insertionSort(largeArray)); // [2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
-console.log("Insertion sort large array []: ", insertionSort(strings, stringCompare)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
+// console.log("Insertion sort large array []: ", insertionSort(strings, stringCompare)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
+// console.log("Insertion sort large array []: ", insertionSort(moarKittyData, oldestToYoungest)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
+/* [{
+  name: "Blue",
+  age: 1
+},{
+  name: "Grumpy",
+  age: 6
+},{
+  name: "LilBub",
+  age: 7
+}, {
+  name: "Garfield",
+  age: 40
+}, {
+  name: "Heathcliff",
+  age: 45
+}]; */
