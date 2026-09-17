@@ -132,6 +132,17 @@ const insertionSort: SortMethod = (values, compare) => {
     return result;
 };
 
+// Teacher example
+const insertionSortExample: SortMethod = (arr, compare) => {
+
+    const size = arr.length;
+
+    // Execute the initial loop, starting at the first value
+    for (let i = 1; i < size; i++) {
+        const currentValue = arr[i];
+    }
+}
+
 const array1 = [4, 20, 12, 10, 7, 9];
 const array2 = [0, -10, 7, 4];
 const array3 = [1, 2, 3];
