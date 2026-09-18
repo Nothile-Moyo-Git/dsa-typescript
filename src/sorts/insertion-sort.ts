@@ -133,6 +133,7 @@ const insertionSort: SortMethod = (values, compare) => {
 };
 
 // Teacher example
+// In this example, we go backwards, not forwards as I've done in mine
 const insertionSortExample: SortMethod = (arr, compare) => {
 
     const size = arr.length;
@@ -140,7 +141,35 @@ const insertionSortExample: SortMethod = (arr, compare) => {
     // Execute the initial loop, starting at the first value
     for (let i = 1; i < size; i++) {
         const currentValue = arr[i];
+        let replaceIndex = 0;
+
+        // This is the backwards loop, similar to how I did it
+        for (let j = i - 1; j >= 0 && arr[j]; j--) {
+
+          replaceIndex = j;
+
+          // Do the comparisons for strings or numbers
+          if (!compare) {
+            const previous = arr[j];
+
+            console.log("Current value: ", currentValue);
+            console.log("Previous: ", previous);
+
+            if (previous !== undefined && currentValue) {
+              // Move values to the right
+              arr[j + 1] = previous;
+            }
+          }
+
+          // If you have a compare function, use that instead
+        }
+
+        if (currentValue !== undefined) {
+          arr[replaceIndex + 1] = currentValue;
+        }
     }
+
+    return arr;
 }
 
 const array1 = [4, 20, 12, 10, 7, 9];
@@ -190,3 +219,7 @@ console.log("Insertion sort: ");
   name: "Heathcliff",
   age: 45
 }]; */
+
+// Teacher example
+const learningArray = [2, 1, 9, 76, 4];
+console.log("Insertion sort: ", insertionSortExample(learningArray));
