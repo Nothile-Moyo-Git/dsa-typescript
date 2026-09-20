@@ -136,40 +136,54 @@ const insertionSort: SortMethod = (values, compare) => {
 // In this example, we go backwards, not forwards as I've done in mine
 const insertionSortExample: SortMethod = (arr, compare) => {
 
+    console.log("Insertion sort [2, 1, 9, 76, 4]: ");
+
     const size = arr.length;
+    const result = arr;
 
     // Execute the initial loop, starting at the first value
     for (let i = 1; i < size; i++) {
-        const currentValue = arr[i];
+
+        const currentValue = result[i];
         let replaceIndex = 0;
+        let shouldSwap = false;
 
         // This is the backwards loop, similar to how I did it
-        for (let j = i - 1; j >= 0 && arr[j]; j--) {
+        for (let j = i - 1; j >= 0; j--) {
 
           replaceIndex = j;
+          const previous = arr[j];
 
           // Do the comparisons for strings or numbers
           if (!compare) {
-            const previous = arr[j];
 
             console.log("Current value: ", currentValue);
             console.log("Previous: ", previous);
 
-            if (previous !== undefined && currentValue) {
+            if (previous !== undefined && currentValue !== undefined && previous > currentValue) {
               // Move values to the right
-              arr[j + 1] = previous;
+              shouldSwap = true;
+              result[j + 1] = previous;
             }
           }
 
           // If you have a compare function, use that instead
+
+          // Documentation
+          console.log("\n");
+          console.log("ReplaceIndex: ", replaceIndex);
+          console.log("Current value: ", currentValue);
+          console.log("Current result: ", result);
         }
 
-        if (currentValue !== undefined) {
-          arr[replaceIndex + 1] = currentValue;
+        console.log("-".repeat(50));
+
+        if (currentValue !== undefined && shouldSwap === true) {
+          result[replaceIndex] = currentValue;
         }
     }
 
-    return arr;
+    return result;
 }
 
 const array1 = [4, 20, 12, 10, 7, 9];
@@ -222,4 +236,4 @@ console.log("Insertion sort: ");
 
 // Teacher example
 const learningArray = [2, 1, 9, 76, 4];
-console.log("Insertion sort: ", insertionSortExample(learningArray));
+console.log("Insertion sort [2, 1, 9, 76, 4]: ", insertionSortExample(learningArray));
