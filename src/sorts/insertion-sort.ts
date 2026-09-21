@@ -145,25 +145,31 @@ const insertionSortExample: SortMethod = (arr, compare) => {
     for (let i = 1; i < size; i++) {
 
         const currentValue = result[i];
-        let replaceIndex = 0;
+        let replaceIndex = i - 1;
         let shouldSwap = false;
 
         // This is the backwards loop, similar to how I did it
         for (let j = i - 1; j >= 0; j--) {
 
-          replaceIndex = j;
           const previous = arr[j];
 
           // Do the comparisons for strings or numbers
           if (!compare) {
-
+            console.log("\n");
             console.log("Current value: ", currentValue);
             console.log("Previous: ", previous);
 
-            if (previous !== undefined && currentValue !== undefined && previous > currentValue) {
-              // Move values to the right
-              shouldSwap = true;
-              result[j + 1] = previous;
+            // Check if the current value is greater than the previous one
+            // If true, move values to the right
+            if (previous !== undefined && currentValue !== undefined) {
+              
+              if (previous > currentValue) {
+
+                // Move values to the right
+                shouldSwap = true;
+                result[j + 1] = previous;
+                replaceIndex = j;
+              }
             }
           }
 
@@ -176,11 +182,12 @@ const insertionSortExample: SortMethod = (arr, compare) => {
           console.log("Current result: ", result);
         }
 
-        console.log("-".repeat(50));
-
         if (currentValue !== undefined && shouldSwap === true) {
           result[replaceIndex] = currentValue;
         }
+
+        console.log("Updated result: ", result);
+        console.log("-".repeat(50));
     }
 
     return result;
