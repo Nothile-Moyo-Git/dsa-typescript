@@ -68,6 +68,11 @@ console.log(bubbleSort([37, 45, 29, 8]));  // [8, 29, 37, 45] */
 // We'll need to do this for objects with strings inside them
 // We'll need 2 parameters being passed through to the method
 //
+// The way this works, we start at position 0, and we compare it to the next number
+// If the previous value is greater than the next, swap them, and continue, the swapped value will be used on the next swap
+// Continue this process until completed
+// The largest number will "bubble" to the top
+//
 // It also needs to work for arrays of numbers, arrays of strings or the default array of object with numbers inside
 // 
 // Time complexity: O(n^2)

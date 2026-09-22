@@ -14,8 +14,12 @@
 //
 // Receive an array of numbers
 // Set a value to temp (initial) and compare it to other numbers
-// Keep the index of the smallest value
-// Move the value left
+// Keep the index of the smallest value if we find one.
+// Move the value left at position i. Swap it with the value at position j.
+//
+// In essence, start at the beginning, go right, find the smallest value, place it at position i and swap with j
+// Continue the process until it's all sorted, as you keep getting the smallest value and placing it at position i
+// We replace with j where it's at as each position is eventually sorted
 // 
 // Time complexity: O(n ^ 2) as it needs to iterate squared, worst case
 // =======================================================================================================================
@@ -59,6 +63,7 @@ const selectionSort: sort['method'] = (values, compare?: sort['compare']) => {
             if (temp !== undefined && value !== undefined) {
 
                 if (typeof(temp) === 'object' && typeof(value) === 'object' && compare) {
+                    // Check if the value at position i is greater than the value at position j
                     let swap = compare(temp, value);
                     if (swap > 0) {
                         temp = value;

@@ -44,8 +44,37 @@ const oldestToYoungest: Comparitor = (a, b) => {
     return 0;
 };
 
-// Todo, define a type that contains everything
-// Use a generic type that extends it and contains the relevant typing
+// ============================================================================================================================
+// Insertion Sort
+//
+// Insertion sort works by starting at the first value, it then iterates through i
+// j starts at i - 1 to begin at value 0, it compares itself to i, and if i is greater, replace value at position j + 1 with j
+// Continue this process to shift values to the right until i is no longer greater than j
+//
+// We start with the first two values so don't worry about multiple moves
+// 
+// Example:
+// i = 1. j = 0.
+// [0, -10, 7, 4] -> Start at -10. Compare with 0.
+// -10 is less than 0, so we make the value at the index 0, the smallest value is now -10, so store that index
+// [0, 0, 7, 4]. Index to insert value is now 0.
+// Value is inserted
+// [-10, 0, 7, 4]
+//
+// [-10, 0, 7, 4] -> Start at 7. Compare with 0.
+// 7 is greater than 0, so we set the sorted boolean to true and we don't do any replacements and continue
+// 
+// [-10, 0, 7, 4] -> Start at 4. Compare with 7.
+// 7 is greater than 4, so we make the value at the index 7, and we keep 4 as the smallest.
+// [-10, 0, 7, 7]
+// Our smallest index is now 2, and we compare to 0, which is smaller than 4
+// Stop iterating here, and place the value in 4
+// [-10, 0, 4, 7]
+//
+// Array is sorted
+// 
+// Time complexity: O(n ^ 2) as it needs to iterate squared, worst case
+// ===========================================================================================================================
 const insertionSort: SortMethod = (values, compare) => {
 
     // Get values to handle the iteration
@@ -149,6 +178,7 @@ const insertionSortExample: SortMethod = (arr, compare) => {
         let shouldSwap = false;
 
         // This is the backwards loop, similar to how I did it
+        // The greater than conditional happens here
         for (let j = i - 1; j >= 0; j--) {
 
           const previous = arr[j];
@@ -222,8 +252,8 @@ console.log("Insertion sort: ");
 // console.log("Insertion sort [1, 2, 3]: ", insertionSort(array3)); // [1, 2, 3]
 // console.log("Insertion sort []: ", insertionSort([])); // []
 // console.log("Insertion sort large array []: ", insertionSort(largeArray)); // [2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
-// console.log("Insertion sort large array []: ", insertionSort(strings, stringCompare)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
-// console.log("Insertion sort large array []: ", insertionSort(moarKittyData, oldestToYoungest)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
+// console.log("Insertion sort large array []: ", insertionSort(strings, strComp)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
+// console.log("Insertion sort large array []: ", insertionSort(moarKittyData, oldestToYoungest));
 /* [{
   name: "Blue",
   age: 1
@@ -243,4 +273,27 @@ console.log("Insertion sort: ");
 
 // Teacher example
 const learningArray = [2, 1, 9, 76, 4];
-console.log("Insertion sort [2, 1, 9, 76, 4]: ", insertionSortExample(learningArray));
+// console.log("Insertion sort [2, 1, 9, 76, 4]: ", insertionSortExample(learningArray)); // [1, 2, 4, 9, 76]
+// console.log("Insertion sort [2, 1, 9, 76, 4]: ", insertionSortExample(array1)); // [4, 7, 9, 10, 12, 20]
+// console.log("Insertion sort [0, -10, 7, 4]: ", insertionSort(array2)); // [-10, 0, 4, 7]
+// console.log("Insertion sort [1, 2, 3]: ", insertionSort(array3)); // [1, 2, 3]
+// console.log("Insertion sort []: ", insertionSort([])); // []
+// console.log("Insertion sort large array []: ", insertionSort(largeArray)); [2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
+// console.log("Insertion sort large array []: ", insertionSort(strings, strComp)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
+console.log("Insertion sort large array []: ", insertionSort(moarKittyData, oldestToYoungest));
+/* [{
+  name: "Blue",
+  age: 1
+},{
+  name: "Grumpy",
+  age: 6
+},{
+  name: "LilBub",
+  age: 7
+}, {
+  name: "Garfield",
+  age: 40
+}, {
+  name: "Heathcliff",
+  age: 45
+}]; */
