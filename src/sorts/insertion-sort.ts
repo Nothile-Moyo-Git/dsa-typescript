@@ -165,8 +165,6 @@ const insertionSort: SortMethod = (values, compare) => {
 // In this example, we go backwards, not forwards as I've done in mine
 const insertionSortExample: SortMethod = (arr, compare) => {
 
-    console.log("Insertion sort [2, 1, 9, 76, 4]: ");
-
     const size = arr.length;
     const result = arr;
 
@@ -185,9 +183,6 @@ const insertionSortExample: SortMethod = (arr, compare) => {
 
           // Do the comparisons for strings or numbers
           if (!compare) {
-            console.log("\n");
-            console.log("Current value: ", currentValue);
-            console.log("Previous: ", previous);
 
             // Check if the current value is greater than the previous one
             // If true, move values to the right
@@ -202,22 +197,11 @@ const insertionSortExample: SortMethod = (arr, compare) => {
               }
             }
           }
-
-          // If you have a compare function, use that instead
-
-          // Documentation
-          console.log("\n");
-          console.log("ReplaceIndex: ", replaceIndex);
-          console.log("Current value: ", currentValue);
-          console.log("Current result: ", result);
         }
 
         if (currentValue !== undefined && shouldSwap === true) {
           result[replaceIndex] = currentValue;
         }
-
-        console.log("Updated result: ", result);
-        console.log("-".repeat(50));
     }
 
     return result;
@@ -272,7 +256,7 @@ console.log("Insertion sort: ");
 }]; */
 
 // Teacher example
-const learningArray = [2, 1, 9, 76, 4];
+// const learningArray = [2, 1, 9, 76, 4];
 // console.log("Insertion sort [2, 1, 9, 76, 4]: ", insertionSortExample(learningArray)); // [1, 2, 4, 9, 76]
 // console.log("Insertion sort [2, 1, 9, 76, 4]: ", insertionSortExample(array1)); // [4, 7, 9, 10, 12, 20]
 // console.log("Insertion sort [0, -10, 7, 4]: ", insertionSort(array2)); // [-10, 0, 4, 7]
@@ -280,7 +264,7 @@ const learningArray = [2, 1, 9, 76, 4];
 // console.log("Insertion sort []: ", insertionSort([])); // []
 // console.log("Insertion sort large array []: ", insertionSort(largeArray)); [2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]
 // console.log("Insertion sort large array []: ", insertionSort(strings, strComp)); // ["Blue", "Garfield", "Grumpy", "Heathcliff", "LilBub"]
-console.log("Insertion sort large array []: ", insertionSort(moarKittyData, oldestToYoungest));
+// console.log("Insertion sort large array []: ", insertionSort(moarKittyData, oldestToYoungest));
 /* [{
   name: "Blue",
   age: 1
