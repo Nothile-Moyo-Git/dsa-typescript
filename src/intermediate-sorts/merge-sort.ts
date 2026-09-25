@@ -32,6 +32,7 @@ const mergeArrays: Merge = <T extends SortableItem>(a: T[], b: T[]) => {
     let result: T[] = [];
     const aSize = a.length;
     const bSize = b.length;
+    const totalSize = aSize + bSize;
 
     // Keep our indexes and values so we can track as we check and sort
     let aIndex = 0;
@@ -39,8 +40,6 @@ const mergeArrays: Merge = <T extends SortableItem>(a: T[], b: T[]) => {
     let merged = false;
 
     let currentSmallest = null;
-    let aNextValue = 0;
-    let bNextValue = 0;
 
     if (aSize > 0 || bSize > 0) {
         while (merged === false) {
@@ -48,15 +47,49 @@ const mergeArrays: Merge = <T extends SortableItem>(a: T[], b: T[]) => {
             let first = a[aIndex];
             let second = b[bIndex];
 
-            console.log("Hello!");
+            console.log("First: ", first);
+            console.log("Second: ", second);
 
+            // Compare values, push it into the result, increment the index for either one
+            // This allows one full pass of these values
             if (first !== undefined && second !== undefined) {
+
+                // If we have objects, we should compare the ages, otherwise, compare the strings / numbers
                 currentSmallest = first < second ? 'a' : 'b';
+
+                if (currentSmallest === 'a') {
+                    result.push(first);
+                    aIndex++;
+                } else {
+                    result.push(second);
+                    bIndex++;
+                }
+            }
+
+            // If comparisons are done, we'll do the remaining array values
+            // This occurs because one value is undefined as it's completed
+            if (first !== undefined && second === undefined) {
+                result.push(first);
+                aIndex++;
+            }
+            
+            if (second !== undefined && first === undefined) {
+                result.push(second);
+                bIndex++;
             }
 
             console.log("CurrentSmallest: ", currentSmallest);
+
+            const resultSize = result.length;
+            console.log("Result: ", result);
+            console.log("ResultSize: ", resultSize);
+            console.log("TotalSize: ", totalSize);
             
-            merged = true;
+            // Once the final array is the size of the two arrays passed in
+            // The merge is finished
+            if (resultSize >= totalSize) {
+                merged = true;
+            }  
         }
     }
 
