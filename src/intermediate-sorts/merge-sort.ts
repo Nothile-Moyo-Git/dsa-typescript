@@ -54,8 +54,12 @@ const mergeArrays: Merge = <T extends SortableItem>(a: T[], b: T[]) => {
             // This allows one full pass of these values
             if (first !== undefined && second !== undefined) {
 
-                // If we have objects, we should compare the ages, otherwise, compare the strings / numbers
-                currentSmallest = first < second ? 'a' : 'b';
+                if (typeof(first) === 'object' && typeof(second) === 'object') {
+                    currentSmallest = first.age > second.age ? 'a' : 'b';
+                } else {
+                    // If we have objects, we should compare the ages, otherwise, compare the strings / numbers
+                    currentSmallest = first < second ? 'a' : 'b';
+                }
 
                 if (currentSmallest === 'a') {
                     result.push(first);
@@ -101,4 +105,47 @@ const mergeSort = () => {
 
 };
 
-console.log("Merge arrays: ", mergeArrays([1, 2, 7, 8], [3, 4, 5, 6]));
+// 
+var moarKittyData = [{
+  name: "LilBub",
+  age: 7
+}, {
+  name: "Garfield",
+  age: 40
+}, {
+  name: "Heathcliff",
+  age: 45
+}, {
+  name: "Blue",
+  age: 1
+}, {
+  name: "Grumpy",
+  age: 6
+}, {
+  name: "Crusty",
+  age: 21
+}];
+
+var kitties = ["Garfield", "Heathcliff", "LilBub", "Blue", "Crusty", "Grumpy"];
+
+// console.log("Merge arrays: ", mergeArrays([1, 2, 7, 8], [3, 4, 5, 6]));
+/* console.log("Merge arrays: ", mergeArrays([{
+  name: "LilBub",
+  age: 45
+}, {
+  name: "Garfield",
+  age: 40
+}, {
+  name: "Heathcliff",
+  age: 7
+}], [{
+  name: "Blue",
+  age: 21
+}, {
+  name: "Grumpy",
+  age: 6
+}, {
+  name: "Crusty",
+  age: 1
+}])); */
+console.log("Merge arrays: ", mergeArrays(["Garfield", "Heathcliff", "LilBub"], ["Blue", "Crusty", "Grumpy",]));
