@@ -101,12 +101,38 @@ const mergeArrays: Merge = <T extends SortableItem>(a: T[], b: T[]) => {
 
 };
 
-const mergeSort = () => {
+const splitArray = <T extends SortableItem>(values: T[]) => {
+
+  const size = values.length;
+  const half = Math.ceil(size / 2) - 1;
+
+  const first = values[0, half];
 
 };
 
-// 
-var moarKittyData = [{
+// Do a binary search and find the middle value inside it
+// If the value you're checking is greater, 
+
+const mergeSort: SortMethod = <T extends SortableItem>(values: T[], compare?: Comparitor) => {
+
+  let result: T[] = values;
+  const size = result.length;
+
+  let split = values;
+  let currentSplits = 0;
+  let currentSplit: T[] = [];
+  const maxSplits = size - 1;
+
+  return result;
+};
+
+const array1 = [4, 20, 12, 10, 7, 9];
+const array2 = [0, -10, 7, 4];
+const array3 = [1, 2, 3];
+const array4: number[] = [];
+const array5 = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
+const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
+const moarKittyData = [{
   name: "LilBub",
   age: 7
 }, {
@@ -121,12 +147,7 @@ var moarKittyData = [{
 }, {
   name: "Grumpy",
   age: 6
-}, {
-  name: "Crusty",
-  age: 21
 }];
-
-var kitties = ["Garfield", "Heathcliff", "LilBub", "Blue", "Crusty", "Grumpy"];
 
 // console.log("Merge arrays: ", mergeArrays([1, 2, 7, 8], [3, 4, 5, 6]));
 /* console.log("Merge arrays: ", mergeArrays([{
@@ -148,4 +169,4 @@ var kitties = ["Garfield", "Heathcliff", "LilBub", "Blue", "Crusty", "Grumpy"];
   name: "Crusty",
   age: 1
 }])); */
-console.log("Merge arrays: ", mergeArrays(["Garfield", "Heathcliff", "LilBub"], ["Blue", "Crusty", "Grumpy",]));
+// console.log("Merge arrays: ", mergeArrays(["Garfield", "Heathcliff", "LilBub"], ["Blue", "Crusty", "Grumpy",]));
