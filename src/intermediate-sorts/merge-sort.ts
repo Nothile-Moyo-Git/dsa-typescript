@@ -103,34 +103,33 @@ const mergeArrays: Merge = <T extends SortableItem>(a: T[], b: T[]) => {
 
 // Recursive function to be called to split and eventually merge the arrays
 // It should use two pointers for its time / space compexity
-const splitArray = <T extends SortableItem>(values: T[], left: number, right: number, count: number) => {
+const splitArray = <T extends SortableItem>(values: T[], left: number, right: number, direction: string) => {
 
   const size = values.length;
+
+  console.log("Direction: ", direction);
+  console.log("Left before: ", left);
+  console.log("Right before: ", right);
 
   // Take right from left as we're finding the medium value
   // So, if left is pos 1, right is pos 3, 3 - 1 = 2 / 2 = 1
   const half = left + Math.floor((right - left) / 2);
 
-  console.log("Count: ", count);
-  console.log("Left: ", left);
-  console.log("Right: ", right);
+  console.log("Left after: ", left);
+  console.log("Right after: ", right);
 
   console.log("\n");
   console.log("-".repeat(50));
   console.log("\n");
 
   // End the loop
-  if (right - left <= 1) {
-    return;
-  }
-
-  if (count === 3) {
+  if (right - left <= 0) {
     return;
   }
 
   // Split the array again
-  // splitArray(values, left, half);
-  splitArray(values, half, right, count + 1)
+  splitArray(values, left, half, "left");
+  splitArray(values, half + 1, right, "right")
 
 };
  
@@ -195,4 +194,4 @@ const moarKittyData = [{
 }])); */
 // console.log("Merge arrays: ", mergeArrays(["Garfield", "Heathcliff", "LilBub"], ["Blue", "Crusty", "Grumpy",]));
 
-console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, 0))
+console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, "neither"))
