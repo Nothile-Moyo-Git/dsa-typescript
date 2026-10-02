@@ -14,6 +14,7 @@ type SortableItem = string | number | { name: string, age: number };
 // Typing for the comparison function
 type Comparitor = <T extends SortableItem>(a : T, b: T) => number;
 
+// 
 type Merge = <T extends SortableItem>(a : T[], b : T[]) => T[];
 
 // Generic type that takes 
@@ -101,9 +102,88 @@ const mergeArrays: Merge = <T extends SortableItem>(a: T[], b: T[]) => {
 
 };
 
+// Merge the two arrays into one and return the value
+const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: number, right: number, buffer: T[]) => {
+
+  console.log("\n");
+  console.log("Merge ranges called");
+
+  console.log("Left: ", left);
+  console.log("Mid: ", half);
+  console.log("Right: ", right);
+
+  // Get the left, mid, and right numbers so we can iterate through our arrays and merge them into buffer
+  let i = left;
+  let j = right;
+  let count = left;
+
+  // Let's do this simply for values 0, 0, 1 as an example
+  // TODO: Update this to cover other use cases
+    console.log("Testing variation");
+
+    // Iterate through the arrays whilst the lengths are the same
+    // Once you've covered these, then you iterate through remainders
+    // Add them to the array
+    while (i <= half && j <= right) {
+      const first = values[i];
+      const second = values[j];
+
+      if (first !== undefined && second !== undefined) {
+        console.log("Values to compare: ");
+        console.log("First: ", first);
+        console.log("Second: ", second);
+
+        if (first < second) {
+          buffer[count] = first;
+          i++;
+        } else {
+          console.log("Update second called");
+          buffer[count] = second;
+          j++;
+        }
+      }
+
+      count++;
+    }
+
+    // If we've still got values left in the first array, then add them to our buffer
+    // The positions are pointers we have to the original array, so we can use that
+    while (i <= half) {
+      const first = values[i];
+
+      if (first !== undefined) {
+        console.log("Update remainder second called");
+        console.log("Second: ", first);
+        buffer[count] = first;
+        i++;
+        count++;
+      }
+    }
+
+    // If we've still got values left in the second array, then add them to our buffer
+    // The positions are pointers we have to the original array, so we can use that
+    while (j <= right) {
+      const second = values[j];
+
+      if (second !== undefined) {
+        console.log("Update remainder second called");
+        console.log("Second: ", second);
+        buffer[count] = second;
+        j++;
+        count++;
+      }
+    }
+  
+
+  console.log("Buffer: ", buffer);
+ 
+  console.log("\n");
+
+};
+
 // Recursive function to be called to split and eventually merge the arrays
 // It should use two pointers for its time / space compexity
-const splitArray = <T extends SortableItem>(values: T[], left: number, right: number, direction: string) => {
+const splitArray = <T extends SortableItem>(values: T[], left: number, right: number, direction: string, buffer: T[]) => {
 
   const size = values.length;
 
@@ -128,9 +208,10 @@ const splitArray = <T extends SortableItem>(values: T[], left: number, right: nu
   }
 
   // Split the array again
-  splitArray(values, left, half, "left");
-  splitArray(values, half + 1, right, "right")
+  splitArray(values, left, half, "left", buffer);
+  splitArray(values, half + 1, right, "right", buffer);
 
+  mergeRanges(values, left, half, right, buffer);
 };
  
 // Do a binary search and find the middle value inside it
@@ -194,4 +275,6 @@ const moarKittyData = [{
 }])); */
 // console.log("Merge arrays: ", mergeArrays(["Garfield", "Heathcliff", "LilBub"], ["Blue", "Crusty", "Grumpy",]));
 
-console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, "neither"))
+let buffer = [...array2];
+
+console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, "neither", buffer))
