@@ -108,6 +108,7 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
   console.log("\n");
   console.log("Merge ranges called");
 
+  console.log("Values: ", values);
   console.log("Left: ", left);
   console.log("Mid: ", half);
   console.log("Right: ", right);
@@ -133,13 +134,27 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
         console.log("First: ", first);
         console.log("Second: ", second);
 
-        if (first < second) {
-          buffer[count] = first;
-          i++;
+        if (typeof(first) === 'object' && typeof(second) === 'object') {
+
+          // Compare the objects
+          if (first.age < second.age) {
+            buffer[count] = first;
+            i++;
+          } else {
+            buffer[count] = second;
+            j++;
+          }        
+
         } else {
-          console.log("Update second called");
-          buffer[count] = second;
-          j++;
+  
+          if (first < second) {
+            buffer[count] = first;
+            i++;
+          } else {
+            console.log("Update second called");
+            buffer[count] = second;
+            j++;
+          }
         }
       }
 
@@ -152,7 +167,7 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
       const first = values[i];
 
       if (first !== undefined) {
-        console.log("Update remainder second called");
+        console.log("Update remainder first called");
         console.log("Second: ", first);
         buffer[count] = first;
         i++;
@@ -185,8 +200,6 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
 // It should use two pointers for its time / space compexity
 const splitArray = <T extends SortableItem>(values: T[], left: number, right: number, direction: string, buffer: T[]) => {
 
-  const size = values.length;
-
   console.log("Direction: ", direction);
   console.log("Left before: ", left);
   console.log("Right before: ", right);
@@ -210,6 +223,17 @@ const splitArray = <T extends SortableItem>(values: T[], left: number, right: nu
   // Split the array again
   splitArray(values, left, half, "left", buffer);
   splitArray(values, half + 1, right, "right", buffer);
+
+  // If the values are already sorted, no need to merge the ranges
+  const first = values[half];
+  const second = values[half + 1];
+
+  // If the values are merged, skip it
+  if (first !== undefined && second !== undefined) {
+    if (first === second) {
+      return;
+    }
+  }
 
   mergeRanges(values, left, half, right, buffer);
 };
@@ -275,6 +299,8 @@ const moarKittyData = [{
 }])); */
 // console.log("Merge arrays: ", mergeArrays(["Garfield", "Heathcliff", "LilBub"], ["Blue", "Crusty", "Grumpy",]));
 
-let buffer = [...array2];
+let buffer = array2.slice();
+let strBuffer = [...kitties];
 
-console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, "neither", buffer))
+// console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, "neither", buffer));
+console.log("String array: ", splitArray(kitties, 0, kitties.length - 1, "neither", strBuffer));
