@@ -115,7 +115,7 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
 
   // Get the left, mid, and right numbers so we can iterate through our arrays and merge them into buffer
   let i = left;
-  let j = right;
+  let j = half + 1;
   let count = left;
 
   // Let's do this simply for values 0, 0, 1 as an example
@@ -168,7 +168,7 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
 
       if (first !== undefined) {
         console.log("Update remainder first called");
-        console.log("Second: ", first);
+        console.log("First: ", first);
         buffer[count] = first;
         i++;
         count++;
@@ -203,6 +203,7 @@ const splitArray = <T extends SortableItem>(values: T[], left: number, right: nu
   console.log("Direction: ", direction);
   console.log("Left before: ", left);
   console.log("Right before: ", right);
+  console.log("Current buffer: ", strBuffer);
 
   // Take right from left as we're finding the medium value
   // So, if left is pos 1, right is pos 3, 3 - 1 = 2 / 2 = 1
@@ -259,7 +260,8 @@ const array2 = [0, -10, 7, 4];
 const array3 = [1, 2, 3];
 const array4: number[] = [];
 const array5 = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
-const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
+const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue"];
+// const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
 const moarKittyData = [{
   name: "LilBub",
   age: 7
