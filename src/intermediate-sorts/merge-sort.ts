@@ -112,11 +112,14 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
   console.log("Left: ", left);
   console.log("Mid: ", half);
   console.log("Right: ", right);
+  console.log("Buffer before: ", buffer);
 
   // Get the left, mid, and right numbers so we can iterate through our arrays and merge them into buffer
   let i = left;
   let j = half + 1;
   let count = left;
+
+  console.log("Count: ", count);
 
   // Let's do this simply for values 0, 0, 1 as an example
   // TODO: Update this to cover other use cases
@@ -126,8 +129,8 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
     // Once you've covered these, then you iterate through remainders
     // Add them to the array
     while (i <= half && j <= right) {
-      const first = values[i];
-      const second = values[j];
+      const first = buffer[i];
+      const second = buffer[j];
 
       if (first !== undefined && second !== undefined) {
         console.log("Values to compare: ");
@@ -148,18 +151,27 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
         } else {
   
           if (first < second) {
+            console.log("Update first called");
+            let temp = second;
             buffer[count] = first;
+            buffer[i] = temp;
             i++;
           } else {
             console.log("Update second called");
+            let temp = first;
             buffer[count] = second;
+            buffer[j] = temp;
             j++;
           }
         }
       }
 
+      console.log("Buffer updated: ", buffer);
+      console.log("\n");
       count++;
     }
+
+    console.log("Count after: ", count);
 
     // If we've still got values left in the first array, then add them to our buffer
     // The positions are pointers we have to the original array, so we can use that
@@ -190,7 +202,7 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
     }
   
 
-  console.log("Buffer: ", buffer);
+  console.log("Buffer after: ", buffer);
  
   console.log("\n");
 
