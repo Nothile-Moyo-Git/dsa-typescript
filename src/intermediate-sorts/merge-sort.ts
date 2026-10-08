@@ -119,6 +119,9 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
   let j = half + 1;
   let count = left;
 
+  let tempArray: T[] = [];
+  tempArray.length = right - left + 1;
+
   console.log("Count: ", count);
 
   // Let's do this simply for values 0, 0, 1 as an example
@@ -152,15 +155,13 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
   
           if (first < second) {
             console.log("Update first called");
-            let temp = second;
-            buffer[count] = first;
-            buffer[i] = temp;
+            tempArray[count] = first;
             i++;
-          } else {
+          } 
+          
+          if (second < first) {
             console.log("Update second called");
-            let temp = first;
-            buffer[count] = second;
-            buffer[j] = temp;
+            tempArray[count] = second;
             j++;
           }
         }
@@ -176,12 +177,12 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
     // If we've still got values left in the first array, then add them to our buffer
     // The positions are pointers we have to the original array, so we can use that
     while (i <= half) {
-      const first = values[i];
+      const first = buffer[i];
 
       if (first !== undefined) {
         console.log("Update remainder first called");
         console.log("First: ", first);
-        buffer[count] = first;
+        tempArray[count] = first;
         i++;
         count++;
       }
@@ -190,18 +191,28 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
     // If we've still got values left in the second array, then add them to our buffer
     // The positions are pointers we have to the original array, so we can use that
     while (j <= right) {
-      const second = values[j];
+      const second = buffer[j];
 
       if (second !== undefined) {
         console.log("Update remainder second called");
         console.log("Second: ", second);
-        buffer[count] = second;
+        tempArray[count] = second;
         j++;
         count++;
       }
     }
   
 
+  // Update buffer to the values we have in temp, so we update the whole array, instead of changing values
+  // This is because trying to directly update buffer ruins the references
+  for (let k = left; k < tempArray.length; k++) {
+    const value = tempArray[k];
+
+    if (value) {
+      buffer[k] = value;
+    }
+  }
+  console.log("Temp after: ", tempArray);
   console.log("Buffer after: ", buffer);
  
   console.log("\n");
@@ -272,6 +283,7 @@ const array2 = [0, -10, 7, 4];
 const array3 = [1, 2, 3];
 const array4: number[] = [];
 const array5 = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
+const array6 = [12, 3, 8, 4];
 const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue"];
 // const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
 const moarKittyData = [{
@@ -309,12 +321,14 @@ const moarKittyData = [{
   age: 6
 }, {
   name: "Crusty",
+
   age: 1
 }])); */
 // console.log("Merge arrays: ", mergeArrays(["Garfield", "Heathcliff", "LilBub"], ["Blue", "Crusty", "Grumpy",]));
 
 let buffer = array2.slice();
-let strBuffer = [...kitties];
+let strBuffer = [...array6];
+let arrayBuffer = [...array6];
 
 // console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, "neither", buffer));
-console.log("String array: ", splitArray(kitties, 0, kitties.length - 1, "neither", strBuffer));
+console.log("String array: ", splitArray(array6, 0, array6.length - 1, "neither", arrayBuffer));
