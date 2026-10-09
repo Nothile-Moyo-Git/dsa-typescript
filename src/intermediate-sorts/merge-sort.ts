@@ -14,21 +14,20 @@ type SortableItem = string | number | { name: string, age: number };
 // Typing for the comparison function
 type Comparitor = <T extends SortableItem>(a : T, b: T) => number;
 
-// 
+// Type to merge two sorted arrays together
 type Merge = <T extends SortableItem>(a : T[], b : T[]) => T[];
 
-// Generic type that takes 
-type SortMethod = <T extends SortableItem>(values: T[], compare?: Comparitor) => T[];
-
 // =======================================================================================================================
-// Merge Sort
-//
-// Receive an array of numbers
-// Sort by starting with the second value, then sort on the left hand side
-// Continue until completion
+// merge
 // 
+// Takes two sorted arrays and merges them, it does this by iterating through both
+// As it does so, it compares the values, pushes the smallest, then generates a new array based on this, and then returns the result
+//
+// Doesn't modigy the parameters passed to it for this function
+// Compare function is added as a parameter but isn't used
+//
 // =======================================================================================================================
-const mergeArrays: Merge = <T extends SortableItem>(a: T[], b: T[]) => {
+const merge: Merge = <T extends SortableItem>(a: T[], b: T[], compare?: Comparitor) => {
 
     let result: T[] = [];
     const aSize = a.length;
@@ -119,8 +118,8 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
   let j = half + 1;
   let count = left;
 
-  let tempArray: T[] = [];
-  tempArray.length = right - left + 1;
+  let temp: T[] = [];
+  temp.length = right - left + 1;
 
   console.log("Count: ", count);
 
@@ -155,13 +154,13 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
   
           if (first < second) {
             console.log("Update first called");
-            tempArray[count] = first;
+            temp[count] = first;
             i++;
           } 
           
           if (second < first) {
             console.log("Update second called");
-            tempArray[count] = second;
+            temp[count] = second;
             j++;
           }
         }
@@ -182,7 +181,7 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
       if (first !== undefined) {
         console.log("Update remainder first called");
         console.log("First: ", first);
-        tempArray[count] = first;
+        temp[count] = first;
         i++;
         count++;
       }
@@ -196,7 +195,7 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
       if (second !== undefined) {
         console.log("Update remainder second called");
         console.log("Second: ", second);
-        tempArray[count] = second;
+        temp[count] = second;
         j++;
         count++;
       }
@@ -205,14 +204,14 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
 
   // Update buffer to the values we have in temp, so we update the whole array, instead of changing values
   // This is because trying to directly update buffer ruins the references
-  for (let k = left; k < tempArray.length; k++) {
-    const value = tempArray[k];
+  for (let k = left; k < temp.length; k++) {
+    const value = temp[k];
 
     if (value) {
       buffer[k] = value;
     }
   }
-  console.log("Temp after: ", tempArray);
+  console.log("Temp after: ", temp);
   console.log("Buffer after: ", buffer);
  
   console.log("\n");
@@ -221,7 +220,7 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
 
 // Recursive function to be called to split and eventually merge the arrays
 // It should use two pointers for its time / space compexity
-const splitArray = <T extends SortableItem>(values: T[], left: number, right: number, direction: string, buffer: T[]) => {
+const mergeSort = <T extends SortableItem>(values: T[], left: number, right: number, direction: string, buffer: T[]) => {
 
   console.log("Direction: ", direction);
   console.log("Left before: ", left);
@@ -245,8 +244,8 @@ const splitArray = <T extends SortableItem>(values: T[], left: number, right: nu
   }
 
   // Split the array again
-  splitArray(values, left, half, "left", buffer);
-  splitArray(values, half + 1, right, "right", buffer);
+  mergeSort(values, left, half, "left", buffer);
+  mergeSort(values, half + 1, right, "right", buffer);
 
   // If the values are already sorted, no need to merge the ranges
   const first = values[half];
@@ -264,26 +263,11 @@ const splitArray = <T extends SortableItem>(values: T[], left: number, right: nu
  
 // Do a binary search and find the middle value inside it
 // If the value you're checking is greater, 
-
-const mergeSort: SortMethod = <T extends SortableItem>(values: T[], compare?: Comparitor) => {
-
-  let result: T[] = values;
-  const size = result.length;
-
-  let split = values;
-  let currentSplits = 0;
-  let currentSplit: T[] = [];
-  const maxSplits = size - 1;
-
-  return result;
-};
-
 const array1 = [4, 20, 12, 10, 7, 9];
 const array2 = [0, -10, 7, 4];
 const array3 = [1, 2, 3];
 const array4: number[] = [];
 const array5 = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
-const array6 = [12, 3, 8, 4];
 const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue"];
 // const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
 const moarKittyData = [{
@@ -326,9 +310,7 @@ const moarKittyData = [{
 }])); */
 // console.log("Merge arrays: ", mergeArrays(["Garfield", "Heathcliff", "LilBub"], ["Blue", "Crusty", "Grumpy",]));
 
-let buffer = array2.slice();
-let strBuffer = [...array6];
-let arrayBuffer = [...array6];
+let strBuffer = [...array2];
 
 // console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, "neither", buffer));
-console.log("String array: ", splitArray(array6, 0, array6.length - 1, "neither", arrayBuffer));
+console.log("String array: ", mergeSort(array2, 0, array2.length - 1, "neither", strBuffer));
