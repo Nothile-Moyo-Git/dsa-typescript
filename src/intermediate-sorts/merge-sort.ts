@@ -21,7 +21,8 @@ type Merge = <T extends SortableItem>(a : T[], b : T[]) => T[];
 // merge
 // 
 // Takes two sorted arrays and merges them, it does this by iterating through both
-// As it does so, it compares the values, pushes the smallest, then generates a new array based on this, and then returns the result
+// As it does so, it creates a new, compares the values, and pushes the smallest until it covers all values
+// It then returns the total result
 //
 // Doesn't modigy the parameters passed to it for this function
 // Compare function is added as a parameter but isn't used
@@ -54,13 +55,21 @@ const merge: Merge = <T extends SortableItem>(a: T[], b: T[], compare?: Comparit
             // This allows one full pass of these values
             if (first !== undefined && second !== undefined) {
 
+                // Objects, strings and numbers all use different logic
                 if (typeof(first) === 'object' && typeof(second) === 'object') {
                     currentSmallest = first.age > second.age ? 'a' : 'b';
-                } else {
-                    // If we have objects, we should compare the ages, otherwise, compare the strings / numbers
-                    currentSmallest = first < second ? 'a' : 'b';
                 }
 
+                // We do strings separately as we're sorting by length, not by value
+                if (typeof(first) === 'string' && typeof(second) === 'string') {
+                  currentSmallest = (first.length - second.length) <= 0 ? 'a' : 'b';
+                }
+
+                if (typeof(first) === 'number' && typeof(second) === 'number') {
+                  // If we have objects, we should compare the ages, otherwise, compare the strings / numbers
+                  currentSmallest = first < second ? 'a' : 'b';
+                }
+ 
                 if (currentSmallest === 'a') {
                     result.push(first);
                     aIndex++;
@@ -312,5 +321,10 @@ const moarKittyData = [{
 
 let strBuffer = [...array2];
 
+const names = ["Bob","Ethel", "Christine"];
+const otherNames = ["M", "Colt", "Allison", "SuperLongNameOMG"];
+
+console.log("Merge for arrays: ", merge(names, otherNames));
+
 // console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, "neither", buffer));
-console.log("String array: ", mergeSort(array2, 0, array2.length - 1, "neither", strBuffer));
+// console.log("String array: ", mergeSort(array2, 0, array2.length - 1, "neither", strBuffer));
