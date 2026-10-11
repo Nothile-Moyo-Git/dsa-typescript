@@ -229,7 +229,7 @@ const mergeRanges = <T extends SortableItem>(values: T[], left: number, half: nu
 
 // Recursive function to be called to split and eventually merge the arrays
 // It should use two pointers for its time / space compexity
-const mergeSort = <T extends SortableItem>(values: T[], left: number, right: number, direction: string, buffer: T[]) => {
+const mergeSortOptimal = <T extends SortableItem>(values: T[], left: number, right: number, direction: string, buffer: T[]) => {
 
   console.log("Direction: ", direction);
   console.log("Left before: ", left);
@@ -253,8 +253,8 @@ const mergeSort = <T extends SortableItem>(values: T[], left: number, right: num
   }
 
   // Split the array again
-  mergeSort(values, left, half, "left", buffer);
-  mergeSort(values, half + 1, right, "right", buffer);
+  mergeSortOptimal(values, left, half, "left", buffer);
+  mergeSortOptimal(values, half + 1, right, "right", buffer);
 
   // If the values are already sorted, no need to merge the ranges
   const first = values[half];
@@ -269,7 +269,43 @@ const mergeSort = <T extends SortableItem>(values: T[], left: number, right: num
 
   mergeRanges(values, left, half, right, buffer);
 };
+
+// Merge sort
+// This is similar to my example above but it splits the array itself and reassigns it and passes this through
+const mergeSort = <T extends SortableItem>(values: T[], compare?: Comparitor) => {
+
+  const left = 0;
+  const right = values.length - 1;
+
+  console.log("Right: ", right);
+
+  // Take right from left as we're finding the medium value
+  // So, if left is pos 1, right is pos 3, 3 - 1 = 2 / 2 = 1
+  const half = left + Math.floor((right - left) / 2);
+
+  console.log("Left after: ", left);
+  console.log("Right after: ", right);
+
+  console.log("\n");
+  console.log("-".repeat(50));
+  console.log("\n");
  
+  // End the loop
+  if (right - left < 1) {
+    return;
+  }
+
+  // Split the array between left and right here  
+  const leftArray = values.slice(left, half);
+  const rightArray = values.slice(half + 1, right);
+
+  // Split the array again
+  mergeSort(leftArray, compare);
+  mergeSort(rightArray, compare);
+
+  merge(leftArray, rightArray);
+};
+
 // Do a binary search and find the middle value inside it
 // If the value you're checking is greater, 
 const array1 = [4, 20, 12, 10, 7, 9];
@@ -324,7 +360,7 @@ let strBuffer = [...array2];
 const names = ["Bob","Ethel", "Christine"];
 const otherNames = ["M", "Colt", "Allison", "SuperLongNameOMG"];
 
-console.log("Merge for arrays: ", merge(names, otherNames));
+// console.log("Merge for arrays: ", merge(names, otherNames));
 
 // console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, "neither", buffer));
-// console.log("String array: ", mergeSort(array2, 0, array2.length - 1, "neither", strBuffer));
+console.log("String array: ", mergeSort(array2));
