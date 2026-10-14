@@ -290,14 +290,11 @@ const mergeSort = <T extends SortableItem>(values: T[], compare?: Comparitor) =>
   const half = Math.ceil((right - left) / 2);
 
   // We return here because the element will only be 1 element and we can't split it
+  console.log("\n");
   console.log("Half: ", half);
   console.log("Left after: ", left);
   console.log("Right after: ", right);
 
-  console.log("\n");
-  console.log("-".repeat(50));
-  console.log("\n");
- 
   // Split the array between left and right here
   const leftArray = values.slice(left, half);
   const rightArray = values.slice(half, right);
@@ -305,9 +302,29 @@ const mergeSort = <T extends SortableItem>(values: T[], compare?: Comparitor) =>
   console.log("Left array: ", leftArray);
   console.log("Right array: ", rightArray);
 
+  console.log("\n");
+
   // Split the array again
   mergeSort(leftArray, compare);
   mergeSort(rightArray, compare);
+
+  // Get the merged arrays, update value to reflect this and then return it
+  const outcome = merge(leftArray, rightArray);
+  
+  for (let i = 0; i < outcome.length; i++) {
+    console.log("i: ", i);
+    const next = outcome[i];
+
+    if (next !== undefined) {
+      values[i] = next;
+    }
+  }
+
+  console.log("Outcome: ", outcome);
+
+  console.log("\n");
+  console.log("-".repeat(50));
+  console.log("\n");
 
   return merge(leftArray, rightArray);
 };
@@ -363,11 +380,13 @@ const moarKittyData = [{
 
 let strBuffer = [...array2];
 
-const names = ["Bob","Ethel", "Christine"];
+const names = ["Bob", "Ethel", "Christine"];
 const otherNames = ["M", "Colt", "Allison", "SuperLongNameOMG"];
 
 // console.log("Merge for arrays: ", merge(names, otherNames));
 
 // console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, "neither", buffer));
 // console.log("Array 2 sliced: ", array2.slice(2, 4));
-console.log("String array: ", mergeSort(array2));
+// console.log("String array: ", mergeSort(array2));
+
+console.log("Testing sort: ", mergeSort(array2));
