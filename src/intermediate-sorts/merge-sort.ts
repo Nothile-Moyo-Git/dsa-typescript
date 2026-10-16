@@ -62,7 +62,11 @@ const merge: Merge = <T extends SortableItem>(a: T[], b: T[], compare?: Comparit
 
                 // We do strings separately as we're sorting by length, not by value
                 if (typeof(first) === 'string' && typeof(second) === 'string') {
-                  currentSmallest = (first.length - second.length) <= 0 ? 'a' : 'b';
+                  // NOTE: For the course, we do it by length for the assist method
+                  // NOTE: For the main one, we do it by value
+                  // currentSmallest = (first.length - second.length) <= 0 ? 'a' : 'b';
+
+                  currentSmallest = first < second ? 'a' : 'b';
                 }
 
                 if (typeof(first) === 'number' && typeof(second) === 'number') {
@@ -234,7 +238,6 @@ const mergeSortOptimal = <T extends SortableItem>(values: T[], left: number, rig
   console.log("Direction: ", direction);
   console.log("Left before: ", left);
   console.log("Right before: ", right);
-  console.log("Current buffer: ", strBuffer);
 
   // Take right from left as we're finding the medium value
   // So, if left is pos 1, right is pos 3, 3 - 1 = 2 / 2 = 1
@@ -277,6 +280,11 @@ const mergeSort = <T extends SortableItem>(values: T[], compare?: Comparitor) =>
 
   const left = 0;
   const right = values.length;
+
+  // If our array is empty, return an empty array, this safeguards our request
+  if (right === 0) {
+    return [];
+  }
 
   // This allows us to only have a minimum size of 1 for our arrays as we do a split below when it's 2
   // We can't split past that
@@ -326,6 +334,7 @@ const mergeSort = <T extends SortableItem>(values: T[], compare?: Comparitor) =>
   console.log("-".repeat(50));
   console.log("\n");
 
+  // We return here to get the final result of the two merged arrays
   return merge(leftArray, rightArray);
 };
 
@@ -336,8 +345,7 @@ const array2 = [0, -10, 7, 4];
 const array3 = [1, 2, 3];
 const array4: number[] = [];
 const array5 = [4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32];
-const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue"];
-// const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
+const kitties = ["LilBub", "Garfield", "Heathcliff", "Blue", "Grumpy"];
 const moarKittyData = [{
   name: "LilBub",
   age: 7
@@ -378,15 +386,10 @@ const moarKittyData = [{
 }])); */
 // console.log("Merge arrays: ", mergeArrays(["Garfield", "Heathcliff", "LilBub"], ["Blue", "Crusty", "Grumpy",]));
 
-let strBuffer = [...array2];
-
-const names = ["Bob", "Ethel", "Christine"];
-const otherNames = ["M", "Colt", "Allison", "SuperLongNameOMG"];
-
 // console.log("Merge for arrays: ", merge(names, otherNames));
 
 // console.log("Split arrays: ", splitArray(array2, 0, array2.length - 1, "neither", buffer));
 // console.log("Array 2 sliced: ", array2.slice(2, 4));
 // console.log("String array: ", mergeSort(array2));
 
-console.log("Testing sort: ", mergeSort(array2));
+console.log("Testing sort: ", mergeSort(moarKittyData));
