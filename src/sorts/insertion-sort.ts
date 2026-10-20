@@ -16,6 +16,8 @@
 // Sort by starting with the second value, then sort on the left hand side
 // Continue until completion
 // 
+// Time complexity: O(n^2)
+//
 // =======================================================================================================================
 
 // The type that accompanies every type we may use
