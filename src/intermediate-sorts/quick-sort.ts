@@ -27,3 +27,63 @@
 //
 // =======================================================================================================================
 
+// =======================================================================================================================
+// Pivot
+//
+// We pass start and end through as they represent chunks of our original array
+//
+//
+// =======================================================================================================================
+
+const numbers: number[] = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27];
+
+const pivot = (values: number[], start: number = 0, end: number = values.length) => {
+
+    // For learning Pick the number 11 as the initial pivot
+    const chosen = values[start];
+    const size = end - start;
+    let swapIndex = start;
+    let outcome: number[] = [];
+
+    // Swap the values in the array
+    const swap = (values: number[], swapIndex: number, currentIndex: number) => {
+        const temp = [...values];
+        const first = values[swapIndex];
+        const second = values[currentIndex];
+
+        console.log("Temp: ", temp);
+        console.log("First: ", first);
+        console.log("Second: ", second);
+        console.log("SwapIndex: ", swapIndex);
+        console.log("CurrentIndex: ", currentIndex);
+
+        if (first !== undefined && second !== undefined) {
+            temp[swapIndex] = second;
+            temp[currentIndex] = first;
+        }
+
+        return temp;
+    };
+
+    for (let i = start; i < size; i++) {
+        const value = values[i];
+
+        if (value !== undefined && chosen !== undefined) {
+            if (chosen > value) {
+                swapIndex++;
+                outcome = swap(values, swapIndex, i);
+                values = outcome;
+                console.log("Outcome: ", outcome);
+            }
+        }
+
+        console.log("\n");
+        console.log("-".repeat(50));
+        console.log("\n");
+    }
+
+    // We'll need to call pivot for the other two halves of the array
+    return values;
+};
+
+console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
