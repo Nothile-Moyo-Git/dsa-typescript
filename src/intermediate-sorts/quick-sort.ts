@@ -39,6 +39,11 @@ const numbers: number[] = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41
 
 const pivot = (values: number[], start: number = 0, end: number = values.length) => {
 
+    // No point in pivoting when the value is one
+    if (end <= 1) {
+        return;
+    }
+
     // For learning Pick the number 11 as the initial pivot
     const chosen = values[start];
     const size = end - start;
@@ -81,6 +86,13 @@ const pivot = (values: number[], start: number = 0, end: number = values.length)
         console.log("-".repeat(50));
         console.log("\n");
     }
+
+    console.log("\n");
+    console.log("=".repeat(50));
+    console.log("\n");
+
+    // Pivot left side
+    pivot(values, 0, swapIndex);
 
     // We'll need to call pivot for the other two halves of the array
     return values;
