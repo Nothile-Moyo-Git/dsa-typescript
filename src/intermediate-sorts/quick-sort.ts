@@ -70,6 +70,22 @@ const pivot = (values: number[], start: number = 0, end: number = values.length)
         return temp;
     };
 
+    const leapfrog = (values: number[], swapIndex: number) => {
+
+        // Get the swapIndex value, the start value, and swap them
+        // The start value is the initial one, so this should work
+        const temp = [...values];
+        const first = values[start];
+        const second = values[swapIndex];
+
+        if (first !== undefined && second !== undefined) {
+            temp[start] = second;
+            temp[swapIndex] = first;
+        }
+
+        return temp;
+    };
+
     for (let i = start; i < size; i++) {
         const value = values[i];
 
@@ -87,11 +103,15 @@ const pivot = (values: number[], start: number = 0, end: number = values.length)
         console.log("\n");
     }
 
+    const pivotedValue = leapfrog(values, swapIndex);
+    console.log("Leapfrog: ", pivotedValue);
+
     console.log("\n");
     console.log("=".repeat(50));
     console.log("\n");
 
     // Pivot left side
+    // Pivot right hand side with a max size of 3 for now for testing
     pivot(values, 0, swapIndex);
 
     // We'll need to call pivot for the other two halves of the array
