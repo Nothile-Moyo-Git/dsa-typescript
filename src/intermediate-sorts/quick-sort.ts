@@ -36,11 +36,18 @@
 // =======================================================================================================================
 
 const numbers: number[] = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27];
+const numbersShort: number[] = [20, 30, 42, 10, 6];
 
-const pivot = (values: number[], start: number = 0, end: number = values.length) => {
+const pivot = (values: number[], start: number = 0, end: number = values.length, count: number = 0) => {
+
+    console.log("Count: ", count);
+    console.log("Start: ", start);
+    console.log("End: ", end);
+    console.log("End - start", end - start);
+    console.log("\n");
 
     // No point in pivoting when the value is one
-    if (end <= 1) {
+    if (end - start <= 1) {
         return;
     }
 
@@ -88,6 +95,8 @@ const pivot = (values: number[], start: number = 0, end: number = values.length)
 
     for (let i = start; i < size; i++) {
         const value = values[i];
+        console.log("Value: ", value);
+        console.log("Chosen: ", chosen);
 
         if (value !== undefined && chosen !== undefined) {
             if (chosen > value) {
@@ -103,8 +112,12 @@ const pivot = (values: number[], start: number = 0, end: number = values.length)
         console.log("\n");
     }
 
-    const pivotedValue = leapfrog(values, swapIndex);
-    console.log("Leapfrog: ", pivotedValue);
+    // Move the pivot value into its position through a swap
+    if (count === 0) {
+        const pivotedValue = leapfrog(values, swapIndex);
+        console.log("Leapfrog: ", pivotedValue);
+        values = pivotedValue;
+    }
 
     console.log("\n");
     console.log("=".repeat(50));
@@ -112,10 +125,14 @@ const pivot = (values: number[], start: number = 0, end: number = values.length)
 
     // Pivot left side
     // Pivot right hand side with a max size of 3 for now for testing
-    pivot(values, 0, swapIndex);
+    if (count <= 5) {
+        pivot(values, 0, swapIndex, count++);
+        pivot(values, swapIndex, end, count++);
+    }
 
     // We'll need to call pivot for the other two halves of the array
     return values;
 };
 
-console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
+// console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
+console.log("Pivot on smaller array [20, 30, 42, 10, 6]: ", pivot(numbersShort));
