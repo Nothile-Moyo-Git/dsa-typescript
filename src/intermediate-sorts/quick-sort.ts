@@ -36,7 +36,8 @@
 // =======================================================================================================================
 
 const numbers: number[] = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27];
-const numbersShort: number[] = [20, 30, 42, 10, 6];
+const numbersShort: number[] = [20, 42, 30, 10, 6];
+const numbersTiny: number[] = [20, 30, 6];
 
 const pivot = (values: number[], start: number = 0, end: number = values.length, count: number = 0) => {
 
@@ -53,7 +54,6 @@ const pivot = (values: number[], start: number = 0, end: number = values.length,
 
     // For learning Pick the number 11 as the initial pivot
     const chosen = values[start];
-    const size = end - start;
     let swapIndex = start;
     let outcome: number[] = [];
 
@@ -93,13 +93,16 @@ const pivot = (values: number[], start: number = 0, end: number = values.length,
         return temp;
     };
 
-    for (let i = start; i < size; i++) {
+    console.log("Values: ", values);
+
+    for (let i = start; i < end; i++) {
         const value = values[i];
-        console.log("Value: ", value);
+        console.log("Current Value: ", value);
         console.log("Chosen: ", chosen);
 
         if (value !== undefined && chosen !== undefined) {
             if (chosen > value) {
+                console.log("Swapping:");
                 swapIndex++;
                 outcome = swap(values, swapIndex, i);
                 values = outcome;
@@ -123,11 +126,16 @@ const pivot = (values: number[], start: number = 0, end: number = values.length,
     console.log("=".repeat(50));
     console.log("\n");
 
+    count = count + 1;
+
     // Pivot left side
     // Pivot right hand side with a max size of 3 for now for testing
-    if (count <= 5) {
-        pivot(values, 0, swapIndex, count++);
-        pivot(values, swapIndex, end, count++);
+    if (count <= 3) {
+        // console.log("Split left: ");
+        // pivot(values, 0, swapIndex, count);
+
+        console.log("Split right: ");
+        pivot(values, swapIndex + 1, end, count);
     }
 
     // We'll need to call pivot for the other two halves of the array
@@ -135,4 +143,4 @@ const pivot = (values: number[], start: number = 0, end: number = values.length,
 };
 
 // console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
-console.log("Pivot on smaller array [20, 30, 42, 10, 6]: ", pivot(numbersShort));
+console.log("Pivot on smaller array [20, 42, 30, 10, 6]: ", pivot(numbersShort));
