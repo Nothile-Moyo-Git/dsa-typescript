@@ -39,7 +39,7 @@ const numbers: number[] = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41
 const numbersShort: number[] = [20, 42, 30, 10, 6];
 const numbersTiny: number[] = [20, 30, 6];
 
-const pivot = (values: number[], start: number = 0, end: number = values.length, count: number = 0) => {
+const pivot = (values: number[], start: number = 0, end: number = values.length - 1, count: number = 0) => {
 
     console.log("Count: ", count);
     console.log("Start: ", start);
@@ -48,7 +48,7 @@ const pivot = (values: number[], start: number = 0, end: number = values.length,
     console.log("\n");
 
     // No point in pivoting when the value is one
-    if (end - start <= 1) {
+    if (end - start <= 0) {
         return;
     }
 
@@ -95,7 +95,7 @@ const pivot = (values: number[], start: number = 0, end: number = values.length,
 
     console.log("Values: ", values);
 
-    for (let i = start; i < end; i++) {
+    for (let i = start; i <= end; i++) {
         const value = values[i];
         console.log("Current Value: ", value);
         console.log("Chosen: ", chosen);
@@ -116,7 +116,7 @@ const pivot = (values: number[], start: number = 0, end: number = values.length,
     }
 
     // Move the pivot value into its position through a swap
-    if (count === 0) {
+    if (count < 2) {
         const pivotedValue = leapfrog(values, swapIndex);
         console.log("Leapfrog: ", pivotedValue);
         values = pivotedValue;
@@ -144,3 +144,8 @@ const pivot = (values: number[], start: number = 0, end: number = values.length,
 
 // console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
 console.log("Pivot on smaller array [20, 42, 30, 10, 6]: ", pivot(numbersShort));
+
+// Handling the split when there are only two numbers
+/* console.log("Pivot and swap on an updated array [6, 10, 20, 42, 30]: ", 
+    pivot([6, 10, 20, 42, 30], 3, 4, 1)
+); */
