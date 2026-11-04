@@ -49,6 +49,8 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
 
     // No point in pivoting when the value is one
     if (end - start <= 0) {
+        console.log(">".repeat(50));
+        console.log("\n");
         return;
     }
 
@@ -94,9 +96,12 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
     };
 
     console.log("Values: ", values);
+    console.log("Starting iterations: ");
+    console.log("\n");
 
     for (let i = start; i <= end; i++) {
         const value = values[i];
+        console.log("Index: ", i);
         console.log("Current Value: ", value);
         console.log("Chosen: ", chosen);
 
@@ -110,17 +115,14 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
             }
         }
 
-        console.log("\n");
         console.log("-".repeat(50));
-        console.log("\n");
     }
 
     // Move the pivot value into its position through a swap
-    if (count < 2) {
-        const pivotedValue = leapfrog(values, swapIndex);
-        console.log("Leapfrog: ", pivotedValue);
-        values = pivotedValue;
-    }
+    console.log("Pre swap: ", values);
+    const pivotedValue = leapfrog(values, swapIndex);
+    console.log("Leapfrog: ", pivotedValue);
+    values = pivotedValue;
 
     console.log("\n");
     console.log("=".repeat(50));
@@ -130,13 +132,18 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
 
     // Pivot left side
     // Pivot right hand side with a max size of 3 for now for testing
-    if (count <= 3) {
-        // console.log("Split left: ");
-        // pivot(values, 0, swapIndex, count);
+    if (count <= 12) {
+        console.log("Split left: ");
+        pivot(values, start, swapIndex - 1, count);
 
         console.log("Split right: ");
         pivot(values, swapIndex + 1, end, count);
     }
+
+    console.log("Count: ", count);
+    console.log("Start: ", start);
+    console.log("End: ", end);
+    console.log("Values: ", values);
 
     // We'll need to call pivot for the other two halves of the array
     return values;

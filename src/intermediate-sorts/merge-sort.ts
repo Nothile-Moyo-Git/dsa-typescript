@@ -220,6 +220,9 @@ const mergeSortOptimal = <T extends SortableItem>(values: T[], left: number, rig
   }
 
   mergeRanges(values, left, half, right, buffer);
+
+  console.log("Values: ", values);
+  return buffer;
 };
 
 // Merge sort
@@ -295,4 +298,7 @@ const moarKittyData = [{
   age: 6
 }];
 
-console.log("Testing sort: ", mergeSort(moarKittyData));
+// Slice to create a new allocation of memory instead of updating the values one
+const bufferArray = array2.slice();
+console.log("String array: ", mergeSortOptimal(array2, 0, array2.length - 1, "neither", bufferArray));
+// console.log("Testing sort: ", mergeSort(moarKittyData));
