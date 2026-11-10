@@ -120,9 +120,8 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
 
     // Move the pivot value into its position through a swap
     console.log("Pre swap: ", values);
-    const pivotedValue = leapfrog(values, swapIndex);
-    console.log("Leapfrog: ", pivotedValue);
-    values = pivotedValue;
+    const pivotedValues = leapfrog(values, swapIndex);
+    console.log("Leapfrog: ", pivotedValues);
 
     console.log("\n");
     console.log("=".repeat(50));
@@ -132,21 +131,35 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
 
     // Pivot left side
     // Pivot right hand side with a max size of 3 for now for testing
+
+    let leftSideValues: number[] = [];
+    let rightSideValues: number[] = [];
+
     if (count <= 12) {
-        console.log("Split left: ");
-        pivot(values, start, swapIndex - 1, count);
+        const leftSplit = pivot(pivotedValues, start, swapIndex - 1, count);
+        if (leftSplit !== undefined) {
+            console.log("Split left: ");
+            leftSideValues = leftSplit;
+        }
+
 
         console.log("Split right: ");
-        pivot(values, swapIndex + 1, end, count);
+        const rightSplit = pivot(pivotedValues, swapIndex + 1, end, count);
+        if (rightSplit !== undefined) {
+            rightSideValues = rightSplit;
+        }
     }
 
     console.log("Count: ", count);
     console.log("Start: ", start);
     console.log("End: ", end);
     console.log("Values: ", values);
+    console.log("Left values: ", leftSideValues);
+    console.log("Right values: ", rightSideValues);
+    // console.log("Returned: ", returned);
 
     // We'll need to call pivot for the other two halves of the array
-    return values;
+    return pivotedValues;
 };
 
 // console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
