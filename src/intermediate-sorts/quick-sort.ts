@@ -121,6 +121,7 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
     // Move the pivot value into its position through a swap
     console.log("Pre swap: ", values);
     const pivotedValues = leapfrog(values, swapIndex);
+    let sortedArray: number[] = [];
     console.log("Leapfrog: ", pivotedValues);
 
     console.log("\n");
@@ -136,17 +137,21 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
     let rightSideValues: number[] = [];
 
     if (count <= 12) {
+        console.log("Split left: ");
+
         const leftSplit = pivot(pivotedValues, start, swapIndex - 1, count);
         if (leftSplit !== undefined) {
-            console.log("Split left: ");
             leftSideValues = leftSplit;
+            sortedArray = leftSplit;
         }
 
 
         console.log("Split right: ");
-        const rightSplit = pivot(pivotedValues, swapIndex + 1, end, count);
+        const rightSplit = pivot(sortedArray, swapIndex + 1, end, count);
+
         if (rightSplit !== undefined) {
             rightSideValues = rightSplit;
+            sortedArray = rightSplit;
         }
     }
 
