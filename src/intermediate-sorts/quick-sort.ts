@@ -164,7 +164,16 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
     // console.log("Returned: ", returned);
 
     // We'll need to call pivot for the other two halves of the array
-    return pivotedValues;
+    let returnValue: number[] = [];
+
+    // Since we do the right split last, return that for the final one, or default to the original
+    // leapfrogged value
+    if (leftSideValues && leftSideValues.length > 0) {
+
+        // Since we split on the left side, we return that first
+        returnValue = [...leftSideValues];
+    }
+    return rightSideValues.length !== 0 ? rightSideValues : pivotedValues;
 };
 
 // console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
