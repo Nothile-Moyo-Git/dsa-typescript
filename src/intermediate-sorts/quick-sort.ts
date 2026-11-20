@@ -32,6 +32,7 @@
 //
 // We pass start and end through as they represent chunks of our original array
 //
+// 
 //
 // =======================================================================================================================
 
@@ -173,7 +174,17 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
         // Since we split on the left side, we return that first
         returnValue = [...leftSideValues];
     }
-    return rightSideValues.length !== 0 ? rightSideValues : pivotedValues;
+
+    // If we have values on the right, then we return that instead
+    if (rightSideValues && rightSideValues.length > 0) {
+
+        // Since we split on the right hand side, we return that second
+        returnValue = [...rightSideValues];
+    }
+
+    console.log("Return value: ", returnValue);
+
+    return returnValue.length > 0 ? returnValue : pivotedValues;
 };
 
 // console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
