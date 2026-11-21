@@ -136,27 +136,24 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
     let leftSideValues: number[] = [];
     let rightSideValues: number[] = [];
 
-    if (count <= 12) {
-        console.log("Split left: ");
+    console.log("Split left: ");
 
-        const leftSplit = pivot(pivotedValues, start, swapIndex - 1, count);
-        if (leftSplit !== undefined) {
-            leftSideValues = leftSplit;
-        }
-
-        // If we updated our array on the left hand side, then we pass it through to the right
-        // That's because we return an updated array of split values
-        const leftPivot = leftSplit ?? pivotedValues;
-
-        console.log("Split right: ");
-        const rightSplit = pivot(leftPivot, swapIndex + 1, end, count);
-
-        if (rightSplit !== undefined) {
-            rightSideValues = rightSplit;
-        }
+    const leftSplit = pivot(pivotedValues, start, swapIndex - 1, count);
+    if (leftSplit !== undefined) {
+        leftSideValues = leftSplit;
     }
 
-    console.log("Count: ", count);
+    // If we updated our array on the left hand side, then we pass it through to the right
+    // That's because we return an updated array of split values
+    const leftPivot = leftSplit ?? pivotedValues;
+
+    console.log("Split right: ");
+    const rightSplit = pivot(leftPivot, swapIndex + 1, end, count);
+
+    if (rightSplit !== undefined) {
+        rightSideValues = rightSplit;
+    }
+    
     console.log("Start: ", start);
     console.log("End: ", end);
     console.log("Values: ", values);
