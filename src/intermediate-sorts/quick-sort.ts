@@ -37,7 +37,7 @@
 // =======================================================================================================================
 
 const numbers: number[] = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27];
-const numbersShort: number[] = [20, 42, 30, 10, 6];
+const numbersShort: number[] = [20, 42, 30, 6, 10];
 const numbersTiny: number[] = [20, 30, 6];
 
 const pivot = (values: number[], start: number = 0, end: number = values.length - 1, count: number = 0) => {
@@ -122,7 +122,6 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
     // Move the pivot value into its position through a swap
     console.log("Pre swap: ", values);
     const pivotedValues = leapfrog(values, swapIndex);
-    let sortedArray: number[] = [];
     console.log("Leapfrog: ", pivotedValues);
 
     console.log("\n");
@@ -143,16 +142,17 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
         const leftSplit = pivot(pivotedValues, start, swapIndex - 1, count);
         if (leftSplit !== undefined) {
             leftSideValues = leftSplit;
-            sortedArray = leftSplit;
         }
 
+        // If we updated our array on the left hand side, then we pass it through to the right
+        // That's because we return an updated array of split values
+        const leftPivot = leftSplit ?? pivotedValues;
 
         console.log("Split right: ");
-        const rightSplit = pivot(sortedArray, swapIndex + 1, end, count);
+        const rightSplit = pivot(leftPivot, swapIndex + 1, end, count);
 
         if (rightSplit !== undefined) {
             rightSideValues = rightSplit;
-            sortedArray = rightSplit;
         }
     }
 
@@ -165,7 +165,7 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
     // console.log("Returned: ", returned);
 
     // We'll need to call pivot for the other two halves of the array
-    let returnValue: number[] = [];
+    let returnValue: number[] = pivotedValues;
 
     // Since we do the right split last, return that for the final one, or default to the original
     // leapfrogged value
@@ -184,7 +184,7 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
 
     console.log("Return value: ", returnValue);
 
-    return returnValue.length > 0 ? returnValue : pivotedValues;
+    return returnValue;
 };
 
 // console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
