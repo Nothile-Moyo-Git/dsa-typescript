@@ -36,13 +36,21 @@
 //
 // =======================================================================================================================
 
+// The type that accompanies every type we may use
+type SortableItem = string | number | { name: string, age: number };
+
+// Typing for the comparison function
+type Comparitor = <T extends SortableItem>(a : T, b: T) => number;
+
+// Type to merge two sorted arrays together
+type Quick = <T extends SortableItem>(values : T[]) => T[];
+
 const numbers: number[] = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27];
 const numbersShort: number[] = [20, 42, 30, 6, 10];
 const numbersTiny: number[] = [20, 30, 6];
 
-const pivot = (values: number[], start: number = 0, end: number = values.length - 1, count: number = 0) => {
+const pivot: Quick = <T extends SortableItem>(values: T[], comparator?: Comparitor, start: number = 0, end: number = values.length - 1) => {
 
-    console.log("Count: ", count);
     console.log("Start: ", start);
     console.log("End: ", end);
     console.log("End - start", end - start);
@@ -61,7 +69,7 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
     let outcome: number[] = [];
 
     // Swap the values in the array
-    const swap = (values: number[], swapIndex: number, currentIndex: number) => {
+    const swap = (values: T[], swapIndex: number, currentIndex: number) => {
         const temp = [...values];
         const first = values[swapIndex];
         const second = values[currentIndex];
@@ -128,7 +136,6 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
     console.log("=".repeat(50));
     console.log("\n");
 
-    count = count + 1;
 
     // Pivot left side
     // Pivot right hand side with a max size of 3 for now for testing
@@ -138,7 +145,7 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
 
     console.log("Split left: ");
 
-    const leftSplit = pivot(pivotedValues, start, swapIndex - 1, count);
+    const leftSplit = pivot(pivotedValues, comparator, start, swapIndex - 1);
     if (leftSplit !== undefined) {
         leftSideValues = leftSplit;
     }
@@ -148,7 +155,7 @@ const pivot = (values: number[], start: number = 0, end: number = values.length 
     const leftPivot = leftSplit ?? pivotedValues;
 
     console.log("Split right: ");
-    const rightSplit = pivot(leftPivot, swapIndex + 1, end, count);
+    const rightSplit = pivot(leftPivot, comparator, swapIndex + 1, end);
 
     if (rightSplit !== undefined) {
         rightSideValues = rightSplit;
@@ -191,3 +198,6 @@ console.log("Pivot on smaller array [20, 42, 30, 10, 6]: ", pivot(numbersShort))
 /* console.log("Pivot and swap on an updated array [6, 10, 20, 42, 30]: ", 
     pivot([6, 10, 20, 42, 30], 3, 4, 1)
 ); */
+
+const arr1 = [5, 4, 9, 10, 2, 20, 8, 7, 3];
+const arr2 = [8, 4, 2, 5, 0, 10, 11, 12, 13, 16];
