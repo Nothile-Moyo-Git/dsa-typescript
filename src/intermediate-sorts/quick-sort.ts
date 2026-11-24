@@ -40,16 +40,23 @@
 type SortableItem = string | number | { name: string, age: number };
 
 // Typing for the comparison function
-type Comparitor = <T extends SortableItem>(a : T, b: T) => number;
+type Comparitor = <T extends SortableItem>(a : T, b: T) => T;
 
 // Type to merge two sorted arrays together
-type Quick = <T extends SortableItem>(values : T[]) => T[];
+type Quick = <T extends SortableItem>(values : T[], comparator: Comparitor, start: number, end: number) => T[];
+
+const compareNumbers: Comparitor = <T extends SortableItem>(a: T, b: T) => {
+
+    const result: T = a - b;
+
+    return result;
+};
 
 const numbers: number[] = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27];
 const numbersShort: number[] = [20, 42, 30, 6, 10];
 const numbersTiny: number[] = [20, 30, 6];
 
-const pivot: Quick = <T extends SortableItem>(values: T[], comparator?: Comparitor, start: number = 0, end: number = values.length - 1) => {
+const pivot: Quick = <T extends SortableItem>(values: T[], comparator: Comparitor, start: number = 0, end: number = values.length - 1) => {
 
     console.log("Start: ", start);
     console.log("End: ", end);
@@ -66,7 +73,7 @@ const pivot: Quick = <T extends SortableItem>(values: T[], comparator?: Comparit
     // For learning Pick the number 11 as the initial pivot
     const chosen = values[start];
     let swapIndex = start;
-    let outcome: number[] = [];
+    let outcome: T[] = [];
 
     // Swap the values in the array
     const swap = (values: T[], swapIndex: number, currentIndex: number) => {
@@ -88,7 +95,7 @@ const pivot: Quick = <T extends SortableItem>(values: T[], comparator?: Comparit
         return temp;
     };
 
-    const leapfrog = (values: number[], swapIndex: number) => {
+    const leapfrog = (values: T[], swapIndex: number) => {
 
         // Get the swapIndex value, the start value, and swap them
         // The start value is the initial one, so this should work
@@ -192,7 +199,7 @@ const pivot: Quick = <T extends SortableItem>(values: T[], comparator?: Comparit
 };
 
 // console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
-console.log("Pivot on smaller array [20, 42, 30, 10, 6]: ", pivot(numbersShort));
+console.log("Pivot on smaller array [20, 42, 30, 10, 6]: ", pivot(numbersShort, () => {}));
 
 // Handling the split when there are only two numbers
 /* console.log("Pivot and swap on an updated array [6, 10, 20, 42, 30]: ", 
