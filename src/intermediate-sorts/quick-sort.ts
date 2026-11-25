@@ -40,15 +40,39 @@
 type SortableItem = string | number | { name: string, age: number };
 
 // Typing for the comparison function
-type Comparitor = <T extends SortableItem>(a : T, b: T) => T;
+type Comparitor = <T extends SortableItem>(a : T, b: T) => number;
 
 // Type to merge two sorted arrays together
 type Quick = <T extends SortableItem>(values : T[], comparator: Comparitor, start: number, end: number) => T[];
 
-const compareNumbers: Comparitor = <T extends SortableItem>(a: T, b: T) => {
+const compareValues: Comparitor = <T extends SortableItem>(a: T, b: T) => {
 
-    const result: T = a - b;
+    // Check the types of the values that we pass through
+    // This allows us to access properties from our variables
+    const areNumbers = typeof(a) === 'number' && typeof(b) === 'number';
+    const areStrings = typeof(a) === 'string' && typeof(b) === 'string';
+    const areObjects = typeof(a) === 'object' && typeof(b) === 'object';
 
+    // Check types and return based on this
+    if (areNumbers) {
+        const result: number = a - b;
+
+        return result;
+    }
+
+    if (areStrings) {
+        const result: number = a.length - b.length;
+
+        return result;
+    }
+
+    if (areObjects) {
+        const result = a.age - b.age;
+
+        return result;
+    }
+
+    const result: number = a - b;
     return result;
 };
 
