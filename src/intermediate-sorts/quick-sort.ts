@@ -40,7 +40,7 @@
 type SortableItem = string | number | { name: string, age: number };
 
 // Typing for the comparison function
-type Comparitor = <T extends SortableItem>(a : T, b: T) => number;
+type Comparitor = <T extends SortableItem>(a : T, b: T) => number | null;
 
 // Type to merge two sorted arrays together
 type Quick = <T extends SortableItem>(values : T[], comparator: Comparitor, start: number, end: number) => T[];
@@ -55,25 +55,19 @@ const compareValues: Comparitor = <T extends SortableItem>(a: T, b: T) => {
 
     // Check types and return based on this
     if (areNumbers) {
-        const result: number = a - b;
+        return a - b;
 
-        return result;
     }
 
     if (areStrings) {
-        const result: number = a.length - b.length;
-
-        return result;
+        return a.length - b.length;
     }
 
     if (areObjects) {
-        const result = a.age - b.age;
-
-        return result;
+        return a.age - b.age;
     }
 
-    const result: number = a - b;
-    return result;
+    return null;
 };
 
 const numbers: number[] = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27];
@@ -91,7 +85,7 @@ const pivot: Quick = <T extends SortableItem>(values: T[], comparator: Comparito
     if (end - start <= 0) {
         console.log(">".repeat(50));
         console.log("\n");
-        return;
+        return null;
     }
 
     // For learning Pick the number 11 as the initial pivot
@@ -171,8 +165,8 @@ const pivot: Quick = <T extends SortableItem>(values: T[], comparator: Comparito
     // Pivot left side
     // Pivot right hand side with a max size of 3 for now for testing
 
-    let leftSideValues: number[] = [];
-    let rightSideValues: number[] = [];
+    let leftSideValues: T[] = [];
+    let rightSideValues: T[] = [];
 
     console.log("Split left: ");
 
@@ -200,7 +194,7 @@ const pivot: Quick = <T extends SortableItem>(values: T[], comparator: Comparito
     // console.log("Returned: ", returned);
 
     // We'll need to call pivot for the other two halves of the array
-    let returnValue: number[] = pivotedValues;
+    let returnValue: T[] = pivotedValues;
 
     // Since we do the right split last, return that for the final one, or default to the original
     // leapfrogged value
@@ -223,7 +217,7 @@ const pivot: Quick = <T extends SortableItem>(values: T[], comparator: Comparito
 };
 
 // console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
-console.log("Pivot on smaller array [20, 42, 30, 10, 6]: ", pivot(numbersShort, () => {}));
+console.log("Pivot on smaller array [20, 42, 30, 10, 6]: ", pivot(numbersShort, compareValues, 0, numbersShort.length));
 
 // Handling the split when there are only two numbers
 /* console.log("Pivot and swap on an updated array [6, 10, 20, 42, 30]: ", 
