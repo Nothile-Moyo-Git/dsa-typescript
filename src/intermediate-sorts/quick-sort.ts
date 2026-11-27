@@ -74,7 +74,7 @@ const numbers: number[] = [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41
 const numbersShort: number[] = [20, 42, 30, 6, 10];
 const numbersTiny: number[] = [20, 30, 6];
 
-const pivot: Quick = <T extends SortableItem>(values: T[], comparator: Comparitor, start: number = 0, end: number = values.length - 1) => {
+const QuickSort: Quick = <T extends SortableItem>(values: T[], comparator: Comparitor, start: number = 0, end: number = values.length - 1) => {
 
     console.log("Start: ", start);
     console.log("End: ", end);
@@ -85,7 +85,7 @@ const pivot: Quick = <T extends SortableItem>(values: T[], comparator: Comparito
     if (end - start <= 0) {
         console.log(">".repeat(50));
         console.log("\n");
-        return null;
+        return values;
     }
 
     // For learning Pick the number 11 as the initial pivot
@@ -170,7 +170,7 @@ const pivot: Quick = <T extends SortableItem>(values: T[], comparator: Comparito
 
     console.log("Split left: ");
 
-    const leftSplit = pivot(pivotedValues, comparator, start, swapIndex - 1);
+    const leftSplit = QuickSort(pivotedValues, comparator, start, swapIndex - 1);
     if (leftSplit !== undefined) {
         leftSideValues = leftSplit;
     }
@@ -180,7 +180,7 @@ const pivot: Quick = <T extends SortableItem>(values: T[], comparator: Comparito
     const leftPivot = leftSplit ?? pivotedValues;
 
     console.log("Split right: ");
-    const rightSplit = pivot(leftPivot, comparator, swapIndex + 1, end);
+    const rightSplit = QuickSort(leftPivot, comparator, swapIndex + 1, end);
 
     if (rightSplit !== undefined) {
         rightSideValues = rightSplit;
@@ -217,7 +217,7 @@ const pivot: Quick = <T extends SortableItem>(values: T[], comparator: Comparito
 };
 
 // console.log("Pivot: [11, 40, 40, 50, 43, 10, 30, 42, 20, 6, 19, 32, 20, 41, 23, 27]", pivot(numbers));
-console.log("Pivot on smaller array [20, 42, 30, 10, 6]: ", pivot(numbersShort, compareValues, 0, numbersShort.length));
+console.log("Pivot on smaller array [20, 42, 30, 10, 6]: ", QuickSort(numbersShort, compareValues, 0, numbersShort.length));
 
 // Handling the split when there are only two numbers
 /* console.log("Pivot and swap on an updated array [6, 10, 20, 42, 30]: ", 
